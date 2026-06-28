@@ -210,7 +210,6 @@ Jokes are a special post type: stored in the `jokes` table (not `posts`), exclud
 - [ ] AI provider settings in CMS: encrypted API key, model selector (start with OpenAI GPT-4o), abstract via `AiProvider` interface
 - [ ] Post editor: "Generate content" — sends title + type + tags → fills excerpt + content draft
 - [ ] Post editor: "Audit content" — returns structured suggestions (clarity, SEO, tone, scripture accuracy for faith content)
-- [ ] AI chatbot widget: floating assistant, context-aware via RAG over published posts (Cloudflare Workers AI or OpenAI embeddings + pgvector / simple vector in MySQL)
 
 ---
 

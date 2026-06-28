@@ -72,7 +72,6 @@
 - (Bonus) Include an AI provider
 	- Generate post detail & content
 	- Audit post detail & content
-	- AI chatbot
 - Sitemap generator
 - Good UX search entire website
 - Performance-driven CMS pagination
