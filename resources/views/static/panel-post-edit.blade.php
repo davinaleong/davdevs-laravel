@@ -1,6 +1,6 @@
 @extends('static.layouts.panel')
 
-@section('title', 'Edit Post — CMS')
+@section('title', 'Edit Entry — CMS')
 @section('nav-posts', 'active')
 
 @push('head')
@@ -95,7 +95,7 @@
             </div>
             <div class="form-row">
                 <div class="form-group">
-                    <label class="form-label">Post Type</label>
+                    <label class="form-label">Content Type</label>
                     <select class="cms-input cms-select"><option selected>Article</option><option>Project</option><option>Tool</option></select>
                 </div>
                 <div class="form-group">

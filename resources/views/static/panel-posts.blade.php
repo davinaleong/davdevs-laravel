@@ -1,6 +1,6 @@
 @extends('static.layouts.panel')
 
-@section('title', 'All Posts — CMS')
+@section('title', 'All Entries — CMS')
 @section('nav-posts', 'active')
 
 @push('head')
@@ -56,26 +56,27 @@
 @section('content')
 <div class="cms-page-header">
     <div>
-        <h1 class="cms-page-title">All Posts</h1>
-        <p class="cms-page-sub">94 posts across all types</p>
+        <h1 class="cms-page-title">All Entries</h1>
+        <p class="cms-page-sub">90 entries across all content types</p>
     </div>
     <div class="cms-actions">
-        <a href="/static/panel-post-new"><button class="btn btn-primary">＋ New Post</button></a>
+        <a href="/static/panel-post-new"><button class="btn btn-primary">＋ New Entry</button></a>
     </div>
 </div>
 
 <!-- FILTER BAR -->
 <div class="filter-bar">
-    <input type="search" class="cms-input" placeholder="Search posts…" value="">
+    <input type="search" class="cms-input" placeholder="Search entries…" value="">
     <select class="cms-input cms-select">
         <option>All types</option>
         <option>Article</option>
         <option>Project</option>
         <option>Tool</option>
         <option>Notebook</option>
-        <option>E-Book</option>
         <option>Sermon</option>
         <option>Page</option>
+        <option>Frontend Mentor</option>
+        <option>Knowledge Sharing</option>
     </select>
     <select class="cms-input cms-select">
         <option>All statuses</option>
@@ -88,7 +89,7 @@
     <select class="cms-input cms-select" style="max-width:130px;">
         <option>Newest first</option>
         <option>Oldest first</option>
-        <option>Most liked</option>
+        <option>Most reactions</option>
     </select>
 </div>
 
@@ -118,7 +119,7 @@
                     ['Dav/Devs Laravel CMS Rebuild','davdevs-laravel-cms','project','private','01 Jun 2026',0],
                     ['TOTP 2FA in Laravel Without Breeze Magic','totp-2fa-laravel','article','published','01 Jun 2026',8],
                     ['Structuring Outputs from LLMs Without Losing Your Mind','llm-structured-outputs','article','published','20 May 2026',15],
-                    ['Prompt Injection is the New SQL Injection','prompt-injection','article','published','14 Nov 2025',41],
+                    ['Prompt Injection is the New SQL Injection','prompt-injection','article','archived','14 Nov 2025',41],
                 ];
                 @endphp
                 @foreach($posts as $p)
@@ -151,7 +152,7 @@
 
 <!-- PAGINATION -->
 <div class="pagination">
-    <span class="pagination-info">Showing 1–10 of 94 posts</span>
+    <span class="pagination-info">Showing 1–10 of 90 entries</span>
     <div class="pagination-btns">
         <button class="pg-btn" disabled>←</button>
         <button class="pg-btn active">1</button>

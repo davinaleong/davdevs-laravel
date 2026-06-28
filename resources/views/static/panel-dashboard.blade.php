@@ -98,19 +98,19 @@
         <p class="cms-page-sub">Welcome back, Davina. Here's what's happening.</p>
     </div>
     <div class="cms-actions">
-        <a href="/static/panel-post-new"><button class="btn btn-primary">＋ New Post</button></a>
+        <a href="/static/panel-post-new"><button class="btn btn-primary">＋ New Entry</button></a>
     </div>
 </div>
 
 <!-- STAT CARDS -->
 <div class="stat-grid">
     <div class="stat-card">
-        <span class="stat-label">Total Posts</span>
-        <span class="stat-value">94</span>
+        <span class="stat-label">Total Entries</span>
+        <span class="stat-value">90</span>
         <span class="stat-delta"><span class="up">↑ 3</span> this month</span>
     </div>
     <div class="stat-card">
-        <span class="stat-label">Total Likes</span>
+        <span class="stat-label">Total Reactions</span>
         <span class="stat-value">312</span>
         <span class="stat-delta"><span class="up">↑ 18</span> this week</span>
     </div>
@@ -130,7 +130,7 @@
 <div class="panel-row">
     <div class="cms-card">
         <div class="cms-card-header">
-            <span class="cms-card-title">Recent Posts</span>
+            <span class="cms-card-title">Recent Entries</span>
             <a href="/static/panel-posts"><button class="btn btn-ghost btn-sm">view all →</button></a>
         </div>
         <div class="cms-card-body">
@@ -176,7 +176,7 @@
                 <div class="quick-action-btn">
                     <span class="quick-action-icon">✦</span>
                     <div>
-                        <div class="quick-action-label">New Post</div>
+                        <div class="quick-action-label">New Entry</div>
                         <div class="quick-action-sub">Article, project, tool…</div>
                     </div>
                 </div>
@@ -213,14 +213,14 @@
 <!-- POST TYPE BREAKDOWN -->
 <div class="cms-card">
     <div class="cms-card-header">
-        <span class="cms-card-title">Posts by Type</span>
+        <span class="cms-card-title">Entries by Content Type</span>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:1px;background:var(--cms-border);border-radius:0 0 var(--cms-radius-card) var(--cms-radius-card);overflow:hidden;">
-        @foreach([['Article','article',48],['Project','project',12],['Tool','tool',14],['Notebook','notebook',6],['E-Book','ebook',4],['Sermon','sermon',3],['Page','page',4],['FEM','fem',2],['KS','ks',1]] as $t)
+        @foreach([['Article','article',48],['Project','project',12],['Tool','tool',14],['Notebook','notebook',6],['Sermon','sermon',3],['Page','page',4],['FEM','fem',2],['KS','ks',1]] as $t)
         <div style="flex:1;min-width:100px;background:var(--cms-bg-surface);padding:14px 16px;">
             <div style="margin-bottom:6px;"><span class="type-badge type-{{ $t[1] }}">{{ $t[0] }}</span></div>
             <div style="font-family:var(--cms-font-mono);font-size:22px;color:var(--cms-text-primary);line-height:1;">{{ $t[2] }}</div>
-            <div style="font-size:11px;color:var(--cms-text-muted);margin-top:2px;">posts</div>
+            <div style="font-size:11px;color:var(--cms-text-muted);margin-top:2px;">entries</div>
         </div>
         @endforeach
     </div>

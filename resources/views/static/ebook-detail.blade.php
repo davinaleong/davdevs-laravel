@@ -536,8 +536,8 @@
             </div>
 
             <div class="ebook-cta-row">
-                <button class="btn-download">↓ Download PDF — free</button>
-                <button class="btn-preview">Preview first chapter →</button>
+                <button class="btn-download">Buy — SGD 9.90 →</button>
+                <button class="btn-preview">↓ Free sample chapter</button>
                 <span class="ebook-format-note">PDF · EPUB · 2.4 MB</span>
                 <button class="like-btn" aria-label="Like">
                     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -728,10 +728,10 @@
             <!-- Download box -->
             <div class="rail-download-box">
                 <div class="rail-download-title">Get the book</div>
-                <div class="rail-download-note">Free forever. No email required.</div>
-                <button class="btn-download" style="width:100%;text-align:center;">↓ Download PDF</button>
-                <button class="btn-preview" style="width:100%;text-align:center;">Preview Ch. 1</button>
-                <div style="font-family:var(--font-mono);font-size:8px;color:var(--text-faint);letter-spacing:var(--tracking-mono-xs);">PDF · EPUB · 2.4 MB</div>
+                <div class="rail-download-note">SGD 9.90 · PDF &amp; EPUB included</div>
+                <button class="btn-download" style="width:100%;text-align:center;">Buy — SGD 9.90 →</button>
+                <button class="btn-preview" style="width:100%;text-align:center;">↓ Free sample chapter</button>
+                <div style="font-family:var(--font-mono);font-size:8px;color:var(--text-faint);letter-spacing:var(--tracking-mono-xs);">Lemon Squeezy · PDF &amp; EPUB · 2.4 MB</div>
             </div>
 
             <!-- Book info -->
@@ -762,11 +762,15 @@
                     <span class="rail-stat-value">PDF, EPUB</span>
                 </div>
                 <div class="rail-stat">
-                    <span class="rail-stat-label">licence</span>
-                    <span class="rail-stat-value">CC BY-NC 4.0</span>
+                    <span class="rail-stat-label">language</span>
+                    <span class="rail-stat-value">English</span>
                 </div>
                 <div class="rail-stat">
-                    <span class="rail-stat-label">likes</span>
+                    <span class="rail-stat-label">publisher</span>
+                    <span class="rail-stat-value">GraceSoft</span>
+                </div>
+                <div class="rail-stat">
+                    <span class="rail-stat-label">reactions</span>
                     <span class="rail-stat-value">57</span>
                 </div>
             </div>

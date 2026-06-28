@@ -1,6 +1,6 @@
 @extends('static.layouts.panel')
 
-@section('title', 'New Post — CMS')
+@section('title', 'New Entry — CMS')
 @section('nav-new-post', 'active')
 
 @push('head')
@@ -134,7 +134,7 @@
 @section('content')
 <div class="cms-page-header">
     <div>
-        <h1 class="cms-page-title">New Post</h1>
+        <h1 class="cms-page-title">New Entry</h1>
         <p class="cms-page-sub">Fill in the details below, then publish or save as draft.</p>
     </div>
     <div class="cms-actions">
@@ -153,7 +153,7 @@
         <div class="cms-card" style="padding:16px;display:flex;flex-direction:column;gap:12px;">
             <div class="form-group">
                 <label class="form-label">Title</label>
-                <input type="text" class="cms-input" placeholder="Post title…" style="font-size:16px;font-weight:500;" value="">
+                <input type="text" class="cms-input" placeholder="Entry title…" style="font-size:16px;font-weight:500;" value="">
             </div>
             <div class="form-group">
                 <label class="form-label">Slug</label>
@@ -161,13 +161,12 @@
             </div>
             <div class="form-row">
                 <div class="form-group">
-                    <label class="form-label">Post Type</label>
+                    <label class="form-label">Content Type</label>
                     <select class="cms-input cms-select">
                         <option>Article</option>
                         <option>Project</option>
                         <option>Tool</option>
                         <option>Notebook</option>
-                        <option>E-Book</option>
                         <option>Sermon</option>
                         <option>Page</option>
                         <option>Frontend Mentor</option>
@@ -230,7 +229,7 @@
         <div class="cms-card" style="padding:16px;display:flex;flex-direction:column;gap:12px;">
             <div style="font-size:12px;font-weight:600;color:var(--cms-text-secondary);">SEO & Open Graph</div>
             <div class="form-group">
-                <label class="form-label">Meta Title <span style="font-weight:400;color:var(--cms-text-faint);">(defaults to post title)</span></label>
+                <label class="form-label">Meta Title <span style="font-weight:400;color:var(--cms-text-faint);">(defaults to entry title)</span></label>
                 <input type="text" class="cms-input" placeholder="Override meta title…">
             </div>
             <div class="form-group">

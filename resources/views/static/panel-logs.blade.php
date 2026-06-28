@@ -1,6 +1,6 @@
 @extends('static.layouts.panel')
 
-@section('title', 'Logs — CMS')
+@section('title', 'Activity Log — CMS')
 @section('nav-logs', 'active')
 
 @push('head')
@@ -74,8 +74,8 @@
 @section('content')
 <div class="cms-page-header">
     <div>
-        <h1 class="cms-page-title">Logs</h1>
-        <p class="cms-page-sub">System activity log — all models, auth events, and errors.</p>
+        <h1 class="cms-page-title">Activity Log</h1>
+        <p class="cms-page-sub">All model events, auth events, HTTP requests, CMS actions, and AI calls.</p>
     </div>
     <div class="cms-actions">
         <button class="btn btn-secondary">↓ Export CSV</button>
@@ -86,7 +86,7 @@
 <!-- FILTERS -->
 <div class="log-toolbar">
     <input type="search" class="cms-input" placeholder="Search messages…">
-    <select class="cms-input" style="max-width:120px;"><option>All channels</option><option>[http]</option><option>[auth]</option><option>[cms]</option><option>[post]</option><option>[image]</option></select>
+    <select class="cms-input" style="max-width:120px;"><option>All channels</option><option>[http]</option><option>[auth]</option><option>[cms]</option><option>[model]</option><option>[ai]</option><option>[export]</option></select>
     <div class="filter-spacer"></div>
     <span class="level-pill all">All</span>
     <span class="level-pill debug">debug</span>
@@ -107,20 +107,20 @@
 
     @php
     $logs = [
-        ['error',    '[auth]',  'User',  'Failed 2FA attempt — invalid TOTP code for user ID 1',  '28 Jun 2026 14:22:11', 'row-error'],
-        ['info',     '[post]',  'Post',  'Post #48 published: "Building a Privacy-First CMS…"',    '28 Jun 2026 09:15:04', ''],
-        ['warning',  '[cms]',   'Image', 'Cloudinary upload exceeded 8 MB — resized before store','28 Jun 2026 09:14:51', 'row-warning'],
-        ['info',     '[auth]',  'User',  'User ID 1 authenticated via 2FA — session started',      '28 Jun 2026 08:47:33', ''],
-        ['debug',    '[http]',  '—',     'GET /api/posts?page=2 200 OK — 18ms',                    '28 Jun 2026 08:45:20', ''],
-        ['info',     '[post]',  'Post',  'Post #47 updated: status changed to published',           '27 Jun 2026 17:30:09', ''],
-        ['info',     '[image]', 'Image', 'Image #47 uploaded to Cloudinary — laravel-diagram.png', '27 Jun 2026 16:55:42', ''],
-        ['debug',    '[http]',  '—',     'GET /static/panel-posts 200 OK — 24ms',                  '27 Jun 2026 15:10:08', ''],
-        ['error',    '[cms]',   'Post',  'Markdown parse error on post #46 — unexpected token',    '27 Jun 2026 14:02:55', 'row-error'],
-        ['info',     '[post]',  'Post',  'Post #46 saved as draft',                                '27 Jun 2026 13:58:21', ''],
-        ['info',     '[auth]',  'User',  'User ID 1 authenticated via 2FA — session started',      '27 Jun 2026 08:30:00', ''],
-        ['debug',    '[http]',  '—',     'POST /like — 201 Created — fingerprint hashed OK',       '26 Jun 2026 22:14:09', ''],
-        ['warning',  '[post]',  'Post',  'Read time calculation returned 0 — content may be empty','26 Jun 2026 21:55:34', 'row-warning'],
-        ['info',     '[cms]',   'Tag',   'Tag "Privacy" created',                                  '26 Jun 2026 10:20:17', ''],
+        ['error',    '[auth]',  'User',    'Failed 2FA attempt — invalid TOTP code for user ID 1',        '28 Jun 2026 14:22:11', 'row-error'],
+        ['info',     '[model]', 'Entry',   'Entry #48 published: "Building a Privacy-First CMS…"',          '28 Jun 2026 09:15:04', ''],
+        ['warning',  '[model]', 'Image',   'Cloudinary upload exceeded 8 MB — resized before store',        '28 Jun 2026 09:14:51', 'row-warning'],
+        ['info',     '[auth]',  'User',    'User ID 1 authenticated via 2FA — session started',              '28 Jun 2026 08:47:33', ''],
+        ['debug',    '[http]',  '—',       'GET /api/entries?page=2 200 OK — 18ms',                          '28 Jun 2026 08:45:20', ''],
+        ['info',     '[model]', 'Entry',   'Entry #47 updated: status changed to published',                 '27 Jun 2026 17:30:09', ''],
+        ['info',     '[ai]',    '—',       'Audit complete — entry #47: readability 8/10, SEO 7/10',         '27 Jun 2026 17:30:05', ''],
+        ['debug',    '[http]',  '—',       'GET /static/panel-posts 200 OK — 24ms',                          '27 Jun 2026 15:10:08', ''],
+        ['error',    '[cms]',   'Entry',   'Markdown parse error on entry #46 — unexpected token',           '27 Jun 2026 14:02:55', 'row-error'],
+        ['info',     '[model]', 'Entry',   'Entry #46 saved as draft',                                       '27 Jun 2026 13:58:21', ''],
+        ['info',     '[auth]',  'User',    'User ID 1 authenticated via 2FA — session started',              '27 Jun 2026 08:30:00', ''],
+        ['debug',    '[http]',  '—',       'POST /reactions — 201 Created — fingerprint hashed OK',          '26 Jun 2026 22:14:09', ''],
+        ['warning',  '[model]', 'Entry',   'read_time calculation returned 0 — body may be empty',           '26 Jun 2026 21:55:34', 'row-warning'],
+        ['info',     '[cms]',   'Tag',     'Tag "Privacy" created',                                          '26 Jun 2026 10:20:17', ''],
     ];
     @endphp
 
