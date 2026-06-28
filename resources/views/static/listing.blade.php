@@ -475,7 +475,7 @@
                     <div class="post-row-body">
                         <div class="post-row-tags"><span class="tag tag-amber">Azure</span></div>
                         <h2 class="post-row-title">Azure B2C Custom Policies: A Survival Guide</h2>
-                        <p class="post-row-excerpt">Everything I wish I'd known before spending three days debugging XML policy files. Walao.</p>
+                        <p class="post-row-excerpt">Everything I wish I'd known before spending three days debugging XML policy files.</p>
                         <div class="post-row-meta">
                             <span class="post-row-meta-text">9 min read</span>
                             <span class="post-row-meta-dot">·</span>
