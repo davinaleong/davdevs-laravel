@@ -117,3 +117,18 @@
 - A content migration strategy from the NextJS project to this Laravel CMS
 	I have the project locally on my machine
 - DB Schemas
+
+
+---
+
+## Action
+
+look through the all spec docs in the internal folder and start implementation in these stages:
+- panel
+- site
+
+until checklist is 100% checked
+
+favicons are in the public folder
+
+use this workflow: implement > document progress in a separate document > update checklist > commit and push > repeat
