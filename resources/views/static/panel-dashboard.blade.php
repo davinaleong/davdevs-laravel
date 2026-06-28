@@ -95,7 +95,7 @@
 <div class="cms-page-header">
     <div>
         <h1 class="cms-page-title">Dashboard</h1>
-        <p class="cms-page-sub">Welcome back, Davina. Here's what's happening.</p>
+        <p class="cms-page-sub">Eh, welcome back, Davina. Here's what's happening leh.</p>
     </div>
     <div class="cms-actions">
         <a href="/static/panel-post-new"><button class="btn btn-primary">＋ New Post</button></a>

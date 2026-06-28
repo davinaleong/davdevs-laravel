@@ -384,7 +384,7 @@
         <h1 class="hero-wordmark">Dav<span class="slash">/</span>Devs<span class="cursor"></span></h1>
         <p class="hero-sub">
             A personal dev journal by Davina Leong — articles, projects, tools, notebooks,
-            and the occasional sermon or e-book. Writing about what I build and what I learn.
+            and the occasional sermon or e-book. Whatever I build, I write about one.
         </p>
         <div class="hero-actions">
             <button class="btn-primary">read latest →</button>
@@ -432,8 +432,8 @@
                     Building a Privacy-First CMS with Laravel and Anthropic Claude
                 </h2>
                 <p class="card-excerpt">
-                    How I migrated my Next.js portfolio to a full Laravel web application — model design,
-                    auth, 2FA, and wiring up Claude for AI-assisted content audits.
+                    Migrated my Next.js portfolio to full Laravel — model design, auth, 2FA, and Claude
+                    for AI content audits. Quite a journey, not gonna lie.
                 </p>
                 <div class="card-meta">
                     <span class="card-meta-text">28 Jun 2026</span>
@@ -479,7 +479,7 @@
                     TOTP 2FA in Laravel Without Breeze Magic
                 </h3>
                 <p class="card-excerpt">
-                    Implementing QR-code 2FA from scratch with pragmarx/google2fa — setup, challenge, recovery.
+                    Implementing QR-code 2FA from scratch with pragmarx/google2fa — setup, challenge, recovery. Quite shiok once it all clicks.
                 </p>
                 <div class="card-meta">
                     <span class="card-meta-text">01 Jun 2026</span>

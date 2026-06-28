@@ -389,7 +389,7 @@
             <p>
                 The short answer: I wanted a <strong>web application</strong>, not a static site with a CMS bolted on.
                 Next.js is excellent at what it does, but after three years I kept reaching for things it wasn't
-                designed for — a proper database layer, queues, background jobs, typed model relationships.
+                designed for — a proper database layer, queues, background jobs, typed model relationships. Confirm not the right tool liao.
             </p>
             <p>
                 Laravel gives me all of that with <code>Eloquent</code>, <code>Horizon</code>, and
@@ -437,7 +437,7 @@ Post::saving(function (Post $post) {
             </p>
             <p>
                 The audit runs on demand, not automatically. I didn't want the AI writing for me — I
-                wanted it reading over my shoulder.
+                wanted it reading over my shoulder. Wah, it actually catches when your tags don't match the content.
             </p>
 
             <h3>The Audit Prompt</h3>
