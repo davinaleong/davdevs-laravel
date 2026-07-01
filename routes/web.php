@@ -39,8 +39,9 @@ Route::middleware(['auth', 'two_factor'])->prefix('panel')->name('panel.')->grou
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Content
-    Route::resource('entries',      EntryController::class);
+    Route::resource('entries',      EntryController::class)->except(['show']);
     Route::post('entries/{entry}/duplicate', [EntryController::class, 'duplicate'])->name('entries.duplicate');
+    Route::post('entries/bulk',    [EntryController::class, 'bulk'])->name('entries.bulk');
 
     Route::resource('publications', PublicationController::class);
 
