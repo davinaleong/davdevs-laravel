@@ -41,33 +41,61 @@
 - [ ] Session timeout (2h) — TODO
 - [x] Routes: auth + two_factor middleware on all /panel/* routes
 
-## Phase 3 — CMS Shell & Settings (partial)
+## Phase 3 — CMS Shell & Settings ✅
 
 - [x] CMS layout (layouts/cms.blade.php): amber topbar, collapsible sidebar, dark/light toggle
 - [x] CMS CSS (resources/css/cms.css): full design token system from spec
 - [x] CMS JS (resources/js/cms.js): Alpine.js, theme persistence
 - [x] Dashboard view: stat cards, quick actions, recent logs
 - [x] DashboardController: entry counts, recent logs
-- [ ] Settings page — TODO
-- [ ] Settings controller — TODO
-- [ ] Cache flush — TODO
+- [x] Settings page: grouped by area (display, header, footer, lighthouse, api)
+- [x] SettingController: index, update (handles bool/int/string casts), flushCache
+- [x] Cache flush button
+
+## Phase 4 — Image Manager ✅
+
+- [x] CloudinaryService: upload, destroy, transformedUrl wrapper around cloudinary/cloudinary_php SDK
+- [x] ImageController: index (search + type filter, cursor-paginated), create, store, edit, update, destroy
+- [x] Usage tracker: shows "used in N posts" with links, blocks delete if in use
+- [x] Grid browser with lightbox (Alpine modal, click to open/close on Escape)
+- [x] QR code filter toggle
+- [x] Replace image file on edit (re-uploads to Cloudinary, same DB record)
+
+## Phase 5 — Link Manager ✅
+
+- [x] LinkController: full CRUD + reorder endpoint (for future drag-to-reorder JS)
+- [x] Auto-sets rel="noopener noreferrer" when target=_blank
+- [x] Category field (general/social/nav) for footer/nav filtering
+- [x] Searchable list view
+
+## Phase 6 — YouTube Embed Manager ✅
+
+- [x] VideoEmbedController: add by ID or full URL (regex extraction)
+- [x] Auto-fetch title/channel/thumbnail via YouTube oEmbed API
+- [x] Duplicate detection (video_id unique)
+- [x] Browse/search/edit/delete views
+
+## Phase 7 — Layout Manager ✅
+
+- [x] LayoutController: CRUD, validates blade_component exists via view()->exists() before save
+- [x] Blocks delete if layout is in use by entries/publications
+- [x] Placeholder Blade components created for all 5 seeded layouts (standard, product, tool, sermon, publication) — real markup comes in Phase 12
+
+## Phase 8 — Content Type, Category & Tag Managers ✅
+
+- [x] ContentTypeController: CRUD, react_island + listed flags, blocks delete if in use
+- [x] CategoryController: CRUD, scoped by content_type_id (nullable = cross-type), scope enum
+- [x] TagController: CRUD, same scoping pattern as categories
+- [x] All list views show content type name / scope, block delete if referenced
 
 ## Routes registered
 
-- GET  /                      → site.home
-- GET  /login                 → auth login
-- GET  /2fa/setup             → 2FA setup (auth)
-- GET  /2fa/challenge         → 2FA verify (auth)
-- GET  /panel                 → CMS dashboard (auth + 2fa)
-- GET  /panel/entries         → entry list
-- ... (96 routes total)
+97 routes total, all /panel/* behind auth + two_factor middleware.
 
 ## Next up
 
-- Phase 3 remainder: Settings controller + view
-- Phase 4: Image Manager (CRUD + Cloudinary + lightbox)
-- Phase 5: Link Manager
-- Phase 6: Video Embed Manager
-- Phase 7: Layout Manager
-- Phase 8: Category + Tag Managers
-- Phase 9: Entry/Post Manager (the big one)
+- Phase 9: Entry/Post Manager (the big one — markdown editor, image/video/link linkers, meta editor, type-specific fields)
+- Phase 10: Joke (Quip) System
+- Phase 11: Anonymous Like System
+- Phase 12: Frontend public site
+- Phase 13: Sharing links

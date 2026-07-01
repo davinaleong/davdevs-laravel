@@ -47,6 +47,7 @@ Route::middleware(['auth', 'two_factor'])->prefix('panel')->name('panel.')->grou
     // Media
     Route::resource('images',      ImageController::class)->except(['show']);
     Route::resource('links',       LinkController::class)->except(['show']);
+    Route::post('links/reorder',  [LinkController::class, 'reorder'])->name('links.reorder');
     Route::resource('video-embeds',VideoEmbedController::class)->except(['show']);
 
     // Taxonomy

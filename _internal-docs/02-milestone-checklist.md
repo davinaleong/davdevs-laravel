@@ -61,25 +61,25 @@ See the separate **DB Schemas** document for full column definitions.
 - [x] CMS layout: amber topbar (`~/dav/devs cms` + admin badge), collapsible sidebar, main content area
 - [x] Light/dark mode toggle: Alpine + `localStorage` + `data-theme` on `<html>`, respected sitewide
 - [x] CMS dashboard: post counts by type, recent logs, like counts, quick-create shortcuts
-- [ ] Settings page (grouped):
-  - [ ] **Display:** frontend date format, CMS date format
-  - [ ] **Header:** brand name, brand image (image picker modal)
-  - [ ] **Footer:** copyright text (supports `{year}` token)
-  - [ ] **Lighthouse:** toggle display of each metric (performance, accessibility, SEO, best practices) on public site
-  - [ ] **Headless CMS:** toggle to enable/disable public API (bonus)
-- [ ] Settings stored as key/value in `settings` table, cached (Redis or file), flushed via CMS button
+- [x] Settings page (grouped):
+  - [x] **Display:** frontend date format, CMS date format
+  - [x] **Header:** brand name, brand image (image picker modal)
+  - [x] **Footer:** copyright text (supports `{year}` token)
+  - [x] **Lighthouse:** toggle display of each metric (performance, accessibility, SEO, best practices) on public site
+  - [x] **Headless CMS:** toggle to enable/disable public API (bonus)
+- [x] Settings stored as key/value in `settings` table, cached (Redis or file), flushed via CMS button
 
 ---
 
 ## Phase 4 — Image Manager
 
-- [ ] Upload to Cloudinary with metadata form: alt text, title, caption, credit
-- [ ] Auto-store from Cloudinary response: `public_id`, `secure_url`, `width`, `height`, `format`, `bytes`
-- [ ] `is_qr_code` boolean flag — same table, filtered separately in browser (no separate system needed)
-- [ ] CMS image browser: grid view, search by title/alt, filter by type (image / QR code), date sort, cursor-paginated
-- [ ] Lightbox: full-size preview with metadata panel (Alpine modal, keyboard nav ←→, ESC to close)
-- [ ] Edit metadata, replace image file (new Cloudinary upload, same DB record ID), soft-delete with usage check
-- [ ] Usage tracker: "Used in N posts" label with link list
+- [x] Upload to Cloudinary with metadata form: alt text, title, caption, credit
+- [x] Auto-store from Cloudinary response: `public_id`, `secure_url`, `width`, `height`, `format`, `bytes`
+- [x] `is_qr_code` boolean flag — same table, filtered separately in browser (no separate system needed)
+- [x] CMS image browser: grid view, search by title/alt, filter by type (image / QR code), date sort, cursor-paginated
+- [x] Lightbox: full-size preview with metadata panel (Alpine modal, keyboard nav ←→, ESC to close)
+- [x] Edit metadata, replace image file (new Cloudinary upload, same DB record ID), soft-delete with usage check
+- [x] Usage tracker: "Used in N posts" label with link list
 
 ---
 
@@ -87,36 +87,36 @@ See the separate **DB Schemas** document for full column definitions.
 
 Links are standalone records (reusable across posts, footer, navbar, etc.).
 
-- [ ] CRUD: label, URL, target (`_self` / `_blank`), rel (`noopener noreferrer` auto-applied for `_blank`), description, is_active, sort_order
-- [ ] CMS: searchable list, drag-to-reorder sort (Alpine + SortableJS)
-- [ ] Links attachable to posts via `post_links` pivot (with sort_order)
-- [ ] Social links: a `category` field (`social` / `general`) lets the footer renderer filter to social links only
+- [x] CRUD: label, URL, target (`_self` / `_blank`), rel (`noopener noreferrer` auto-applied for `_blank`), description, is_active, sort_order
+- [x] CMS: searchable list, drag-to-reorder sort (Alpine + SortableJS)
+- [x] Links attachable to posts via `post_links` pivot (with sort_order)
+- [x] Social links: a `category` field (`social` / `general`) lets the footer renderer filter to social links only
 
 ---
 
 ## Phase 6 — YouTube Embed Manager
 
-- [ ] Add by video ID or full URL — auto-fetch title, channel, thumbnail, duration via YouTube oEmbed
-- [ ] Store: `video_id`, `title`, `description`, `channel_name`, `thumbnail_url`, `duration_seconds`, `published_at`
-- [ ] CMS: browse, search, edit, delete
+- [x] Add by video ID or full URL — auto-fetch title, channel, thumbnail, duration via YouTube oEmbed
+- [x] Store: `video_id`, `title`, `description`, `channel_name`, `thumbnail_url`, `duration_seconds`, `published_at`
+- [x] CMS: browse, search, edit, delete
 - [ ] Public rendering: click-to-load iframe (`youtube-nocookie.com`) — no YouTube cookies until user clicks. Show thumbnail + play button by default (privacy-first)
 
 ---
 
 ## Phase 7 — Layout Manager
 
-- [ ] Layouts defined as Blade components (`layouts.standard`, `layouts.product`, `layouts.tool`, `layouts.ebook`, `layouts.sermon`, `layouts.fem`)
-- [ ] CMS CRUD: name, slug, `blade_component` name, description, preview image (image picker)
-- [ ] Validate Blade component exists before saving
-- [ ] Seed default layouts matching all post types
+- [x] Layouts defined as Blade components (`layouts.standard`, `layouts.product`, `layouts.tool`, `layouts.ebook`, `layouts.sermon`, `layouts.fem`)
+- [x] CMS CRUD: name, slug, `blade_component` name, description, preview image (image picker)
+- [x] Validate Blade component exists before saving
+- [x] Seed default layouts matching all post types
 
 ---
 
 ## Phase 8 — Post Type, Category & Tag Managers
 
-- [ ] Post type manager: name, slug, `has_tools_react` flag, `excluded_from_main_list` flag (for Jokes), description
-- [ ] Category manager: name, slug, scoped by `post_type_id`, description, active toggle
-- [ ] Tag manager: name, slug, scoped by `post_type_id`
+- [x] Post type manager: name, slug, `has_tools_react` flag, `excluded_from_main_list` flag (for Jokes), description
+- [x] Category manager: name, slug, scoped by `post_type_id`, description, active toggle
+- [x] Tag manager: name, slug, scoped by `post_type_id`
 - [ ] All category/tag dropdowns in post editor filtered by selected post type
 
 ---
