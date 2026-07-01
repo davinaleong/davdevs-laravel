@@ -6,10 +6,10 @@
 
 ## Phase 0 — Project Setup
 
-- [ ] `laravel new davdevs --git`
-- [ ] Configure `.env`: MySQL, Laravel Cloud, Cloudinary, TOTP secret
-- [ ] Install frontend: Tailwind CSS v4, Alpine.js, Vite
-- [ ] Install packages:
+- [x] `laravel new davdevs --git`
+- [x] Configure `.env`: MySQL, Laravel Cloud, Cloudinary, TOTP secret
+- [x] Install frontend: Tailwind CSS v4, Alpine.js, Vite
+- [x] Install packages:
   - `spatie/laravel-permission`
   - `spatie/laravel-sitemap`
   - `spatie/laravel-sluggable`
@@ -18,10 +18,10 @@
   - `bacon/bacon-qr-code` (2FA QR code generation)
   - `league/commonmark` (Markdown rendering)
   - `cloudinary-labs/cloudinary-laravel`
-- [ ] Install dev: Pest, Laravel Pint, Larastan, Laravel Debugbar
+- [x] Install dev: Pest, Laravel Pint, Larastan, Laravel Debugbar
 - [ ] Set up Laravel Cloud project, environments (production + staging), deploy pipeline
 - [ ] GitHub Actions CI: Pint lint + Pest tests on every PR
-- [ ] Security headers middleware: CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy
+- [x] Security headers middleware: CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy
 - [ ] Global rate limiting middleware (public API routes + like endpoint)
 
 > **Cloudinary vs R2:** Cloudinary is the right choice here — easier Laravel SDK, built-in image transformations (resize, format, quality via URL params), and good free tier. You already use R2 on Beacon; keep concerns separate. Revisit if Cloudinary costs scale.
@@ -32,19 +32,19 @@
 
 See the separate **DB Schemas** document for full column definitions.
 
-- [ ] Migrate all tables (see schema doc): `settings`, `images`, `links`, `youtube_embeds`, `layouts`, `post_types`, `categories`, `tags`, `posts`, `post_images`, `post_youtube_embeds`, `post_links`, `post_tags`, `post_meta`, `jokes`, `likes`, `logs`, `redirects`, `export_jobs`
-- [ ] Seed post types: Page, Project, Article, Tool, Notebook, Knowledge Sharing, Frontend Mentor, Sermon, E-Book
-- [ ] Create Eloquent models with relationships, casts, and accessors
+- [x] Migrate all tables (see schema doc): `settings`, `images`, `links`, `youtube_embeds`, `layouts`, `post_types`, `categories`, `tags`, `posts`, `post_images`, `post_youtube_embeds`, `post_links`, `post_tags`, `post_meta`, `jokes`, `likes`, `logs`, `redirects`, `export_jobs`
+- [x] Seed post types: Page, Project, Article, Tool, Notebook, Knowledge Sharing, Frontend Mentor, Sermon, E-Book
+- [x] Create Eloquent models with relationships, casts, and accessors
 - [ ] Model observers: auto-write to `logs` on create/update/delete for all content models
-- [ ] `Post::saving()` observer: recalculate `read_time_minutes` from word count before every save
-- [ ] Global scopes: `PublishedScope` (status = published, published_at <= now) for frontend queries
+- [x] `Post::saving()` observer: recalculate `read_time_minutes` from word count before every save
+- [x] Global scopes: `PublishedScope` (status = published, published_at <= now) for frontend queries
 
 ---
 
 ## Phase 2 — Authentication & 2FA
 
-- [ ] Laravel Breeze (Blade) for auth scaffolding
-- [ ] Disable public registration — invite-only or env-gated
+- [x] Laravel Breeze (Blade) for auth scaffolding
+- [x] Disable public registration — invite-only or env-gated
 - [ ] TOTP 2FA via `pragmarx/google2fa-laravel`:
   - [ ] Generate secret on first login, display setup QR code (via `bacon/bacon-qr-code`)
   - [ ] Store encrypted TOTP secret on `users` table
@@ -52,15 +52,15 @@ See the separate **DB Schemas** document for full column definitions.
   - [ ] Recovery codes: generate 8 single-use codes, store hashed
   - [ ] 2FA disable flow (requires password re-confirmation)
 - [ ] Session timeout: auto-logout after 2 hours of inactivity
-- [ ] Lock CMS routes behind `auth` + `2fa.verified` middleware group
+- [x] Lock CMS routes behind `auth` + `2fa.verified` middleware group
 
 ---
 
 ## Phase 3 — CMS Shell & Settings
 
-- [ ] CMS layout: amber topbar (`~/dav/devs cms` + admin badge), collapsible sidebar, main content area
-- [ ] Light/dark mode toggle: Alpine + `localStorage` + `data-theme` on `<html>`, respected sitewide
-- [ ] CMS dashboard: post counts by type, recent logs, like counts, quick-create shortcuts
+- [x] CMS layout: amber topbar (`~/dav/devs cms` + admin badge), collapsible sidebar, main content area
+- [x] Light/dark mode toggle: Alpine + `localStorage` + `data-theme` on `<html>`, respected sitewide
+- [x] CMS dashboard: post counts by type, recent logs, like counts, quick-create shortcuts
 - [ ] Settings page (grouped):
   - [ ] **Display:** frontend date format, CMS date format
   - [ ] **Header:** brand name, brand image (image picker modal)

@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('images', function (Blueprint $table) {
@@ -19,18 +16,15 @@ return new class extends Migration
             $table->string('alt', 500)->nullable();
             $table->text('caption')->nullable();
             $table->string('credit', 300)->nullable();
-            $table->smallInteger('width')->unsigned()->nullable();
-            $table->smallInteger('height')->unsigned()->nullable();
+            $table->unsignedSmallInteger('width')->nullable();
+            $table->unsignedSmallInteger('height')->nullable();
             $table->string('format', 20)->nullable();
-            $table->integer('bytes')->unsigned()->nullable();
+            $table->unsignedInteger('bytes')->nullable();
             $table->boolean('qr_code')->default(false);
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('images');

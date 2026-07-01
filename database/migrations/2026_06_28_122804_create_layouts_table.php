@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('layouts', function (Blueprint $table) {
@@ -17,14 +14,13 @@ return new class extends Migration
             $table->string('slug', 100)->unique();
             $table->string('blade_component', 200);
             $table->text('description')->nullable();
-            $table->foreignId('preview_image_id')->nullable()->references('id')->on('images')->nullOnDelete();
+            $table->unsignedBigInteger('preview_image_id')->nullable();
             $table->boolean('active')->default(true);
+
+            $table->foreign('preview_image_id')->references('id')->on('images')->nullOnDelete();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('layouts');
