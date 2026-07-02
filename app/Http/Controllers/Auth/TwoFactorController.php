@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use PragmaRX\Google2FALaravel\Support\Authenticator;
@@ -81,8 +82,12 @@ class TwoFactorController extends Controller
         $google2fa = app('pragmarx.google2fa');
 
         if (!$google2fa->verifyKey($secret, $request->code)) {
+            ActivityLog::create(['channel' => 'auth', 'level' => 'warning', 'message' => "2FA verify failed: {$user->email}"]);
+
             return back()->withErrors(['code' => 'Invalid code. Please try again.']);
         }
+
+        ActivityLog::create(['channel' => 'auth', 'level' => 'info', 'message' => "2FA verify success: {$user->email}"]);
 
         session(['2fa_verified' => true]);
 

@@ -1,4 +1,26 @@
-<x-site-layout :title="$entry->title" :description="$entry->excerpt">
+@php
+$jsonLdBase = [
+    '@context'      => 'https://schema.org',
+    'headline'      => $entry->title,
+    'description'   => $entry->excerpt,
+    'datePublished' => $entry->published_at?->toIso8601String(),
+    'dateModified'  => $entry->updated_at->toIso8601String(),
+    'image'         => $entry->ogImage?->url,
+    'author'        => ['@type' => 'Person', 'name' => 'Davina Leong'],
+];
+$jsonLd = match ($entry->contentType->slug) {
+    'tool'   => json_encode(array_merge($jsonLdBase, ['@type' => 'SoftwareApplication', 'applicationCategory' => 'DeveloperApplication'])),
+    'sermon' => json_encode(array_merge($jsonLdBase, [
+        '@type'       => 'VideoObject',
+        'name'        => $entry->title,
+        'uploadDate'  => $entry->published_at?->toIso8601String(),
+        'thumbnailUrl'=> $entry->videoEmbeds->first()?->thumbnail_url,
+        'embedUrl'    => $entry->videoEmbeds->first() ? "https://www.youtube-nocookie.com/embed/{$entry->videoEmbeds->first()->video_id}" : null,
+    ])),
+    default  => json_encode(array_merge($jsonLdBase, ['@type' => 'Article'])),
+};
+@endphp
+<x-site-layout :title="$entry->title" :description="$entry->excerpt" :og-image="$entry->ogImage?->url" :json-ld="$jsonLd">
     <article style="max-width:680px;margin:0 auto;padding:48px 36px;">
         <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-faint);margin-bottom:12px;">
             {{ $entry->contentType->name }} @if($entry->category) · {{ $entry->category->name }} @endif · {{ $entry->published_at?->format('M j, Y') }} · {{ $entry->read_time }} min read

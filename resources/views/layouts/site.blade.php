@@ -6,8 +6,27 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title }} — {{ $settings['brand_name'] ?? 'Dav/Devs' }}</title>
     @if($description)<meta name="description" content="{{ $description }}">@endif
+    <link rel="canonical" href="{{ url()->current() }}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/png" href="/favicon.png">
+
+    {{-- Open Graph --}}
+    <meta property="og:title" content="{{ $title }}">
+    @if($description)<meta property="og:description" content="{{ $description }}">@endif
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    @if($ogImage)<meta property="og:image" content="{{ $ogImage }}">@endif
+
+    {{-- Twitter Card --}}
+    <meta name="twitter:card" content="{{ $ogImage ? 'summary_large_image' : 'summary' }}">
+    <meta name="twitter:title" content="{{ $title }}">
+    @if($description)<meta name="twitter:description" content="{{ $description }}">@endif
+    @if($ogImage)<meta name="twitter:image" content="{{ $ogImage }}">@endif
+
+    @if($jsonLd)
+    <script type="application/ld+json">{!! $jsonLd !!}</script>
+    @endif
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body x-data="{ theme: localStorage.getItem('theme') || 'dark', searchOpen: false }"

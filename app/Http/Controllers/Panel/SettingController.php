@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -42,6 +43,8 @@ class SettingController extends Controller
         }
 
         Cache::forget('settings');
+
+        ActivityLog::create(['channel' => 'cms', 'level' => 'info', 'message' => 'Settings saved by '.auth()->user()->email]);
 
         return redirect()->route('panel.settings.index')->with('success', 'Settings saved.');
     }

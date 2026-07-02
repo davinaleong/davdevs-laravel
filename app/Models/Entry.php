@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use App\Traits\LogsActivity;
 
 class Entry extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, LogsActivity;
 
     protected $fillable = [
         'ulid', 'content_type_id', 'layout_id', 'category_id', 'og_image_id',

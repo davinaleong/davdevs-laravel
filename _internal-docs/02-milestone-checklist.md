@@ -201,7 +201,7 @@ Jokes are a special post type: stored in the `jokes` table (not `posts`), exclud
   - Instagram: copy-to-clipboard only (no direct share URL API)
   - Threads: `https://www.threads.net/intent/post?text={title}+{url}`
 - [x] One-click copy canonical URL (Alpine clipboard API)
-- [ ] OG tags, Twitter Card, JSON-LD structured data rendered per post for correct link previews
+- [x] OG tags, Twitter Card, JSON-LD structured data rendered per post for correct link previews
 
 ---
 
@@ -231,26 +231,26 @@ Jokes are a special post type: stored in the `jokes` table (not `posts`), exclud
 
 ## Phase 16 — Sitemap, SEO & Robots
 
-- [ ] `spatie/laravel-sitemap` — generate sitemap.xml for all published posts + listing pages
-- [ ] Exclude Jokes from sitemap
-- [ ] Schedule sitemap regeneration daily (Laravel Scheduler)
-- [ ] `robots.txt`: allow all, point to sitemap, disallow `/admin`
-- [ ] Canonical URLs on all public pages
-- [ ] JSON-LD: `Article`, `SoftwareApplication` (Tools), `Book` (E-Books), `VideoObject` (Sermons)
+- [x] `spatie/laravel-sitemap` — generate sitemap.xml for all published posts + listing pages
+- [x] Exclude Jokes from sitemap
+- [x] Schedule sitemap regeneration daily (Laravel Scheduler)
+- [x] `robots.txt`: allow all, point to sitemap, disallow `/admin`
+- [x] Canonical URLs on all public pages
+- [x] JSON-LD: `Article`, `SoftwareApplication` (Tools), `Book` (E-Books), `VideoObject` (Sermons)
 
 ---
 
 ## Phase 17 — Logging
 
-- [ ] Model observer → `logs` table on every create/update/delete
-- [ ] HTTP request logging middleware (method, URL, status, duration, ip_hash, user_agent)
-- [ ] Auth event logging (login, logout, failed login, 2FA success/fail)
-- [ ] CMS action logging (publish, image upload, settings save, export)
+- [x] Model observer → `logs` table on every create/update/delete
+- [x] HTTP request logging middleware (method, URL, status, duration, ip_hash, user_agent)
+- [x] Auth event logging (login, logout, failed login, 2FA success/fail)
+- [x] CMS action logging (publish, image upload, settings save, export)
 - [ ] AI API call logging (tokens, latency, errors)
-- [ ] Log metadata: `id`, `channel`, `level`, `message`, `context` (JSON), `ip_hash`, `user_agent`, `url`, `method`, `status_code`, `duration_ms`, `created_at`
-- [ ] Never store raw IPs — SHA-256(ip + daily_salt) only
-- [ ] CMS log viewer: filter by channel / level / date range / keyword, cursor-paginated, colour-coded by level
-- [ ] Scheduled prune: delete logs older than 90 days
+- [x] Log metadata: `id`, `channel`, `level`, `message`, `context` (JSON), `ip_hash`, `user_agent`, `url`, `method`, `status_code`, `duration_ms`, `created_at`
+- [x] Never store raw IPs — SHA-256(ip + daily_salt) only
+- [x] CMS log viewer: filter by channel / level / date range / keyword, cursor-paginated, colour-coded by level
+- [x] Scheduled prune: delete logs older than 90 days
 
 ---
 

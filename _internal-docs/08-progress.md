@@ -150,10 +150,57 @@
   detail, ebooks, funny, search API, quip API all return 200 with
   real seeded data
 
+## Phase 13 — Sharing Links ✅
+
+- [x] Share row on entry/publication detail (LinkedIn, Facebook, Threads, copy-link) — Instagram omitted per spec (no direct share URL API)
+- [x] Canonical URL, OG tags, Twitter Card meta rendered per page via SiteLayout component (`title`/`description`/`ogImage`/`jsonLd` props)
+- [x] JSON-LD structured data: `Article` (default), `SoftwareApplication` (Tool), `VideoObject` (Sermon), `Book` (E-Book with Offer)
+
+## Phase 16 — Sitemap, SEO & Robots ✅
+
+- [x] `sitemap:generate` Artisan command using spatie/laravel-sitemap:
+      home, ebooks index, per-content-type listing pages, all published
+      public entries + publications with lastmod/priority
+- [x] Quips/jokes excluded (not part of entries/publications tables)
+- [x] Scheduled daily via `withSchedule()` in bootstrap/app.php
+- [x] `public/robots.txt`: disallows /panel, /login, /2fa, /api; points to /sitemap.xml
+- [x] Canonical URLs on all public pages (see Phase 13)
+
+## Phase 17 — Logging ✅
+
+- [x] `LogsActivity` trait (created/updated/deleted → activity_log)
+      attached to Entry, Publication, Image, Link, VideoEmbed, Layout,
+      ContentType, Category, Tag, Quip
+- [x] `LogHttpRequests` middleware: method/URL/status/duration/ip_hash/
+      user_agent on every request (skips debugbar/build asset noise)
+- [x] Auth event logging: `LogAuthEvents` listener on Login/Logout/Failed
+      events, plus explicit 2FA verify success/fail logs in
+      TwoFactorController
+- [x] CMS action logging: settings save logs explicitly; publish/
+      upload/etc. captured generically via the model observer trail
+- [x] Log metadata matches schema: channel, level, message, context
+      (JSON), ip_hash (SHA-256, never raw IP), user_agent, url, method,
+      status_code, duration_ms
+- [x] CMS log viewer (`panel.logs.index`): filter by channel/level/
+      date range/keyword, cursor-paginated, colour-coded by level
+- [x] Scheduled prune: `logs:prune` deletes entries older than 90 days
+      (daily), `exports:prune` cleans expired export files (hourly)
+
+Verified via tinker: creating an Entry writes exactly one activity_log
+row with the correct message. Sitemap command runs clean, generates
+valid XML with home/listing/entry/ebook URLs.
+
 ## Next up
 
-- Phase 13: Sharing links (partially done inline on entry detail — LinkedIn/Facebook/Threads/copy link; still need JSON-LD structured data)
-- Phase 16: Sitemap, SEO & Robots
-- Phase 17: Logging (activity_log observers + viewer)
-- Phase 19: Privacy & Security hardening
-- Phase 21: Deployment config
+- Phase 14: AI Features (bonus)
+- Phase 15: Data Export (bonus)
+- Phase 18: Performance (mostly satisfied by existing patterns —
+  eager loading, cursor pagination, Cloudinary responsive URLs; needs
+  a final audit pass)
+- Phase 19: Privacy & Security hardening (PDPA page, cookie consent,
+  EXIF stripping, Markdown sanitisation, composer/npm audit)
+- Phase 20: Headless CMS / GraphQL API (bonus)
+- Phase 21: Laravel Cloud & Deployment config
+- Phase 22: Content Migration (requires local access to the Next.js
+  source project — out of scope for this environment, documented as
+  a manual follow-up)

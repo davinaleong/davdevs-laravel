@@ -1,4 +1,20 @@
-<x-site-layout :title="$publication->title" :description="$publication->excerpt">
+@php
+$jsonLd = json_encode([
+    '@context'    => 'https://schema.org',
+    '@type'       => 'Book',
+    'name'        => $publication->title,
+    'description' => $publication->excerpt,
+    'image'       => $publication->coverImage?->url,
+    'author'      => ['@type' => 'Person', 'name' => 'Davina Leong'],
+    'offers'      => $publication->store ? [
+        '@type'         => 'Offer',
+        'price'         => $publication->store->price_display,
+        'priceCurrency' => $publication->store->currency,
+        'url'           => $publication->store->ls_store_url,
+    ] : null,
+]);
+@endphp
+<x-site-layout :title="$publication->title" :description="$publication->excerpt" :og-image="$publication->coverImage?->url" :json-ld="$jsonLd">
     <article style="max-width:680px;margin:0 auto;padding:48px 36px;">
         @if($publication->coverImage)<img src="{{ $publication->coverImage->url }}" style="width:100%;border-radius:10px;margin-bottom:24px;">@endif
         <h1 style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--text-primary);margin:0 0 8px;">{{ $publication->title }}</h1>

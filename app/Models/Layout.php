@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\LogsActivity;
 
 class Layout extends Model
 {
+    use LogsActivity;
+
     public $timestamps = false;
 
     protected $fillable = ['name', 'slug', 'blade_component', 'description', 'preview_image_id', 'active'];

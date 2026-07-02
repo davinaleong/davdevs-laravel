@@ -1,2 +1,7 @@
 User-agent: *
-Disallow:
+Disallow: /panel
+Disallow: /login
+Disallow: /2fa
+Disallow: /api
+
+Sitemap: /sitemap.xml

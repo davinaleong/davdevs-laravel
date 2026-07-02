@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\LogsActivity;
 
 class Tag extends Model
 {
+    use LogsActivity;
+
     public $timestamps = false;
 
     protected $fillable = ['content_type_id', 'scope', 'name', 'slug'];

@@ -11,8 +11,12 @@ class SiteLayout extends Component
 {
     public array $settings;
 
-    public function __construct(public string $title = 'Dav/Devs', public ?string $description = null)
-    {
+    public function __construct(
+        public string $title = 'Dav/Devs',
+        public ?string $description = null,
+        public ?string $ogImage = null,
+        public ?string $jsonLd = null,
+    ) {
         $this->settings = Cache::remember('settings', 3600, function () {
             return Setting::all()->mapWithKeys(fn ($s) => [$s->key => $s->getTypedValue()])->all();
         });
