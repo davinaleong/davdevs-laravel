@@ -142,7 +142,7 @@ Links are standalone records (reusable across posts, footer, navbar, etc.).
   - [x] **E-Book specific fields** (shown when type = E-Book): `ls_product_id`, `ls_variant_id`, `ls_store_url`, `is_bundle` toggle
   - [x] **Joke fields** (shown when type = Joke): `joke_type` (qa / statement), `joke_question` (for Q/A variant)
   - [ ] **Social sharing links** (shown on published posts): pre-built share URLs for LinkedIn, Facebook, Instagram, Threads — one-click copy + open
-- [ ] Post preview: opens frontend URL in new tab; draft posts use a signed preview token
+- [x] Post preview: opens frontend URL in new tab; draft posts use a signed preview token
 - [x] Post duplicate action
 - [x] Bulk actions: publish, archive, delete selected
 
@@ -169,38 +169,38 @@ Jokes are a special post type: stored in the `jokes` table (not `posts`), exclud
 - [x] On first visit: generate UUID token, store in signed HttpOnly SameSite=Strict cookie (1 year)
 - [x] `likes` table: `post_id`, `token_hash` (SHA-256 of token), `ip_hash` (SHA-256 of IP + daily salt), `created_at`
 - [x] Like/unlike endpoint: rate-limited (5 req/min per IP), CSRF-protected, idempotent, returns updated count
-- [ ] Public: like button with Alpine reactive counter + optimistic UI
+- [x] Public: like button with Alpine reactive counter + optimistic UI
 - [ ] CMS: like counts in post list column
 
 ---
 
 ## Phase 12 — Frontend (public site)
 
-- [ ] Global layout: header (brand, nav, search trigger `Cmd/Ctrl+K`, dark mode toggle), footer (social links, copyright, Lighthouse score badges if enabled)
-- [ ] Homepage: hero with `~/dav/devs _` typing animation, section teasers per post type (latest 4 each, excluding Jokes)
-- [ ] Listing pages: `/projects`, `/articles`, `/tools`, `/notebooks`, `/knowledge-sharing`, `/fem`, `/sermons`, `/ebooks`
-- [ ] Each listing: filter by category, filter by tag, sort (newest/oldest/alpha), cursor-paginated
-- [ ] Mobile infinite scroll: Intersection Observer + Alpine + `htmx` or Livewire (append next page on scroll)
-- [ ] Post detail: dynamic Blade layout resolved from `layout.blade_component`, reading progress bar, OG tags, share links, like button, read time badge
+- [x] Global layout: header (brand, nav, search trigger `Cmd/Ctrl+K`, dark mode toggle), footer (social links, copyright, Lighthouse score badges if enabled)
+- [x] Homepage: hero with `~/dav/devs _` typing animation, section teasers per post type (latest 4 each, excluding Jokes)
+- [x] Listing pages: `/projects`, `/articles`, `/tools`, `/notebooks`, `/knowledge-sharing`, `/fem`, `/sermons`, `/ebooks`
+- [x] Each listing: filter by category, filter by tag, sort (newest/oldest/alpha), cursor-paginated
+- [x] Mobile infinite scroll: Intersection Observer + Alpine + `htmx` or Livewire (append next page on scroll)
+- [x] Post detail: dynamic Blade layout resolved from `layout.blade_component`, reading progress bar, OG tags, share links, like button, read time badge
 - [ ] **Tool posts:** React island via Vite dynamic import by slug. Blade template provides the mount point; Vite loads the correct React component.
-- [ ] **E-Book posts:** Lemon Squeezy buy button rendered from `ls_store_url` / product ID in post meta. Bundle posts list included volumes.
-- [ ] **Sermon posts:** YouTube embed (click-to-load) + Markdown content
-- [ ] **Joke page:** `/funny` — see Phase 10
-- [ ] **Private posts:** redirect to login if not authenticated
-- [ ] Full-text search: MySQL FULLTEXT index on `title` + `excerpt` + `content`. Search modal (Cmd/Ctrl+K), results grouped by type, keyboard nav, debounced input.
-- [ ] Light/dark mode: system default, user-overridable, stored in `localStorage`
-- [ ] Lighthouse score display: footer badges (performance / accessibility / SEO / best practices), values pulled from `settings` table, shown only if enabled in settings
+- [x] **E-Book posts:** Lemon Squeezy buy button rendered from `ls_store_url` / product ID in post meta. Bundle posts list included volumes.
+- [x] **Sermon posts:** YouTube embed (click-to-load) + Markdown content
+- [x] **Joke page:** `/funny` — see Phase 10
+- [x] **Private posts:** redirect to login if not authenticated
+- [x] Full-text search: MySQL FULLTEXT index on `title` + `excerpt` + `content`. Search modal (Cmd/Ctrl+K), results grouped by type, keyboard nav, debounced input.
+- [x] Light/dark mode: system default, user-overridable, stored in `localStorage`
+- [x] Lighthouse score display: footer badges (performance / accessibility / SEO / best practices), values pulled from `settings` table, shown only if enabled in settings
 
 ---
 
 ## Phase 13 — Sharing Links
 
-- [ ] Per-post share panel (CMS + public): LinkedIn, Facebook, Instagram, Threads
+- [x] Per-post share panel (CMS + public): LinkedIn, Facebook, Instagram, Threads
   - LinkedIn: `https://www.linkedin.com/sharing/share-offsite/?url={url}`
   - Facebook: `https://www.facebook.com/sharer/sharer.php?u={url}`
   - Instagram: copy-to-clipboard only (no direct share URL API)
   - Threads: `https://www.threads.net/intent/post?text={title}+{url}`
-- [ ] One-click copy canonical URL (Alpine clipboard API)
+- [x] One-click copy canonical URL (Alpine clipboard API)
 - [ ] OG tags, Twitter Card, JSON-LD structured data rendered per post for correct link previews
 
 ---

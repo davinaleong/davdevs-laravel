@@ -202,9 +202,13 @@
                 </div>
             </div>
 
-            <div style="display:flex;gap:10px;">
+            <div style="display:flex;gap:10px;align-items:center;">
                 <button type="submit" style="background:var(--cms-btn-primary-bg);color:var(--cms-btn-primary-text);border:none;border-radius:5px;padding:9px 18px;font-size:13px;font-weight:500;cursor:pointer;">Save Entry</button>
                 <a href="{{ route('panel.entries.index') }}" style="background:var(--cms-btn-secondary-bg);border:1px solid var(--cms-btn-secondary-border);color:var(--cms-btn-secondary-text);padding:9px 18px;border-radius:5px;font-size:13px;text-decoration:none;">Cancel</a>
+                @if($entry->exists)
+                <a href="{{ in_array($entry->status, ['draft','archived']) ? \Illuminate\Support\Facades\URL::temporarySignedRoute('site.show', now()->addHours(24), [$entry->contentType->slug, $entry->slug]) : route('site.show', [$entry->contentType->slug, $entry->slug]) }}"
+                   target="_blank" style="margin-left:auto;font-size:12px;color:var(--cms-accent);text-decoration:none;">Preview on frontend →</a>
+                @endif
             </div>
         </form>
     </div>

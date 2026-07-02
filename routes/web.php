@@ -14,10 +14,21 @@ use App\Http\Controllers\Panel\PublicationController;
 use App\Http\Controllers\Panel\QuipController;
 use App\Http\Controllers\Panel\SettingController;
 use App\Http\Controllers\Panel\ActivityLogController;
+use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Route;
 
-// Public site
-Route::get('/', fn () => view('site.home'))->name('home');
+// Public site — fixed paths first
+Route::get('/', [SiteController::class, 'home'])->name('home');
+Route::get('funny', [SiteController::class, 'funny'])->name('site.funny');
+Route::get('api/quips/random', [SiteController::class, 'randomQuip'])->name('api.quips.random');
+Route::get('api/search', [SiteController::class, 'search'])->middleware('throttle:30,1')->name('api.search');
+Route::post('api/reactions/{type}/{id}', [\App\Http\Controllers\Api\ReactionController::class, 'toggle'])
+    ->where('type', 'entry|publication')
+    ->where('id', '[0-9]+')
+    ->middleware('throttle:5,1')
+    ->name('api.reactions.toggle');
+Route::get('ebooks', [SiteController::class, 'ebooks'])->name('site.ebooks');
+Route::get('ebooks/{slug}', [SiteController::class, 'ebookShow'])->name('site.ebooks.show');
 
 // Auth
 require __DIR__.'/auth.php';
@@ -68,13 +79,6 @@ Route::middleware(['auth', 'two_factor'])->prefix('panel')->name('panel.')->grou
     Route::get('logs',            [ActivityLogController::class, 'index'])->name('logs.index');
 });
 
-// Public API — reactions (rate limited)
-Route::post('api/reactions/{type}/{id}', [\App\Http\Controllers\Api\ReactionController::class, 'toggle'])
-    ->where('type', 'entry|publication')
-    ->where('id', '[0-9]+')
-    ->middleware('throttle:5,1')
-    ->name('api.reactions.toggle');
-
 // Static mockups (dev only)
 if (app()->isLocal()) {
     Route::get('static/{slug}', function (string $slug) {
@@ -82,3 +86,12 @@ if (app()->isLocal()) {
         return view("static.{$slug}");
     })->where('slug', '[a-z0-9\-]+');
 }
+
+// Public site — dynamic content-type listing/detail routes (catch-all, MUST be last)
+Route::get('{typeSlug}', [SiteController::class, 'listing'])
+    ->where('typeSlug', '[a-z0-9\-]+')
+    ->name('site.listing');
+Route::get('{typeSlug}/{slug}', [SiteController::class, 'show'])
+    ->where('typeSlug', '[a-z0-9\-]+')
+    ->where('slug', '[a-z0-9\-]+')
+    ->name('site.show');

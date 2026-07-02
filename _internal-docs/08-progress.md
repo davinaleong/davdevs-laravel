@@ -116,10 +116,43 @@
       short enum-safe names, matches reactionable_type column)
 - [x] Idempotent toggle (like/unlike), returns updated count as JSON
 
+## Phase 12 — Frontend public site ✅
+
+- [x] SiteController: home, listing (dynamic per content type), show
+      (entry detail), ebooks index/show, funny, randomQuip API, search API
+- [x] Global site layout (layouts/site.blade.php via SiteLayout
+      component): nav with dynamic content-type links, Cmd/Ctrl+K search
+      modal, dark/light toggle (localStorage), footer with social links
+      + Lighthouse badges, reading progress bar
+- [x] Homepage: hero with typing-cursor wordmark, per-content-type
+      section teasers (latest 4, excluding unlisted types)
+- [x] Listing pages: dynamic route `{typeSlug}` resolves via
+      content_types.slug, category + sort filters, cursor pagination
+- [x] Mobile infinite scroll: Alpine + @alpinejs/intersect, fetches
+      JSON from same listing endpoint (Accept header branch in
+      controller), desktop keeps classic pagination links
+- [x] Post detail: dynamic route `{typeSlug}/{slug}`, tags, embedded
+      images/videos (click-to-load youtube-nocookie), like button
+      (calls reaction API), share links, reading progress bar via
+      scroll listener
+- [x] E-book listing + detail: cover image, Lemon Squeezy buy button,
+      bundle member list
+- [x] Joke page `/funny`: Q/A variant with 30s countdown + skip button,
+      statement variant shown directly, refresh fetches a different
+      quip (excludes current ID), disclaimer text
+- [x] Private entries redirect to login if unauthenticated
+- [x] Draft/archived entries require a valid signed URL (404 otherwise)
+- [x] Full-text search: MySQL FULLTEXT via api/search endpoint,
+      Cmd/Ctrl+K modal, debounced input, grouped by type
+- [x] Settings-driven brand name, footer copyright, Lighthouse badge
+      visibility (cached 1hr, flushed from CMS settings page)
+- Verified end-to-end via local dev server: home, listing, entry
+  detail, ebooks, funny, search API, quip API all return 200 with
+  real seeded data
+
 ## Next up
 
-- Phase 12: Frontend public site (the next big one — homepage, listings, post detail, search, dark/light mode)
-- Phase 13: Sharing links (share URLs, OG tags, JSON-LD)
+- Phase 13: Sharing links (partially done inline on entry detail — LinkedIn/Facebook/Threads/copy link; still need JSON-LD structured data)
 - Phase 16: Sitemap, SEO & Robots
 - Phase 17: Logging (activity_log observers + viewer)
 - Phase 19: Privacy & Security hardening
