@@ -123,28 +123,28 @@ Links are standalone records (reusable across posts, footer, navbar, etc.).
 
 ## Phase 9 — Post Manager
 
-- [ ] CMS post list: filter by type / status / category / featured / date range, full-text search, sortable columns, cursor-paginated
+- [x] CMS post list: filter by type / status / category / featured / date range, full-text search, sortable columns, cursor-paginated
 - [ ] Post create/edit form:
-  - [ ] Title, slug (auto-generated, editable), excerpt
-  - [ ] Post type → drives layout options, category/tag scope, and conditional fields
-  - [ ] Layout selector
-  - [ ] **Status:** Draft / Private / Published (Private = authenticated users only; Published = public)
-  - [ ] `published_at` datetime picker (schedule future posts)
-  - [ ] Featured toggle
-  - [ ] Category (scoped), tags (multi-select, scoped)
-  - [ ] OG image picker (image browser modal)
-  - [ ] Markdown editor (CodeMirror or EasyMDE with live preview split-pane)
-  - [ ] Computed read time (shown live in editor sidebar, stored on save)
-  - [ ] Image linker: multi-select from image browser, sortable, optional caption override per attachment
-  - [ ] YouTube embed linker: multi-select, sortable
-  - [ ] Link linker: multi-select from link manager, sortable
-  - [ ] Post meta editor: add/remove key-value rows (for LS UUIDs, GitHub URLs, Lighthouse scores, etc.)
-  - [ ] **E-Book specific fields** (shown when type = E-Book): `ls_product_id`, `ls_variant_id`, `ls_store_url`, `is_bundle` toggle
-  - [ ] **Joke fields** (shown when type = Joke): `joke_type` (qa / statement), `joke_question` (for Q/A variant)
+  - [x] Title, slug (auto-generated, editable), excerpt
+  - [x] Post type → drives layout options, category/tag scope, and conditional fields
+  - [x] Layout selector
+  - [x] **Status:** Draft / Private / Published (Private = authenticated users only; Published = public)
+  - [x] `published_at` datetime picker (schedule future posts)
+  - [x] Featured toggle
+  - [x] Category (scoped), tags (multi-select, scoped)
+  - [x] OG image picker (image browser modal)
+  - [x] Markdown editor (CodeMirror or EasyMDE with live preview split-pane)
+  - [x] Computed read time (shown live in editor sidebar, stored on save)
+  - [x] Image linker: multi-select from image browser, sortable, optional caption override per attachment
+  - [x] YouTube embed linker: multi-select, sortable
+  - [x] Link linker: multi-select from link manager, sortable
+  - [x] Post meta editor: add/remove key-value rows (for LS UUIDs, GitHub URLs, Lighthouse scores, etc.)
+  - [x] **E-Book specific fields** (shown when type = E-Book): `ls_product_id`, `ls_variant_id`, `ls_store_url`, `is_bundle` toggle
+  - [x] **Joke fields** (shown when type = Joke): `joke_type` (qa / statement), `joke_question` (for Q/A variant)
   - [ ] **Social sharing links** (shown on published posts): pre-built share URLs for LinkedIn, Facebook, Instagram, Threads — one-click copy + open
 - [ ] Post preview: opens frontend URL in new tab; draft posts use a signed preview token
-- [ ] Post duplicate action
-- [ ] Bulk actions: publish, archive, delete selected
+- [x] Post duplicate action
+- [x] Bulk actions: publish, archive, delete selected
 
 ---
 
@@ -152,8 +152,8 @@ Links are standalone records (reusable across posts, footer, navbar, etc.).
 
 Jokes are a special post type: stored in the `jokes` table (not `posts`), excluded from all main post lists and sitemaps, and served randomly on the `/funny` page.
 
-- [ ] `jokes` table: `id`, `type` (qa/statement), `question` (nullable), `answer`, `is_active`, `created_at`, `updated_at`
-- [ ] CMS: dedicated joke manager (separate from post manager) — CRUD, bulk toggle active, filter by type
+- [x] `jokes` table: `id`, `type` (qa/statement), `question` (nullable), `answer`, `is_active`, `created_at`, `updated_at`
+- [x] CMS: dedicated joke manager (separate from post manager) — CRUD, bulk toggle active, filter by type
 - [ ] Public `/funny` page:
   - [ ] On load: fetch a random active joke from the server (no full page reload — Alpine + fetch)
   - [ ] Refresh button: fetches a new random joke (guaranteed different from current)
@@ -166,9 +166,9 @@ Jokes are a special post type: stored in the `jokes` table (not `posts`), exclud
 
 ## Phase 11 — Anonymous Like System
 
-- [ ] On first visit: generate UUID token, store in signed HttpOnly SameSite=Strict cookie (1 year)
-- [ ] `likes` table: `post_id`, `token_hash` (SHA-256 of token), `ip_hash` (SHA-256 of IP + daily salt), `created_at`
-- [ ] Like/unlike endpoint: rate-limited (5 req/min per IP), CSRF-protected, idempotent, returns updated count
+- [x] On first visit: generate UUID token, store in signed HttpOnly SameSite=Strict cookie (1 year)
+- [x] `likes` table: `post_id`, `token_hash` (SHA-256 of token), `ip_hash` (SHA-256 of IP + daily salt), `created_at`
+- [x] Like/unlike endpoint: rate-limited (5 req/min per IP), CSRF-protected, idempotent, returns updated count
 - [ ] Public: like button with Alpine reactive counter + optimistic UI
 - [ ] CMS: like counts in post list column
 

@@ -92,10 +92,35 @@
 
 97 routes total, all /panel/* behind auth + two_factor middleware.
 
+## Phase 9 — Entry/Post Manager ✅
+
+- [x] EntryController: filters (type/status/category/featured/date), full-text search, sort, cursor pagination, bulk actions
+- [x] Tabbed edit form (Content/Media & Links/Meta/Settings): markdown editor w/ preview, image/video/link linkers, tag multi-select, meta key/value editor
+- [x] Duplicate action (deep-copies meta/images/videos/links/tags)
+- [x] Auto slug (YYYYMMDD-slug, collision-safe)
+- [x] PublicationController + form: same pattern as Entry, plus Store tab (Lemon Squeezy fields) and bundle member picker
+
+## Phase 10 — Joke (Quip) System ✅
+
+- [x] QuipController: CRUD, variant filter, bulk activate/deactivate
+- [x] Form: Q/A vs Statement variant toggle (Alpine-driven conditional fields)
+- [x] List view shows question+punchline preview, active/inactive chip
+
+## Phase 11 — Anonymous Like System ✅
+
+- [x] ReactionController (Api namespace): toggle endpoint, UUID cookie
+      (1yr, HttpOnly, SameSite=Strict, signed via cookie() helper),
+      SHA-256 token_hash + SHA-256(ip+daily salt) ip_hash
+- [x] Rate limited 5 req/min via throttle:5,1 middleware
+- [x] Morph map registered in AppServiceProvider (entry/publication →
+      short enum-safe names, matches reactionable_type column)
+- [x] Idempotent toggle (like/unlike), returns updated count as JSON
+
 ## Next up
 
-- Phase 9: Entry/Post Manager (the big one — markdown editor, image/video/link linkers, meta editor, type-specific fields)
-- Phase 10: Joke (Quip) System
-- Phase 11: Anonymous Like System
-- Phase 12: Frontend public site
-- Phase 13: Sharing links
+- Phase 12: Frontend public site (the next big one — homepage, listings, post detail, search, dark/light mode)
+- Phase 13: Sharing links (share URLs, OG tags, JSON-LD)
+- Phase 16: Sitemap, SEO & Robots
+- Phase 17: Logging (activity_log observers + viewer)
+- Phase 19: Privacy & Security hardening
+- Phase 21: Deployment config

@@ -43,7 +43,7 @@ Route::middleware(['auth', 'two_factor'])->prefix('panel')->name('panel.')->grou
     Route::post('entries/{entry}/duplicate', [EntryController::class, 'duplicate'])->name('entries.duplicate');
     Route::post('entries/bulk',    [EntryController::class, 'bulk'])->name('entries.bulk');
 
-    Route::resource('publications', PublicationController::class);
+    Route::resource('publications', PublicationController::class)->except(['show']);
 
     // Media
     Route::resource('images',      ImageController::class)->except(['show']);
@@ -59,6 +59,7 @@ Route::middleware(['auth', 'two_factor'])->prefix('panel')->name('panel.')->grou
 
     // Jokes
     Route::resource('quips', QuipController::class)->except(['show']);
+    Route::post('quips/bulk-toggle', [QuipController::class, 'bulkToggle'])->name('quips.bulk-toggle');
 
     // Settings & logs
     Route::get('settings',        [SettingController::class, 'index'])->name('settings.index');
@@ -66,6 +67,13 @@ Route::middleware(['auth', 'two_factor'])->prefix('panel')->name('panel.')->grou
     Route::post('settings/flush-cache', [SettingController::class, 'flushCache'])->name('settings.flush-cache');
     Route::get('logs',            [ActivityLogController::class, 'index'])->name('logs.index');
 });
+
+// Public API — reactions (rate limited)
+Route::post('api/reactions/{type}/{id}', [\App\Http\Controllers\Api\ReactionController::class, 'toggle'])
+    ->where('type', 'entry|publication')
+    ->where('id', '[0-9]+')
+    ->middleware('throttle:5,1')
+    ->name('api.reactions.toggle');
 
 // Static mockups (dev only)
 if (app()->isLocal()) {
