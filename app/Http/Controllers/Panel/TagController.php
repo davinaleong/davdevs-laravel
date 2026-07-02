@@ -21,7 +21,7 @@ class TagController extends Controller
     {
         $contentTypes = ContentType::orderBy('name')->get();
 
-        return view('panel.tags-form', ['tag' => new Tag(), 'contentTypes' => $contentTypes]);
+        return view('panel.tags-form', ['tag' => new Tag, 'contentTypes' => $contentTypes]);
     }
 
     public function store(Request $request)
@@ -63,8 +63,8 @@ class TagController extends Controller
     {
         return $request->validate([
             'content_type_id' => 'nullable|exists:content_types,id',
-            'scope'           => 'required|in:entries,publications,all',
-            'name'            => 'required|string|max:100',
+            'scope' => 'required|in:entries,publications,all',
+            'name' => 'required|string|max:100',
         ]);
     }
 }

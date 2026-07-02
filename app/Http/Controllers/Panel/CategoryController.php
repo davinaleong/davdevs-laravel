@@ -21,7 +21,7 @@ class CategoryController extends Controller
     {
         $contentTypes = ContentType::orderBy('name')->get();
 
-        return view('panel.categories-form', ['category' => new Category(), 'contentTypes' => $contentTypes]);
+        return view('panel.categories-form', ['category' => new Category, 'contentTypes' => $contentTypes]);
     }
 
     public function store(Request $request)
@@ -63,10 +63,10 @@ class CategoryController extends Controller
     {
         $data = $request->validate([
             'content_type_id' => 'nullable|exists:content_types,id',
-            'scope'           => 'required|in:entries,publications,all',
-            'name'            => 'required|string|max:100',
-            'description'     => 'nullable|string',
-            'active'          => 'nullable|boolean',
+            'scope' => 'required|in:entries,publications,all',
+            'name' => 'required|string|max:100',
+            'description' => 'nullable|string',
+            'active' => 'nullable|boolean',
         ]);
 
         $data['active'] = $request->boolean('active');

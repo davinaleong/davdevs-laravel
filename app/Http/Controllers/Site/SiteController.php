@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\ContentType;
 use App\Models\Entry;
 use App\Models\Publication;
@@ -49,8 +50,8 @@ class SiteController extends Controller
         $sort = $request->string('sort', 'newest');
         match ((string) $sort) {
             'oldest' => $query->orderBy('published_at', 'asc'),
-            'alpha'  => $query->orderBy('title', 'asc'),
-            default  => $query->orderByDesc('published_at'),
+            'alpha' => $query->orderBy('title', 'asc'),
+            default => $query->orderByDesc('published_at'),
         };
 
         $entries = $query->cursorPaginate(12)->withQueryString();
@@ -58,17 +59,17 @@ class SiteController extends Controller
         if ($request->wantsJson()) {
             return response()->json([
                 'entries' => $entries->map(fn ($e) => [
-                    'title'        => $e->title,
-                    'excerpt'      => $e->excerpt,
-                    'url'          => route('site.show', [$type->slug, $e->slug]),
+                    'title' => $e->title,
+                    'excerpt' => $e->excerpt,
+                    'url' => route('site.show', [$type->slug, $e->slug]),
                     'published_at' => $e->published_at?->format('M j, Y'),
-                    'read_time'    => $e->read_time,
+                    'read_time' => $e->read_time,
                 ]),
                 'next_page_url' => $entries->nextPageUrl(),
             ]);
         }
 
-        $categories = \App\Models\Category::where('content_type_id', $type->id)->where('active', true)->get();
+        $categories = Category::where('content_type_id', $type->id)->where('active', true)->get();
 
         return view('site.listing', compact('type', 'entries', 'categories'));
     }
@@ -82,7 +83,7 @@ class SiteController extends Controller
             ->with(['contentType', 'category', 'layout', 'images', 'videoEmbeds', 'links', 'tags', 'meta'])
             ->firstOrFail();
 
-        if ($entry->status === 'private' && !auth()->check()) {
+        if ($entry->status === 'private' && ! auth()->check()) {
             return redirect()->route('login');
         }
 
@@ -106,7 +107,7 @@ class SiteController extends Controller
             ->with(['store', 'images', 'links', 'tags', 'bundleMembers'])
             ->firstOrFail();
 
-        if ($publication->status === 'private' && !auth()->check()) {
+        if ($publication->status === 'private' && ! auth()->check()) {
             return redirect()->route('login');
         }
 
@@ -131,9 +132,9 @@ class SiteController extends Controller
         abort_unless($quip, 404);
 
         return response()->json([
-            'id'        => $quip->id,
-            'variant'   => $quip->variant,
-            'question'  => $quip->question,
+            'id' => $quip->id,
+            'variant' => $quip->variant,
+            'question' => $quip->question,
             'punchline' => $quip->punchline,
         ]);
     }
@@ -155,7 +156,7 @@ class SiteController extends Controller
             ->get();
 
         return response()->json([
-            'entries'      => $entries->map(fn ($e) => ['title' => $e->title, 'url' => route('site.show', [$e->contentType->slug, $e->slug]), 'type' => $e->contentType->name]),
+            'entries' => $entries->map(fn ($e) => ['title' => $e->title, 'url' => route('site.show', [$e->contentType->slug, $e->slug]), 'type' => $e->contentType->name]),
             'publications' => $publications->map(fn ($p) => ['title' => $p->title, 'url' => route('site.ebooks.show', $p->slug), 'type' => 'E-Book']),
         ]);
     }

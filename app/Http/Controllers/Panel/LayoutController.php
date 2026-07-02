@@ -18,7 +18,7 @@ class LayoutController extends Controller
 
     public function create()
     {
-        return view('panel.layouts-form', ['layout' => new Layout()]);
+        return view('panel.layouts-form', ['layout' => new Layout]);
     }
 
     public function store(Request $request)
@@ -57,10 +57,10 @@ class LayoutController extends Controller
     protected function validated(Request $request): array
     {
         $data = $request->validate([
-            'name'            => 'required|string|max:100',
+            'name' => 'required|string|max:100',
             'blade_component' => 'required|string|max:200',
-            'description'     => 'nullable|string',
-            'active'          => 'nullable|boolean',
+            'description' => 'nullable|string',
+            'active' => 'nullable|boolean',
         ]);
 
         abort_unless(

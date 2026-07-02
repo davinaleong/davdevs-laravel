@@ -12,10 +12,10 @@ class DashboardController extends Controller
     public function index()
     {
         $stats = [
-            'entries'      => Entry::count(),
+            'entries' => Entry::count(),
             'publications' => Publication::count(),
-            'published'    => Entry::where('status', 'published')->count(),
-            'drafts'       => Entry::where('status', 'draft')->count(),
+            'published' => Entry::where('status', 'published')->count(),
+            'drafts' => Entry::where('status', 'draft')->count(),
         ];
 
         $recentLogs = ActivityLog::latest('created_at')->limit(10)->get();

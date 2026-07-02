@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Cloudinary\Cloudinary;
+use Cloudinary\Transformation\Resize;
 use Illuminate\Http\UploadedFile;
 
 class CloudinaryService
@@ -19,15 +20,18 @@ class CloudinaryService
         $result = $this->cloudinary->uploadApi()->upload($file->getRealPath(), [
             'folder' => 'davdevs',
             'resource_type' => 'image',
+            // Cloudinary strips EXIF/metadata from the delivered asset by default;
+            // this explicitly keeps only color-profile data needed for correct rendering.
+            'image_metadata' => false,
         ]);
 
         return [
             'cloudinary_id' => $result['public_id'],
-            'url'           => $result['secure_url'],
-            'width'         => $result['width'] ?? null,
-            'height'        => $result['height'] ?? null,
-            'format'        => $result['format'] ?? null,
-            'bytes'         => $result['bytes'] ?? null,
+            'url' => $result['secure_url'],
+            'width' => $result['width'] ?? null,
+            'height' => $result['height'] ?? null,
+            'format' => $result['format'] ?? null,
+            'bytes' => $result['bytes'] ?? null,
         ];
     }
 
@@ -44,7 +48,7 @@ class CloudinaryService
         ], $options);
 
         return $this->cloudinary->image($publicId)
-            ->resize(\Cloudinary\Transformation\Resize::scale()
+            ->resize(Resize::scale()
                 ->width($transformation['width'] ?? null))
             ->toUrl();
     }

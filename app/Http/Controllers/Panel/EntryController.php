@@ -46,21 +46,21 @@ class EntryController extends Controller
         $sort = $request->string('sort', 'newest');
         match ((string) $sort) {
             'oldest' => $query->reorder('published_at', 'asc'),
-            'alpha'  => $query->reorder('title', 'asc'),
-            default  => null, // already newest via id desc
+            'alpha' => $query->reorder('title', 'asc'),
+            default => null, // already newest via id desc
         };
 
         $entries = $query->cursorPaginate(20)->withQueryString();
 
         $contentTypes = ContentType::orderBy('name')->get();
-        $categories   = Category::orderBy('name')->get();
+        $categories = Category::orderBy('name')->get();
 
         return view('panel.entries', compact('entries', 'contentTypes', 'categories'));
     }
 
     public function create()
     {
-        return $this->form(new Entry());
+        return $this->form(new Entry);
     }
 
     public function store(Request $request)
@@ -108,8 +108,8 @@ class EntryController extends Controller
     {
         $request->validate([
             'action' => 'required|in:publish,archive,delete',
-            'ids'    => 'required|array',
-            'ids.*'  => 'exists:entries,id',
+            'ids' => 'required|array',
+            'ids.*' => 'exists:entries,id',
         ]);
 
         $entries = Entry::whereIn('id', $request->input('ids'));
@@ -117,7 +117,7 @@ class EntryController extends Controller
         match ($request->string('action')->toString()) {
             'publish' => $entries->update(['status' => 'published', 'published_at' => now()]),
             'archive' => $entries->update(['status' => 'archived']),
-            'delete'  => $entries->delete(),
+            'delete' => $entries->delete(),
         };
 
         return redirect()->route('panel.entries.index')->with('success', 'Bulk action applied.');
@@ -126,8 +126,8 @@ class EntryController extends Controller
     public function duplicate(Entry $entry)
     {
         $copy = $entry->replicate(['ulid', 'slug', 'published_at']);
-        $copy->title  = $entry->title.' (Copy)';
-        $copy->slug   = $this->uniqueSlug($copy->title);
+        $copy->title = $entry->title.' (Copy)';
+        $copy->slug = $this->uniqueSlug($copy->title);
         $copy->status = 'draft';
         $copy->save();
 
@@ -151,8 +151,8 @@ class EntryController extends Controller
     protected function form(Entry $entry)
     {
         $contentTypes = ContentType::orderBy('name')->get();
-        $layouts      = Layout::where('active', true)->orderBy('name')->get();
-        $categories   = $entry->content_type_id
+        $layouts = Layout::where('active', true)->orderBy('name')->get();
+        $categories = $entry->content_type_id
             ? Category::where('content_type_id', $entry->content_type_id)->orWhereNull('content_type_id')->get()
             : Category::all();
         $tags = $entry->content_type_id
@@ -171,16 +171,16 @@ class EntryController extends Controller
     {
         $data = $request->validate([
             'content_type_id' => 'required|exists:content_types,id',
-            'layout_id'       => 'required|exists:layouts,id',
-            'category_id'     => 'nullable|exists:categories,id',
-            'og_image_id'     => 'nullable|exists:images,id',
-            'title'           => 'required|string|max:500',
-            'excerpt'         => 'nullable|string',
-            'body'            => 'nullable|string',
-            'status'          => 'required|in:draft,private,published,archived',
-            'visibility'      => 'required|in:public,unlisted',
-            'featured'        => 'nullable|boolean',
-            'published_at'    => 'nullable|date',
+            'layout_id' => 'required|exists:layouts,id',
+            'category_id' => 'nullable|exists:categories,id',
+            'og_image_id' => 'nullable|exists:images,id',
+            'title' => 'required|string|max:500',
+            'excerpt' => 'nullable|string',
+            'body' => 'nullable|string',
+            'status' => 'required|in:draft,private,published,archived',
+            'visibility' => 'required|in:public,unlisted',
+            'featured' => 'nullable|boolean',
+            'published_at' => 'nullable|date',
         ]);
 
         $data['featured'] = $request->boolean('featured');
@@ -195,7 +195,7 @@ class EntryController extends Controller
         $imageSync = [];
         foreach ($imageIds as $i => $id) {
             $imageSync[$id] = [
-                'sort_order'       => $i,
+                'sort_order' => $i,
                 'caption_override' => $request->input("image_captions.$id"),
             ];
         }
@@ -225,7 +225,7 @@ class EntryController extends Controller
     {
         $entry->meta()->delete();
 
-        $keys   = $request->input('meta_key', []);
+        $keys = $request->input('meta_key', []);
         $values = $request->input('meta_value', []);
 
         foreach ($keys as $i => $key) {
@@ -240,7 +240,7 @@ class EntryController extends Controller
     {
         $base = date('Ymd').'-'.Str::slug($title);
         $slug = $base;
-        $i    = 1;
+        $i = 1;
 
         while (Entry::where('slug', $slug)->when($ignoreId, fn ($q) => $q->where('id', '!=', $ignoreId))->exists()) {
             $slug = "{$base}-{$i}";

@@ -18,7 +18,7 @@ class ContentTypeController extends Controller
 
     public function create()
     {
-        return view('panel.content-types-form', ['contentType' => new ContentType()]);
+        return view('panel.content-types-form', ['contentType' => new ContentType]);
     }
 
     public function store(Request $request)
@@ -57,15 +57,15 @@ class ContentTypeController extends Controller
     protected function validated(Request $request): array
     {
         $data = $request->validate([
-            'name'          => 'required|string|max:100',
-            'table_target'  => 'required|in:entries,publications',
-            'description'   => 'nullable|string',
-            'react_island'  => 'nullable|boolean',
-            'listed'        => 'nullable|boolean',
+            'name' => 'required|string|max:100',
+            'table_target' => 'required|in:entries,publications',
+            'description' => 'nullable|string',
+            'react_island' => 'nullable|boolean',
+            'listed' => 'nullable|boolean',
         ]);
 
         $data['react_island'] = $request->boolean('react_island');
-        $data['listed']       = $request->boolean('listed');
+        $data['listed'] = $request->boolean('listed');
 
         return $data;
     }

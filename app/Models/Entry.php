@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use App\Traits\LogsActivity;
 
 class Entry extends Model
 {
-    use SoftDeletes, LogsActivity;
+    use LogsActivity, SoftDeletes;
 
     protected $fillable = [
         'ulid', 'content_type_id', 'layout_id', 'category_id', 'og_image_id',
@@ -20,7 +20,7 @@ class Entry extends Model
     protected function casts(): array
     {
         return [
-            'featured'     => 'boolean',
+            'featured' => 'boolean',
             'published_at' => 'datetime',
         ];
     }

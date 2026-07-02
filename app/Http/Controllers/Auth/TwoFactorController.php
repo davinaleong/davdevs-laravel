@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use PragmaRX\Google2FALaravel\Support\Authenticator;
 
 class TwoFactorController extends Controller
 {
@@ -19,7 +18,7 @@ class TwoFactorController extends Controller
         }
 
         $google2fa = app('pragmarx.google2fa');
-        $secret    = session('totp_setup_secret') ?? $google2fa->generateSecretKey();
+        $secret = session('totp_setup_secret') ?? $google2fa->generateSecretKey();
         session(['totp_setup_secret' => $secret]);
 
         $qrUrl = $google2fa->getQRCodeUrl(
@@ -35,21 +34,21 @@ class TwoFactorController extends Controller
     {
         $request->validate(['code' => 'required|digits:6']);
 
-        $user   = $request->user();
+        $user = $request->user();
         $secret = session('totp_setup_secret');
         $google2fa = app('pragmarx.google2fa');
 
-        if (!$google2fa->verifyKey($secret, $request->code)) {
+        if (! $google2fa->verifyKey($secret, $request->code)) {
             return back()->withErrors(['code' => 'Invalid code. Please try again.']);
         }
 
         $recoveryCodes = collect(range(1, 8))->map(fn () => strtoupper(bin2hex(random_bytes(5)))).all();
 
         $user->update([
-            'totp_secret'       => encrypt($secret),
-            'totp_enabled'      => true,
+            'totp_secret' => encrypt($secret),
+            'totp_enabled' => true,
             'totp_confirmed_at' => now(),
-            'recovery_codes'    => array_map('bcrypt', $recoveryCodes),
+            'recovery_codes' => array_map('bcrypt', $recoveryCodes),
         ]);
 
         session()->forget('totp_setup_secret');
@@ -62,6 +61,7 @@ class TwoFactorController extends Controller
     public function saveCodes(Request $request)
     {
         $codes = session('totp_recovery_codes_plain', []);
+
         return view('auth.2fa-save-codes', compact('codes'));
     }
 
@@ -70,6 +70,7 @@ class TwoFactorController extends Controller
         if (session('2fa_verified')) {
             return redirect()->route('panel.dashboard');
         }
+
         return view('auth.2fa-challenge');
     }
 
@@ -77,11 +78,11 @@ class TwoFactorController extends Controller
     {
         $request->validate(['code' => 'required|digits:6']);
 
-        $user   = $request->user();
+        $user = $request->user();
         $secret = decrypt($user->totp_secret);
         $google2fa = app('pragmarx.google2fa');
 
-        if (!$google2fa->verifyKey($secret, $request->code)) {
+        if (! $google2fa->verifyKey($secret, $request->code)) {
             ActivityLog::create(['channel' => 'auth', 'level' => 'warning', 'message' => "2FA verify failed: {$user->email}"]);
 
             return back()->withErrors(['code' => 'Invalid code. Please try again.']);
@@ -103,7 +104,7 @@ class TwoFactorController extends Controller
     {
         $request->validate(['code' => 'required|string']);
 
-        $user  = $request->user();
+        $user = $request->user();
         $codes = $user->recovery_codes ?? [];
         $input = strtoupper(trim($request->code));
 
@@ -112,6 +113,7 @@ class TwoFactorController extends Controller
                 unset($codes[$i]);
                 $user->update(['recovery_codes' => array_values($codes)]);
                 session(['2fa_verified' => true]);
+
                 return redirect()->route('panel.dashboard');
             }
         }
@@ -124,10 +126,10 @@ class TwoFactorController extends Controller
         $request->validate(['password' => 'required|current_password']);
 
         $request->user()->update([
-            'totp_secret'       => null,
-            'totp_enabled'      => false,
+            'totp_secret' => null,
+            'totp_enabled' => false,
             'totp_confirmed_at' => null,
-            'recovery_codes'    => null,
+            'recovery_codes' => null,
         ]);
 
         session()->forget('2fa_verified');

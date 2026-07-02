@@ -12,21 +12,22 @@ class TwoFactorMiddleware
     {
         $user = $request->user();
 
-        if (!$user) {
+        if (! $user) {
             return redirect()->route('login');
         }
 
         // If 2FA not set up, force setup
-        if (!$user->totp_enabled) {
-            if (!$request->routeIs('2fa.*')) {
+        if (! $user->totp_enabled) {
+            if (! $request->routeIs('2fa.*')) {
                 return redirect()->route('2fa.setup');
             }
+
             return $next($request);
         }
 
         // If 2FA set up but not verified in session
-        if (!session('2fa_verified')) {
-            if (!$request->routeIs('2fa.*')) {
+        if (! session('2fa_verified')) {
+            if (! $request->routeIs('2fa.*')) {
                 return redirect()->route('2fa.challenge');
             }
         }

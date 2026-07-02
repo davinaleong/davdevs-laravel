@@ -19,7 +19,7 @@ class ImageController extends Controller
             $search = $request->string('search');
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('alt', 'like', "%{$search}%");
+                    ->orWhere('alt', 'like', "%{$search}%");
             });
         }
 
@@ -40,21 +40,21 @@ class ImageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'file'   => 'required|image|max:10240|mimes:jpg,jpeg,png,webp,gif',
-            'title'  => 'nullable|string|max:500',
-            'alt'    => 'nullable|string|max:500',
-            'caption'=> 'nullable|string',
+            'file' => 'required|image|max:10240|mimes:jpg,jpeg,png,webp,gif',
+            'title' => 'nullable|string|max:500',
+            'alt' => 'nullable|string|max:500',
+            'caption' => 'nullable|string',
             'credit' => 'nullable|string|max:300',
-            'qr_code'=> 'nullable|boolean',
+            'qr_code' => 'nullable|boolean',
         ]);
 
         $uploaded = $this->cloudinary->upload($request->file('file'));
 
         Image::create(array_merge($uploaded, [
-            'title'   => $request->title,
-            'alt'     => $request->alt,
+            'title' => $request->title,
+            'alt' => $request->alt,
             'caption' => $request->caption,
-            'credit'  => $request->credit,
+            'credit' => $request->credit,
             'qr_code' => $request->boolean('qr_code'),
         ]));
 
@@ -72,19 +72,19 @@ class ImageController extends Controller
     public function update(Request $request, Image $image)
     {
         $request->validate([
-            'file'   => 'nullable|image|max:10240|mimes:jpg,jpeg,png,webp,gif',
-            'title'  => 'nullable|string|max:500',
-            'alt'    => 'nullable|string|max:500',
-            'caption'=> 'nullable|string',
+            'file' => 'nullable|image|max:10240|mimes:jpg,jpeg,png,webp,gif',
+            'title' => 'nullable|string|max:500',
+            'alt' => 'nullable|string|max:500',
+            'caption' => 'nullable|string',
             'credit' => 'nullable|string|max:300',
-            'qr_code'=> 'nullable|boolean',
+            'qr_code' => 'nullable|boolean',
         ]);
 
         $data = [
-            'title'   => $request->title,
-            'alt'     => $request->alt,
+            'title' => $request->title,
+            'alt' => $request->alt,
             'caption' => $request->caption,
-            'credit'  => $request->credit,
+            'credit' => $request->credit,
             'qr_code' => $request->boolean('qr_code'),
         ];
 

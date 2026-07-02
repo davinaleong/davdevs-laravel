@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,12 +29,16 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Relation::enforceMorphMap([
-            'entry'       => Entry::class,
+            'entry' => Entry::class,
             'publication' => Publication::class,
         ]);
 
         Event::listen(Login::class, [LogAuthEvents::class, 'handleLogin']);
         Event::listen(Logout::class, [LogAuthEvents::class, 'handleLogout']);
         Event::listen(Failed::class, [LogAuthEvents::class, 'handleFailed']);
+
+        Blade::directive('markdown', function ($expression) {
+            return "<?php echo app(\App\Services\MarkdownService::class)->toHtml({$expression}); ?>";
+        });
     }
 }

@@ -32,12 +32,20 @@ return new class extends Migration
             $table->index('published_at');
             $table->index('content_type_id');
             $table->index('featured');
-            $table->fullText(['title', 'excerpt', 'body']);
+
+            if ($this->supportsFullText()) {
+                $table->fullText(['title', 'excerpt', 'body']);
+            }
         });
     }
 
     public function down(): void
     {
         Schema::dropIfExists('entries');
+    }
+
+    protected function supportsFullText(): bool
+    {
+        return Schema::getConnection()->getDriverName() === 'mysql';
     }
 };

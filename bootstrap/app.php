@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Middleware\CmsIpAllowlist;
+use App\Http\Middleware\LogHttpRequests;
+use App\Http\Middleware\SecurityHeaders;
+use App\Http\Middleware\TwoFactorMiddleware;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -13,10 +17,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
-        $middleware->append(\App\Http\Middleware\LogHttpRequests::class);
+        $middleware->append(SecurityHeaders::class);
+        $middleware->append(LogHttpRequests::class);
         $middleware->alias([
-            'two_factor' => \App\Http\Middleware\TwoFactorMiddleware::class,
+            'two_factor' => TwoFactorMiddleware::class,
+            'cms.ip' => CmsIpAllowlist::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

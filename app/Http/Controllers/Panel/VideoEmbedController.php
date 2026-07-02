@@ -42,12 +42,12 @@ class VideoEmbedController extends Controller
         $meta = $this->fetchOEmbed($videoId);
 
         VideoEmbed::create([
-            'video_id'         => $videoId,
-            'title'            => $meta['title'] ?? $videoId,
-            'channel_name'     => $meta['author_name'] ?? null,
-            'thumbnail_url'    => $meta['thumbnail_url'] ?? "https://i.ytimg.com/vi/{$videoId}/hqdefault.jpg",
+            'video_id' => $videoId,
+            'title' => $meta['title'] ?? $videoId,
+            'channel_name' => $meta['author_name'] ?? null,
+            'thumbnail_url' => $meta['thumbnail_url'] ?? "https://i.ytimg.com/vi/{$videoId}/hqdefault.jpg",
             'duration_seconds' => null,
-            'published_at'     => null,
+            'published_at' => null,
         ]);
 
         return redirect()->route('panel.video-embeds.index')->with('success', 'Video added.');
@@ -61,8 +61,8 @@ class VideoEmbedController extends Controller
     public function update(Request $request, VideoEmbed $videoEmbed)
     {
         $data = $request->validate([
-            'title'        => 'required|string|max:500',
-            'description'  => 'nullable|string',
+            'title' => 'required|string|max:500',
+            'description' => 'nullable|string',
             'channel_name' => 'nullable|string|max:255',
         ]);
 
@@ -95,7 +95,7 @@ class VideoEmbedController extends Controller
 
     protected function fetchOEmbed(string $videoId): array
     {
-        $url = "https://www.youtube.com/oembed?url=".urlencode("https://www.youtube.com/watch?v={$videoId}")."&format=json";
+        $url = 'https://www.youtube.com/oembed?url='.urlencode("https://www.youtube.com/watch?v={$videoId}").'&format=json';
 
         $response = Http::timeout(5)->get($url);
 

@@ -23,7 +23,7 @@ class LinkController extends Controller
 
     public function create()
     {
-        return view('panel.links-form', ['link' => new Link()]);
+        return view('panel.links-form', ['link' => new Link]);
     }
 
     public function store(Request $request)
@@ -65,17 +65,17 @@ class LinkController extends Controller
     protected function validated(Request $request): array
     {
         $data = $request->validate([
-            'label'       => 'required|string|max:255',
-            'url'         => 'required|string|max:2000',
-            'target'      => 'required|in:_self,_blank',
+            'label' => 'required|string|max:255',
+            'url' => 'required|string|max:2000',
+            'target' => 'required|in:_self,_blank',
             'description' => 'nullable|string',
-            'category'    => 'required|in:general,social,nav',
-            'icon_class'  => 'nullable|string|max:100',
-            'active'      => 'nullable|boolean',
+            'category' => 'required|in:general,social,nav',
+            'icon_class' => 'nullable|string|max:100',
+            'active' => 'nullable|boolean',
         ]);
 
         $data['active'] = $request->boolean('active');
-        $data['rel']    = $data['target'] === '_blank' ? 'noopener noreferrer' : '';
+        $data['rel'] = $data['target'] === '_blank' ? 'noopener noreferrer' : '';
 
         return $data;
     }

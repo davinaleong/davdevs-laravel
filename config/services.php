@@ -40,4 +40,6 @@ return [
         'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
     ],
 
+    'cms_ip_allowlist' => env('CMS_IP_ALLOWLIST'),
+
 ];

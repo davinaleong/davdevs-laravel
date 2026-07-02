@@ -24,7 +24,7 @@ class SettingController extends Controller
         foreach ($data as $key => $value) {
             $setting = Setting::where('key', $key)->first();
 
-            if (!$setting) {
+            if (! $setting) {
                 continue;
             }
 
@@ -37,7 +37,7 @@ class SettingController extends Controller
 
         // Handle unchecked booleans (not present in request at all)
         foreach (Setting::where('cast', 'boolean')->get() as $boolSetting) {
-            if (!$request->has($boolSetting->key)) {
+            if (! $request->has($boolSetting->key)) {
                 $boolSetting->update(['value' => '0']);
             }
         }

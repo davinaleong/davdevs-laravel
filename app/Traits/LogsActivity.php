@@ -19,7 +19,7 @@ trait LogsActivity
 
         ActivityLog::create([
             'channel' => 'model',
-            'level'   => 'info',
+            'level' => 'info',
             'message' => class_basename($model)." {$event}: {$label}",
             'context' => ['model' => class_basename($model), 'id' => $model->id, 'event' => $event],
         ]);

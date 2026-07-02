@@ -32,7 +32,7 @@ class PublicationController extends Controller
 
     public function create()
     {
-        return $this->form(new Publication());
+        return $this->form(new Publication);
     }
 
     public function store(Request $request)
@@ -80,11 +80,11 @@ class PublicationController extends Controller
 
     protected function form(Publication $publication)
     {
-        $layouts     = Layout::where('active', true)->orderBy('name')->get();
-        $categories  = Category::orderBy('name')->get();
-        $images      = Image::orderByDesc('id')->limit(60)->get();
-        $links       = Link::orderBy('sort_order')->get();
-        $tags        = Tag::all();
+        $layouts = Layout::where('active', true)->orderBy('name')->get();
+        $categories = Category::orderBy('name')->get();
+        $images = Image::orderByDesc('id')->limit(60)->get();
+        $links = Link::orderBy('sort_order')->get();
+        $tags = Tag::all();
         $bundleCandidates = Publication::where('id', '!=', $publication->id ?? 0)->orderBy('title')->get();
 
         return view('panel.publications-form', compact(
@@ -95,22 +95,22 @@ class PublicationController extends Controller
     protected function validated(Request $request): array
     {
         $data = $request->validate([
-            'layout_id'      => 'required|exists:layouts,id',
-            'category_id'    => 'nullable|exists:categories,id',
-            'og_image_id'    => 'nullable|exists:images,id',
+            'layout_id' => 'required|exists:layouts,id',
+            'category_id' => 'nullable|exists:categories,id',
+            'og_image_id' => 'nullable|exists:images,id',
             'cover_image_id' => 'nullable|exists:images,id',
-            'title'          => 'required|string|max:500',
-            'tagline'        => 'nullable|string|max:500',
-            'excerpt'        => 'nullable|string',
-            'body'           => 'nullable|string',
-            'status'         => 'required|in:draft,private,published,archived',
-            'featured'       => 'nullable|boolean',
-            'bundle'         => 'nullable|boolean',
-            'published_at'   => 'nullable|date',
+            'title' => 'required|string|max:500',
+            'tagline' => 'nullable|string|max:500',
+            'excerpt' => 'nullable|string',
+            'body' => 'nullable|string',
+            'status' => 'required|in:draft,private,published,archived',
+            'featured' => 'nullable|boolean',
+            'bundle' => 'nullable|boolean',
+            'published_at' => 'nullable|date',
         ]);
 
         $data['featured'] = $request->boolean('featured');
-        $data['bundle']   = $request->boolean('bundle');
+        $data['bundle'] = $request->boolean('bundle');
         $data['publication_type'] = 'ebook';
 
         return $data;
@@ -119,11 +119,11 @@ class PublicationController extends Controller
     protected function storeValidated(Request $request): array
     {
         return $request->validate([
-            'ls_product_id'   => 'nullable|string|max:100',
-            'ls_variant_id'   => 'nullable|string|max:100',
-            'ls_store_url'    => 'nullable|string',
-            'price_display'   => 'nullable|string|max:50',
-            'currency'        => 'nullable|string|max:3',
+            'ls_product_id' => 'nullable|string|max:100',
+            'ls_variant_id' => 'nullable|string|max:100',
+            'ls_store_url' => 'nullable|string',
+            'price_display' => 'nullable|string|max:50',
+            'currency' => 'nullable|string|max:3',
             'free_sample_url' => 'nullable|string',
         ]);
     }
@@ -160,7 +160,7 @@ class PublicationController extends Controller
     {
         $publication->meta()->delete();
 
-        $keys   = $request->input('meta_key', []);
+        $keys = $request->input('meta_key', []);
         $values = $request->input('meta_value', []);
 
         foreach ($keys as $i => $key) {
@@ -175,7 +175,7 @@ class PublicationController extends Controller
     {
         $base = Str::slug($title);
         $slug = $base;
-        $i    = 1;
+        $i = 1;
 
         while (Publication::where('slug', $slug)->when($ignoreId, fn ($q) => $q->where('id', '!=', $ignoreId))->exists()) {
             $slug = "{$base}-{$i}";

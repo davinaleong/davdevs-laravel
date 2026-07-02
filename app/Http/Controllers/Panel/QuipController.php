@@ -23,7 +23,7 @@ class QuipController extends Controller
 
     public function create()
     {
-        return view('panel.quips-form', ['quip' => new Quip()]);
+        return view('panel.quips-form', ['quip' => new Quip]);
     }
 
     public function store(Request $request)
@@ -64,10 +64,10 @@ class QuipController extends Controller
     protected function validated(Request $request): array
     {
         $data = $request->validate([
-            'variant'   => 'required|in:qa,statement',
-            'question'  => 'nullable|required_if:variant,qa|string',
+            'variant' => 'required|in:qa,statement',
+            'question' => 'nullable|required_if:variant,qa|string',
             'punchline' => 'required|string',
-            'active'    => 'nullable|boolean',
+            'active' => 'nullable|boolean',
         ]);
 
         $data['active'] = $request->boolean('active');

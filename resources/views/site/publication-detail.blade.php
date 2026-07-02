@@ -20,7 +20,7 @@ $jsonLd = json_encode([
         <h1 style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--text-primary);margin:0 0 8px;">{{ $publication->title }}</h1>
         @if($publication->tagline)<p style="font-family:'Inter',sans-serif;font-size:15px;color:var(--text-secondary);margin:0 0 24px;">{{ $publication->tagline }}</p>@endif
 
-        <div style="font-family:'Lora',serif;font-size:14px;line-height:1.8;color:var(--text-body);white-space:pre-wrap;margin-bottom:32px;">{{ $publication->body }}</div>
+        <div class="prose" style="font-family:'Lora',serif;font-size:14px;line-height:1.8;color:var(--text-body);margin-bottom:32px;">@markdown($publication->body)</div>
 
         @if($publication->store?->ls_store_url)
         <a href="{{ $publication->store->ls_store_url }}" target="_blank" rel="noopener noreferrer"

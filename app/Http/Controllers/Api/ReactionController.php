@@ -19,12 +19,12 @@ class ReactionController extends Controller
         $model = $type === 'entry' ? Entry::findOrFail($id) : Publication::findOrFail($id);
 
         $token = $request->cookie('reaction_token');
-        if (!$token) {
+        if (! $token) {
             $token = (string) Str::uuid();
         }
 
         $tokenHash = hash('sha256', $token);
-        $ipHash    = hash('sha256', $request->ip().date('Y-m-d'));
+        $ipHash = hash('sha256', $request->ip().date('Y-m-d'));
 
         $existing = Reaction::where('reactionable_type', $type)
             ->where('reactionable_id', $id)
@@ -37,9 +37,9 @@ class ReactionController extends Controller
         } else {
             Reaction::create([
                 'reactionable_type' => $type,
-                'reactionable_id'   => $id,
-                'token_hash'        => $tokenHash,
-                'ip_hash'           => $ipHash,
+                'reactionable_id' => $id,
+                'token_hash' => $tokenHash,
+                'ip_hash' => $ipHash,
             ]);
             $liked = true;
         }

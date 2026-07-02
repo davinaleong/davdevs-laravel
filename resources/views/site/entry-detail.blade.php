@@ -35,7 +35,7 @@ $jsonLd = match ($entry->contentType->slug) {
         </div>
         @endif
 
-        <div style="font-family:'Lora',serif;font-size:14px;line-height:1.8;color:var(--text-body);white-space:pre-wrap;">{{ $entry->body }}</div>
+        <div class="prose" style="font-family:'Lora',serif;font-size:14px;line-height:1.8;color:var(--text-body);">@markdown($entry->body)</div>
 
         @if($entry->videoEmbeds->isNotEmpty())
         <div style="margin-top:32px;display:flex;flex-direction:column;gap:16px;">

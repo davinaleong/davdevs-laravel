@@ -190,6 +190,49 @@ Verified via tinker: creating an Entry writes exactly one activity_log
 row with the correct message. Sitemap command runs clean, generates
 valid XML with home/listing/entry/ebook URLs.
 
+## Phase 19 — Privacy & Security Hardening ✅
+
+- [x] `site.privacy` route + PDPA-aligned privacy policy page (what's
+      collected: reaction cookie, hashed IPs, standard logs; what
+      isn't: no third-party analytics, no ad cookies, no data selling)
+- [x] Cookie consent banner (Alpine + localStorage dismiss), essential-
+      cookies-only messaging, links to privacy page
+- [x] No third-party analytics scripts anywhere in the codebase
+- [x] YouTube click-to-load via youtube-nocookie.com (already Phase 6/12)
+- [x] All external links `rel="noopener noreferrer"` — enforced at the
+      model level (Link::target === '_blank' auto-sets rel)
+- [x] Image uploads: server-side MIME validation (`mimes:jpg,jpeg,png,
+      webp,gif` — Laravel checks actual file content, not just
+      extension) + Cloudinary `image_metadata: false` strips EXIF on
+      upload
+- [x] Markdown → HTML: `MarkdownService` wraps league/commonmark with
+      `html_input: strip` (raw HTML in post bodies is stripped, not
+      rendered — no stored XSS via post content) and
+      `allow_unsafe_links: false`; wired via a new `@markdown` Blade
+      directive, used on entry-detail and publication-detail
+- [x] CSRF on all forms (Laravel default), SameSite=Strict + HttpOnly
+      session cookies (`SESSION_SAME_SITE=strict` in .env)
+- [x] Session timeout: `SESSION_LIFETIME=120` (2h inactivity, Laravel
+      default behaviour)
+- [x] `CmsIpAllowlist` middleware (`cms.ip` alias), applied to all
+      `/panel/*` routes, no-ops when `CMS_IP_ALLOWLIST` env is empty
+- [x] `composer audit` and `npm audit`: both clean, zero advisories
+- [x] GitHub Actions CI (`.github/workflows/ci.yml`): Pint lint job +
+      Pest test job against a real MySQL 8 service container
+
+## Test suite fix
+
+Enabled `RefreshDatabase` in `tests/Pest.php` (was commented out —
+stock Breeze scaffold). This surfaced that MySQL `fullText()` indexes
+aren't supported by SQLite (used for the in-memory test DB); both
+migrations that declare fulltext indexes (entries, publications) now
+guard the call behind a `supportsFullText()` driver check so tests run
+against SQLite while production (MySQL) still gets the real index.
+Confirmed via `migrate:fresh` against the real MySQL database that the
+fulltext index is still created there. Full Pint pass applied
+project-wide (many pre-existing style violations across models/
+controllers, none behavioural).
+
 ## Next up
 
 - Phase 14: AI Features (bonus)
@@ -197,8 +240,6 @@ valid XML with home/listing/entry/ebook URLs.
 - Phase 18: Performance (mostly satisfied by existing patterns —
   eager loading, cursor pagination, Cloudinary responsive URLs; needs
   a final audit pass)
-- Phase 19: Privacy & Security hardening (PDPA page, cookie consent,
-  EXIF stripping, Markdown sanitisation, composer/npm audit)
 - Phase 20: Headless CMS / GraphQL API (bonus)
 - Phase 21: Laravel Cloud & Deployment config
 - Phase 22: Content Migration (requires local access to the Next.js

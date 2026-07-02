@@ -15,8 +15,8 @@ class Setting extends Model
         return match ($this->cast) {
             'boolean' => filter_var($this->value, FILTER_VALIDATE_BOOLEAN),
             'integer' => (int) $this->value,
-            'json'    => json_decode($this->value, true),
-            default   => $this->value,
+            'json' => json_decode($this->value, true),
+            default => $this->value,
         };
     }
 }

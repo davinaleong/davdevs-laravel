@@ -20,9 +20,9 @@
   - `cloudinary-labs/cloudinary-laravel`
 - [x] Install dev: Pest, Laravel Pint, Larastan, Laravel Debugbar
 - [ ] Set up Laravel Cloud project, environments (production + staging), deploy pipeline
-- [ ] GitHub Actions CI: Pint lint + Pest tests on every PR
+- [x] GitHub Actions CI: Pint lint + Pest tests on every PR
 - [x] Security headers middleware: CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy
-- [ ] Global rate limiting middleware (public API routes + like endpoint)
+- [x] Global rate limiting middleware (public API routes + like endpoint)
 
 > **Cloudinary vs R2:** Cloudinary is the right choice here — easier Laravel SDK, built-in image transformations (resize, format, quality via URL params), and good free tier. You already use R2 on Beacon; keep concerns separate. Revisit if Cloudinary costs scale.
 
@@ -51,7 +51,7 @@ See the separate **DB Schemas** document for full column definitions.
   - [ ] Middleware: require valid TOTP token after password auth before reaching CMS
   - [ ] Recovery codes: generate 8 single-use codes, store hashed
   - [ ] 2FA disable flow (requires password re-confirmation)
-- [ ] Session timeout: auto-logout after 2 hours of inactivity
+- [x] Session timeout: auto-logout after 2 hours of inactivity
 - [x] Lock CMS routes behind `auth` + `2fa.verified` middleware group
 
 ---
@@ -267,16 +267,16 @@ Jokes are a special post type: stored in the `jokes` table (not `posts`), exclud
 
 ## Phase 19 — Privacy & Security Hardening
 
-- [ ] PDPA privacy policy page
-- [ ] Cookie consent banner (essential cookies only — no tracking)
-- [ ] No third-party analytics scripts (Cloudflare Analytics or Umami self-hosted)
-- [ ] YouTube: `youtube-nocookie.com` + click-to-load (already in Phase 6)
-- [ ] All external links: `rel="noopener noreferrer"`
-- [ ] Image uploads: server-side MIME validation, EXIF stripping
-- [ ] Markdown: sanitise rendered HTML (no XSS via post content) — use CommonMark's allow-list config
-- [ ] CSRF on all forms, SameSite cookies, HttpOnly session
-- [ ] CMS IP allowlist middleware (optional, env-configured)
-- [ ] Regular `composer audit` + `npm audit` in CI
+- [x] PDPA privacy policy page
+- [x] Cookie consent banner (essential cookies only — no tracking)
+- [x] No third-party analytics scripts (Cloudflare Analytics or Umami self-hosted)
+- [x] YouTube: `youtube-nocookie.com` + click-to-load (already in Phase 6)
+- [x] All external links: `rel="noopener noreferrer"`
+- [x] Image uploads: server-side MIME validation, EXIF stripping
+- [x] Markdown: sanitise rendered HTML (no XSS via post content) — use CommonMark's allow-list config
+- [x] CSRF on all forms, SameSite cookies, HttpOnly session
+- [x] CMS IP allowlist middleware (optional, env-configured)
+- [x] Regular `composer audit` + `npm audit` in CI
 
 ---
 

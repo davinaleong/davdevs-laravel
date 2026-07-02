@@ -34,12 +34,20 @@ return new class extends Migration
             $table->index('publication_type');
             $table->index('featured');
             $table->index('bundle');
-            $table->fullText(['title', 'tagline', 'excerpt']);
+
+            if ($this->supportsFullText()) {
+                $table->fullText(['title', 'tagline', 'excerpt']);
+            }
         });
     }
 
     public function down(): void
     {
         Schema::dropIfExists('publications');
+    }
+
+    protected function supportsFullText(): bool
+    {
+        return Schema::getConnection()->getDriverName() === 'mysql';
     }
 };

@@ -13,7 +13,7 @@ class LogAuthEvents
     {
         ActivityLog::create([
             'channel' => 'auth',
-            'level'   => 'info',
+            'level' => 'info',
             'message' => "Login success: {$event->user->email}",
             'context' => ['user_id' => $event->user->id],
         ]);
@@ -23,7 +23,7 @@ class LogAuthEvents
     {
         ActivityLog::create([
             'channel' => 'auth',
-            'level'   => 'info',
+            'level' => 'info',
             'message' => 'Logout: '.($event->user?->email ?? 'unknown'),
             'context' => ['user_id' => $event->user?->id],
         ]);
@@ -33,7 +33,7 @@ class LogAuthEvents
     {
         ActivityLog::create([
             'channel' => 'auth',
-            'level'   => 'warning',
+            'level' => 'warning',
             'message' => 'Login failed: '.($event->credentials['email'] ?? 'unknown'),
         ]);
     }

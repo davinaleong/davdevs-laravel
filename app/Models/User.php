@@ -19,9 +19,9 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'totp_confirmed_at' => 'datetime',
-            'totp_enabled'      => 'boolean',
-            'recovery_codes'    => 'array',
-            'password'          => 'hashed',
+            'totp_enabled' => 'boolean',
+            'recovery_codes' => 'array',
+            'password' => 'hashed',
         ];
     }
 

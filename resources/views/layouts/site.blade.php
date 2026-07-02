@@ -103,7 +103,19 @@
         </div>
         <div style="text-align:center;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--footer-text);">
             {{ str_replace('{year}', date('Y'), $settings['copyright_text'] ?? '© {year}') }}
+            · <a href="{{ route('site.privacy') }}" style="color:var(--footer-text);">Privacy</a>
         </div>
     </footer>
+
+    {{-- Cookie consent banner (essential cookies only, no tracking) --}}
+    <div x-data="{ show: !localStorage.getItem('cookie_consent') }" x-show="show" x-cloak
+         style="position:fixed;bottom:0;left:0;right:0;background:var(--bg-surface-1);border-top:1px solid var(--border-default);padding:14px 20px;z-index:90;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
+        <span style="font-family:'Inter',sans-serif;font-size:12px;color:var(--text-secondary);">
+            We use only essential cookies (session + anonymous like token) — no tracking, no analytics.
+            <a href="{{ route('site.privacy') }}" style="color:var(--accent);">Learn more</a>
+        </span>
+        <button @click="localStorage.setItem('cookie_consent', '1'); show = false"
+                style="background:var(--accent);color:var(--bg-page);border:none;border-radius:5px;padding:6px 16px;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer;">Got it</button>
+    </div>
 </body>
 </html>
