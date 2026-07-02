@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PublicApiController;
 use App\Http\Controllers\Api\ReactionController;
 use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\Panel\ActivityLogController;
@@ -31,6 +32,15 @@ Route::post('api/reactions/{type}/{id}', [ReactionController::class, 'toggle'])
 Route::get('ebooks', [SiteController::class, 'ebooks'])->name('site.ebooks');
 Route::get('ebooks/{slug}', [SiteController::class, 'ebookShow'])->name('site.ebooks.show');
 Route::get('privacy', fn () => view('site.privacy'))->name('site.privacy');
+
+// Headless public REST API (toggleable via Settings > Headless CMS)
+Route::middleware(['ensure_api_enabled', 'throttle:60,1'])->prefix('api')->name('api.public.')->group(function () {
+    Route::get('posts', [PublicApiController::class, 'posts'])->name('posts.index');
+    Route::get('posts/{slug}', [PublicApiController::class, 'post'])->name('posts.show');
+    Route::get('post-types', [PublicApiController::class, 'contentTypes'])->name('content-types');
+    Route::get('categories', [PublicApiController::class, 'categories'])->name('categories');
+    Route::get('tags', [PublicApiController::class, 'tags'])->name('tags');
+});
 
 // Auth
 require __DIR__.'/auth.php';

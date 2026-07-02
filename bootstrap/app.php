@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\CmsIpAllowlist;
+use App\Http\Middleware\EnsurePublicApiEnabled;
 use App\Http\Middleware\LogHttpRequests;
 use App\Http\Middleware\SecurityHeaders;
 use App\Http\Middleware\TwoFactorMiddleware;
@@ -22,6 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'two_factor' => TwoFactorMiddleware::class,
             'cms.ip' => CmsIpAllowlist::class,
+            'ensure_api_enabled' => EnsurePublicApiEnabled::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

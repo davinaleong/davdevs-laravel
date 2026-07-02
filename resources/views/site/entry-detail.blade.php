@@ -57,7 +57,7 @@ $jsonLd = match ($entry->contentType->slug) {
         <div style="margin-top:32px;display:flex;flex-direction:column;gap:16px;">
             @foreach($entry->images as $image)
             <figure style="margin:0;">
-                <img src="{{ $image->url }}" alt="{{ $image->alt }}" style="width:100%;border-radius:8px;">
+                <img src="{{ $image->responsiveUrl(680) }}" alt="{{ $image->alt }}" style="width:100%;border-radius:8px;">
                 @if($image->pivot->caption_override ?? $image->caption)
                 <figcaption style="font-family:'Inter',sans-serif;font-size:11px;color:var(--text-muted);margin-top:6px;">{{ $image->pivot->caption_override ?: $image->caption }}</figcaption>
                 @endif

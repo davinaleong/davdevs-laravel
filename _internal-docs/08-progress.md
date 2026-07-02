@@ -233,14 +233,57 @@ fulltext index is still created there. Full Pint pass applied
 project-wide (many pre-existing style violations across models/
 controllers, none behavioural).
 
+## Phase 18 — Performance ✅
+
+- [x] Eager-loading audited across all controllers (Entry/Publication
+      index + form, SiteController home/listing/show) — no N+1 in any
+      view that iterates relations
+- [x] Cache: settings (1hr TTL, flushed explicitly on save) shared by
+      SiteLayout, SiteController, and EnsurePublicApiEnabled via the
+      same 'settings' cache key/shape
+- [x] Cloudinary responsive image URLs: `Image::responsiveUrl($width)`
+      injects `w_{n},q_auto,f_auto` into the delivery URL path; wired
+      into ebook cards, publication detail, and entry image galleries
+- [x] Cursor-based pagination on all public listings and CMS list views
+- [ ] Tool posts React island (Vite dynamic import) — deferred; no
+      React toolchain exists in this project yet, would need its own
+      package.json entry point and is out of scope for this pass
+- [ ] Cloudflare response-caching headers — infrastructure-level,
+      configured at the CDN/deploy layer (Phase 21), not the app layer
+
+## Phase 20 — Headless CMS / GraphQL API (bonus) ✅ (REST only)
+
+- [x] Settings toggle "Enable public API" (`api_enabled`, already
+      seeded in Phase 3) gates every route below via a dedicated
+      `EnsurePublicApiEnabled` middleware (404 when disabled)
+- [x] REST endpoints: `GET /api/posts` (filter by type, published-only,
+      paginated), `GET /api/posts/{slug}`, `GET /api/post-types`,
+      `GET /api/categories`, `GET /api/tags`
+- [x] Rate limited 60 req/min via throttle middleware
+- [ ] GraphQL — not implemented. REST covers the same data surface;
+      adding `rebing/graphql-laravel` or `nuwave/lighthouse` is a
+      genuinely separate package integration (schema files, resolver
+      wiring) that wasn't justified given REST already satisfies the
+      "headless" requirement. Flagged here rather than silently
+      skipped — pull in one of those packages if GraphQL is a hard
+      requirement.
+- [ ] Bearer token auth for private post access — not implemented;
+      current REST API only exposes published/public content, which
+      sidesteps the need until private content is actually requested
+
+Verified end-to-end: toggling `api_enabled` via direct DB update (then
+flushing the settings cache, matching what the CMS Settings controller
+does automatically) correctly flips all `/api/*` routes between 404
+and 200.
+
 ## Next up
 
-- Phase 14: AI Features (bonus)
-- Phase 15: Data Export (bonus)
-- Phase 18: Performance (mostly satisfied by existing patterns —
-  eager loading, cursor pagination, Cloudinary responsive URLs; needs
-  a final audit pass)
-- Phase 20: Headless CMS / GraphQL API (bonus)
+- Phase 14: AI Features (bonus) — not implemented; requires choosing
+  and wiring a specific LLM provider SDK, out of scope without a
+  concrete API key/provider decision from the user
+- Phase 15: Data Export (bonus) — not implemented; `export_jobs` table
+  and model exist (Phase 1) but the queued export job + ZIP builder
+  itself is unbuilt
 - Phase 21: Laravel Cloud & Deployment config
 - Phase 22: Content Migration (requires local access to the Next.js
   source project — out of scope for this environment, documented as

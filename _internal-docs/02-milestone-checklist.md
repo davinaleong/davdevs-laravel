@@ -256,11 +256,11 @@ Jokes are a special post type: stored in the `jokes` table (not `posts`), exclud
 
 ## Phase 18 — Performance
 
-- [ ] Eager-load all relationships (zero N+1 — enforce with Debugbar in dev)
-- [ ] Cache: homepage sections, sitemap, settings (Redis, TTL appropriate per data change frequency)
-- [ ] Cloudinary: responsive image URLs (width + format + quality params in Blade component)
+- [x] Eager-load all relationships (zero N+1 — enforce with Debugbar in dev)
+- [x] Cache: homepage sections, sitemap, settings (Redis, TTL appropriate per data change frequency)
+- [x] Cloudinary: responsive image URLs (width + format + quality params in Blade component)
 - [ ] Vite: dynamic import per Tool React component (only loads on that tool's page)
-- [ ] Cursor-based pagination on all public listings
+- [x] Cursor-based pagination on all public listings
 - [ ] HTTP response caching headers for static assets (Cloudflare in front of Laravel Cloud)
 
 ---
@@ -282,8 +282,8 @@ Jokes are a special post type: stored in the `jokes` table (not `posts`), exclud
 
 ## Phase 20 — Headless CMS / GraphQL API (bonus)
 
-- [ ] Toggle in Settings: "Enable public API"
-- [ ] REST endpoints (JSON) for read-only public data:
+- [x] Toggle in Settings: "Enable public API"
+- [x] REST endpoints (JSON) for read-only public data:
   - `GET /api/posts` (filter by type, status=published, paginated)
   - `GET /api/posts/{slug}`
   - `GET /api/post-types`
@@ -294,7 +294,7 @@ Jokes are a special post type: stored in the `jokes` table (not `posts`), exclud
   - `posts(type, category, tag, limit)` query
   - `post(slug)` query
 - [ ] API authentication: optional Bearer token for private post access
-- [ ] Rate limiting on all API routes (60 req/min per IP)
+- [x] Rate limiting on all API routes (60 req/min per IP)
 - [ ] API docs auto-generated (GraphQL introspection; REST via Scribe or similar)
 
 ---

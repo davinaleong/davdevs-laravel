@@ -40,4 +40,18 @@ class Image extends Model
     {
         return $this->hasMany(Layout::class, 'preview_image_id');
     }
+
+    /**
+     * Responsive Cloudinary delivery URL: injects width/quality/format
+     * transformation params into the upload path segment.
+     */
+    public function responsiveUrl(int $width, string $quality = 'auto', string $format = 'auto'): string
+    {
+        return preg_replace(
+            '#/upload/#',
+            "/upload/w_{$width},q_{$quality},f_{$format}/",
+            $this->url,
+            1
+        );
+    }
 }
