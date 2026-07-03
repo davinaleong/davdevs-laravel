@@ -63,6 +63,7 @@
                     'System' => [
                         ['label' => 'Settings', 'route' => 'panel.settings.index', 'icon' => '⚙'],
                         ['label' => 'Logs',     'route' => 'panel.logs.index', 'icon' => '📋'],
+                        ['label' => 'Export',   'route' => 'panel.exports.index', 'icon' => '⬇'],
                     ],
                 ];
                 @endphp

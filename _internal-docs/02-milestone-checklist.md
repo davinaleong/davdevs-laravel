@@ -215,7 +215,7 @@ Jokes are a special post type: stored in the `jokes` table (not `posts`), exclud
 
 ## Phase 15 — Data Export
 
-- [ ] CMS: export all data as ZIP containing:
+- [x] CMS: export all data as ZIP containing:
   - `posts.json` — all posts with meta, tags, categories
   - `images.json` — all image metadata (not the files themselves; Cloudinary URLs included)
   - `jokes.json`
@@ -223,9 +223,9 @@ Jokes are a special post type: stored in the `jokes` table (not `posts`), exclud
   - `youtube_embeds.json`
   - `settings.json`
   - `logs.json` (last 90 days)
-- [ ] Export runs as a queued job (async) — CMS shows progress, then download link
-- [ ] `export_jobs` table: tracks status (pending / processing / complete / failed), file path, created_at
-- [ ] Exported ZIP stored temporarily on Cloudinary or Laravel Cloud disk, auto-deleted after 24h
+- [x] Export runs as a queued job (async) — CMS shows progress, then download link
+- [x] `export_jobs` table: tracks status (pending / processing / complete / failed), file path, created_at
+- [x] Exported ZIP stored temporarily on Cloudinary or Laravel Cloud disk, auto-deleted after 24h
 
 ---
 

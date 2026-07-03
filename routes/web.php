@@ -8,6 +8,7 @@ use App\Http\Controllers\Panel\CategoryController;
 use App\Http\Controllers\Panel\ContentTypeController;
 use App\Http\Controllers\Panel\DashboardController;
 use App\Http\Controllers\Panel\EntryController;
+use App\Http\Controllers\Panel\ExportController;
 use App\Http\Controllers\Panel\ImageController;
 use App\Http\Controllers\Panel\LayoutController;
 use App\Http\Controllers\Panel\LinkController;
@@ -89,6 +90,11 @@ Route::middleware(['cms.ip', 'auth', 'two_factor'])->prefix('panel')->name('pane
     Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
     Route::post('settings/flush-cache', [SettingController::class, 'flushCache'])->name('settings.flush-cache');
     Route::get('logs', [ActivityLogController::class, 'index'])->name('logs.index');
+
+    // Data export
+    Route::get('exports', [ExportController::class, 'index'])->name('exports.index');
+    Route::post('exports', [ExportController::class, 'store'])->name('exports.store');
+    Route::get('exports/{exportJob}/download', [ExportController::class, 'download'])->name('exports.download');
 });
 
 // Static mockups (dev only)

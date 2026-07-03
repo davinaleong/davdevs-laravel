@@ -276,14 +276,34 @@ flushing the settings cache, matching what the CMS Settings controller
 does automatically) correctly flips all `/api/*` routes between 404
 and 200.
 
+## Phase 15 — Data Export (bonus) ✅
+
+- [x] `BuildDataExport` queued job: builds a ZIP with entries.json
+      (+ meta/tags/category/contentType), publications.json (+ meta/
+      tags/store), images.json, links.json, youtube_embeds.json,
+      quips.json, settings.json, logs.json (last 90 days only)
+- [x] `ExportController`: index (last 20 jobs), store (creates
+      `ExportJob` row, dispatches the job), download (protected —
+      requires CMS auth, checks status=complete, checks not expired,
+      checks file still exists on disk)
+- [x] Download served through a protected `/panel/exports/{id}/download`
+      route rather than a public storage URL — `download_url` on the
+      model stores a storage-relative path, never a public link, so
+      export contents (which include full post bodies + settings)
+      can't leak via a guessable/public URL
+- [x] `exports:prune` (already scheduled hourly in Phase 17) deletes
+      the on-disk ZIP + row once `expires_at` (24h) has passed
+- [x] CMS nav: "Export" added under System group
+
+Verified via tinker: `BuildDataExport::handle()` produces a valid ZIP
+on disk, `ExportJob` status transitions queued → processing → complete
+correctly, and file existence is confirmed via `Storage::exists()`.
+
 ## Next up
 
 - Phase 14: AI Features (bonus) — not implemented; requires choosing
   and wiring a specific LLM provider SDK, out of scope without a
   concrete API key/provider decision from the user
-- Phase 15: Data Export (bonus) — not implemented; `export_jobs` table
-  and model exist (Phase 1) but the queued export job + ZIP builder
-  itself is unbuilt
 - Phase 21: Laravel Cloud & Deployment config
 - Phase 22: Content Migration (requires local access to the Next.js
   source project — out of scope for this environment, documented as

@@ -18,8 +18,7 @@ class PruneExports extends Command
 
         foreach ($expired as $job) {
             if ($job->download_url) {
-                $path = parse_url($job->download_url, PHP_URL_PATH);
-                Storage::disk('local')->delete(ltrim($path, '/'));
+                Storage::disk('local')->delete($job->download_url);
             }
             $job->delete();
         }
