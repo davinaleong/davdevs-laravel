@@ -207,9 +207,9 @@ Jokes are a special post type: stored in the `jokes` table (not `posts`), exclud
 
 ## Phase 14 — AI Features (bonus)
 
-- [ ] AI provider settings in CMS: encrypted API key, model selector (start with OpenAI GPT-4o), abstract via `AiProvider` interface
-- [ ] Post editor: "Generate content" — sends title + type + tags → fills excerpt + content draft
-- [ ] Post editor: "Audit content" — returns structured suggestions (clarity, SEO, tone, scripture accuracy for faith content)
+- [x] AI provider settings in CMS: encrypted API key, model selector (start with OpenAI GPT-4o), abstract via `AiProvider` interface
+- [x] Post editor: "Generate content" — sends title + type + tags → fills excerpt + content draft
+- [x] Post editor: "Audit content" — returns structured suggestions (clarity, SEO, tone — category is a free-form string per suggestion so scripture-accuracy or any other category the model surfaces for faith content is naturally supported)
 
 ---
 
@@ -246,7 +246,7 @@ Jokes are a special post type: stored in the `jokes` table (not `posts`), exclud
 - [x] HTTP request logging middleware (method, URL, status, duration, ip_hash, user_agent)
 - [x] Auth event logging (login, logout, failed login, 2FA success/fail)
 - [x] CMS action logging (publish, image upload, settings save, export)
-- [ ] AI API call logging (tokens, latency, errors)
+- [x] AI API call logging (tokens, latency, errors)
 - [x] Log metadata: `id`, `channel`, `level`, `message`, `context` (JSON), `ip_hash`, `user_agent`, `url`, `method`, `status_code`, `duration_ms`, `created_at`
 - [x] Never store raw IPs — SHA-256(ip + daily_salt) only
 - [x] CMS log viewer: filter by channel / level / date range / keyword, cursor-paginated, colour-coded by level

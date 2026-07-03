@@ -32,6 +32,14 @@ class SettingController extends Controller
                 $value = $request->has($key) ? '1' : '0';
             }
 
+            // Encrypted secrets: blank submission means "leave unchanged"
+            if ($key === 'ai_api_key') {
+                if (blank($value)) {
+                    continue;
+                }
+                $value = encrypt($value);
+            }
+
             $setting->update(['value' => $value]);
         }
 

@@ -7,6 +7,39 @@
         selectedLinks: {{ json_encode($entry->links->pluck('id')->all()) }},
         selectedTags: {{ json_encode($entry->tags->pluck('id')->all()) }},
         metaRows: {{ json_encode($entry->meta->map(fn($m) => ['key' => $m->key, 'value' => $m->value])->values()->all() ?: [['key' => '', 'value' => '']]) }},
+        aiLoading: false,
+        aiError: null,
+        aiSuggestions: null,
+        generateContent() {
+            const title = document.querySelector('[name=title]').value;
+            if (!title) { this.aiError = 'Add a title first.'; return; }
+            this.aiLoading = true; this.aiError = null;
+            fetch('{{ route('panel.ai.generate') }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, 'Accept': 'application/json' },
+                body: JSON.stringify({ title, type: '{{ $entry->contentType->name ?? 'Article' }}', tags: [] }),
+            }).then(r => r.json()).then(d => {
+                this.aiLoading = false;
+                if (d.error) { this.aiError = d.error; return; }
+                document.querySelector('[name=excerpt]').value = d.excerpt;
+                document.getElementById('entry-body').value = d.body;
+            }).catch(() => { this.aiLoading = false; this.aiError = 'Request failed.'; });
+        },
+        auditContent() {
+            const title = document.querySelector('[name=title]').value;
+            const body = document.getElementById('entry-body').value;
+            if (!body) { this.aiError = 'Nothing to audit yet.'; return; }
+            this.aiLoading = true; this.aiError = null; this.aiSuggestions = null;
+            fetch('{{ route('panel.ai.audit') }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, 'Accept': 'application/json' },
+                body: JSON.stringify({ title, body }),
+            }).then(r => r.json()).then(d => {
+                this.aiLoading = false;
+                if (d.error) { this.aiError = d.error; return; }
+                this.aiSuggestions = d.suggestions;
+            }).catch(() => { this.aiLoading = false; this.aiError = 'Request failed.'; });
+        },
     }">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
             <h1 style="font-family:'Inter',sans-serif;font-size:20px;font-weight:600;color:var(--cms-text-primary);margin:0;">{{ $entry->exists ? 'Edit Entry' : 'New Entry' }}</h1>
@@ -44,11 +77,27 @@
                     <div>
                         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
                             <label style="font-size:12px;font-weight:500;color:var(--cms-text-secondary);">Body (Markdown)</label>
-                            <button type="button" @click="preview = !preview" style="font-size:11px;color:var(--cms-accent);background:none;border:none;cursor:pointer;" x-text="preview ? 'Edit' : 'Preview'"></button>
+                            <div style="display:flex;gap:12px;align-items:center;">
+                                <button type="button" @click="generateContent()" :disabled="aiLoading" style="font-size:11px;color:var(--cms-accent);background:none;border:none;cursor:pointer;">✨ Generate</button>
+                                <button type="button" @click="auditContent()" :disabled="aiLoading" style="font-size:11px;color:var(--cms-accent);background:none;border:none;cursor:pointer;">🔍 Audit</button>
+                                <button type="button" @click="preview = !preview" style="font-size:11px;color:var(--cms-accent);background:none;border:none;cursor:pointer;" x-text="preview ? 'Edit' : 'Preview'"></button>
+                            </div>
                         </div>
+                        <p x-show="aiLoading" style="font-size:11px;color:var(--cms-text-muted);margin:0 0 6px;">Working…</p>
+                        <p x-show="aiError" x-text="aiError" style="font-size:11px;color:var(--cms-error);margin:0 0 6px;"></p>
                         <textarea name="body" id="entry-body" rows="18" x-show="!preview"
                                   style="width:100%;box-sizing:border-box;background:var(--cms-editor-bg,var(--cms-input-bg));border:1px solid var(--cms-input-border);border-radius:5px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.6;color:var(--cms-input-text);">{{ old('body', $entry->body) }}</textarea>
                         <div x-show="preview" x-cloak style="border:1px solid var(--cms-border);border-radius:5px;padding:16px;background:var(--cms-bg-surface-2);font-family:'Lora',serif;font-size:14px;line-height:1.8;color:var(--cms-text-primary);white-space:pre-wrap;" x-text="document.getElementById('entry-body').value"></div>
+
+                        <div x-show="aiSuggestions && aiSuggestions.length" x-cloak style="margin-top:12px;border:1px solid var(--cms-border);border-radius:6px;padding:12px;background:var(--cms-bg-surface-2);">
+                            <div style="font-size:11px;font-weight:600;color:var(--cms-text-primary);margin-bottom:8px;">AI Audit Suggestions</div>
+                            <template x-for="s in aiSuggestions">
+                                <div style="display:flex;gap:8px;margin-bottom:6px;font-size:12px;">
+                                    <span style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 6px;border-radius:3px;background:var(--cms-accent-tint);color:var(--cms-accent);white-space:nowrap;height:fit-content;" x-text="s.category"></span>
+                                    <span style="color:var(--cms-text-secondary);" x-text="s.note"></span>
+                                </div>
+                            </template>
+                        </div>
                     </div>
                 </div>
             </div>

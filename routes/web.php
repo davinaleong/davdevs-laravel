@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\PublicApiController;
 use App\Http\Controllers\Api\ReactionController;
 use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\Panel\ActivityLogController;
+use App\Http\Controllers\Panel\AiController;
 use App\Http\Controllers\Panel\CategoryController;
 use App\Http\Controllers\Panel\ContentTypeController;
 use App\Http\Controllers\Panel\DashboardController;
@@ -95,6 +96,10 @@ Route::middleware(['cms.ip', 'auth', 'two_factor'])->prefix('panel')->name('pane
     Route::get('exports', [ExportController::class, 'index'])->name('exports.index');
     Route::post('exports', [ExportController::class, 'store'])->name('exports.store');
     Route::get('exports/{exportJob}/download', [ExportController::class, 'download'])->name('exports.download');
+
+    // AI (bonus)
+    Route::post('ai/generate', [AiController::class, 'generate'])->name('ai.generate');
+    Route::post('ai/audit', [AiController::class, 'audit'])->name('ai.audit');
 });
 
 // Static mockups (dev only)

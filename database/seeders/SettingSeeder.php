@@ -29,6 +29,9 @@ class SettingSeeder extends Seeder
             ['key' => 'lh_best_practices',     'value' => null, 'cast' => 'integer', 'group' => 'lighthouse'],
             // api
             ['key' => 'api_enabled',           'value' => '0',  'cast' => 'boolean', 'group' => 'api'],
+            // ai (bonus)
+            ['key' => 'ai_api_key',            'value' => null, 'cast' => 'string', 'group' => 'ai'],
+            ['key' => 'ai_model',              'value' => 'gpt-4o', 'cast' => 'string', 'group' => 'ai'],
         ];
 
         foreach ($settings as $setting) {

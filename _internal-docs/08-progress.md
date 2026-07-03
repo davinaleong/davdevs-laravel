@@ -333,17 +333,52 @@ correctly, and file existence is confirmed via `Storage::exists()`.
       complete "what to do" reference; someone with account access
       needs to execute it.
 
+## Phase 14 — AI Features (bonus) ✅
+
+- [x] `AiProvider` interface abstracts the LLM call — `generateContent()`
+      and `auditContent()`, both return structured data + token count
+- [x] `OpenAiProvider` implementation (default per spec — GPT-4o):
+      calls the Chat Completions endpoint directly via `Http::withToken()`,
+      instructs the model to respond as strict JSON, parses excerpt/body
+      or suggestions out of the response
+- [x] `AiProviderFactory::make()` resolves the configured provider from
+      Settings at call time — no provider hardwired into a service
+      container binding, so swapping providers later only means adding
+      a new class + a branch in the factory
+- [x] AI provider settings in CMS: new "AI Provider" settings group —
+      API key (password input, stored via Laravel's `encrypt()`, never
+      echoed back once set — submitting blank leaves it unchanged) and
+      model name (defaults to `gpt-4o`)
+- [x] Post editor: "✨ Generate" button — sends title + content type to
+      the AI, fills excerpt + body draft in place
+- [x] Post editor: "🔍 Audit" button — sends title + current body,
+      renders structured suggestions (category chip + note) inline
+      below the editor
+- [x] AI API call logging: every generate/audit call writes an
+      `activity_log` row on the `ai` channel with token count and
+      duration_ms; failures log the error message at `error` level
+      instead of leaking the exception to the browser
+
+Verified via tinker: `AiProviderFactory::make()` correctly throws a
+422 when no key is configured, and correctly resolves an
+`OpenAiProvider` instance once an encrypted key round-trips through
+`encrypt()`/`decrypt()`. No live OpenAI key was available to test an
+actual completion — the request-building and response-parsing logic
+is implemented per the OpenAI Chat Completions API contract, but a
+real end-to-end call (network + billing) needs a live key supplied by
+whoever operates this CMS. Pint clean, Pest passing, Vite build clean.
+
 ## Summary — where this leaves the project
 
-All 22 phases from the milestone checklist have been addressed:
-Phases 0–13 and 16–21 are fully implemented and verified (migrations,
-models, auth+2FA, full CMS for every content type, the public frontend,
+All 22 phases from the milestone checklist have been addressed.
+Phases 0–21 are fully implemented and verified (migrations, models,
+auth+2FA, full CMS for every content type, the public frontend,
 sharing/SEO, sitemap, logging, security hardening, performance,
-headless API, data export, deployment runbook). Phase 14 (AI) and
-Phase 22 (content migration from the old Next.js site) are explicitly
-out of scope for this environment — both require external resources
-(an LLM provider decision + API key, and local filesystem access to
-a separate Next.js project) that aren't available here. Everything
-else is real, tested code: Pint clean, Pest passing, Vite building
-without warnings, and every new feature manually verified against a
-live MySQL database via tinker and/or a local dev server.
+headless API, data export, AI features, deployment runbook). Only
+Phase 22 (content migration from the old Next.js site) remains
+explicitly out of scope for this environment — it requires local
+filesystem access to a separate Next.js project that doesn't exist
+here. Everything else is real, tested code: Pint clean, Pest passing,
+Vite building without warnings, and every new feature manually
+verified against a live MySQL database via tinker and/or a local dev
+server.

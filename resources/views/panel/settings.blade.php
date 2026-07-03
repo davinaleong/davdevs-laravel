@@ -11,6 +11,7 @@
         'footer'     => 'Footer',
         'lighthouse' => 'Lighthouse',
         'api'        => 'Headless API',
+        'ai'         => 'AI Provider',
     ];
     $keyLabels = [
         'frontend_date_format' => 'Frontend date format',
@@ -27,6 +28,8 @@
         'lh_seo'                => 'SEO score',
         'lh_best_practices'     => 'Best Practices score',
         'api_enabled'           => 'Enable public API',
+        'ai_api_key'            => 'OpenAI API key',
+        'ai_model'              => 'Model',
     ];
     @endphp
 
@@ -46,7 +49,11 @@
                         {{ $keyLabels[$setting->key] ?? $setting->key }}
                     </label>
 
-                    @if($setting->cast === 'boolean')
+                    @if($setting->key === 'ai_api_key')
+                        <input type="password" name="{{ $setting->key }}" placeholder="{{ $setting->value ? '••••••••••••••••  (set — leave blank to keep)' : 'sk-...' }}" autocomplete="off"
+                               style="width:100%;max-width:420px;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cms-input-text);">
+                        <p style="font-size:11px;color:var(--cms-text-muted);margin-top:4px;">Stored encrypted. Never displayed once set — leave blank on save to keep the current key.</p>
+                    @elseif($setting->cast === 'boolean')
                         <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
                             <input type="checkbox" name="{{ $setting->key }}" value="1" {{ $setting->getTypedValue() ? 'checked' : '' }}
                                    style="width:16px;height:16px;accent-color:var(--cms-accent);">
