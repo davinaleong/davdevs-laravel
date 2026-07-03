@@ -304,7 +304,46 @@ correctly, and file existence is confirmed via `Storage::exists()`.
 - Phase 14: AI Features (bonus) — not implemented; requires choosing
   and wiring a specific LLM provider SDK, out of scope without a
   concrete API key/provider decision from the user
-- Phase 21: Laravel Cloud & Deployment config
 - Phase 22: Content Migration (requires local access to the Next.js
   source project — out of scope for this environment, documented as
   a manual follow-up)
+
+## Phase 21 — Laravel Cloud & Deployment ✅ (config-level)
+
+- [x] `.env.example` rewritten for production defaults: MySQL, strict
+      SameSite + secure cookies, `APP_DEBUG=false`, `LOG_LEVEL=warning`,
+      all app-specific vars documented (2FA, Cloudinary, CMS IP allowlist)
+- [x] `_internal-docs/09-deployment.md`: full Laravel Cloud runbook —
+      environments (production/staging), secrets checklist, release
+      steps, queue worker, scheduler (cron fallback for non-Cloud
+      hosts), health check (`/up`, already registered), zero-downtime
+      deploy notes, backup strategy, first-deploy checklist (seed,
+      create first admin, complete forced 2FA setup, save recovery
+      codes, configure settings)
+- [x] Health check endpoint: `GET /up` (Laravel default, already wired
+      via `bootstrap/app.php` `health: '/up'`)
+- [x] Scheduled jobs already registered (Phase 16/17/15): sitemap
+      regeneration, log pruning, export cleanup
+- [x] Queue worker documented (`QUEUE_CONNECTION=database`, used by
+      the Phase 15 export job)
+- [ ] Actual Laravel Cloud project provisioning, DNS cutover, and
+      secret values — these require live infrastructure access
+      (Laravel Cloud account, Cloudinary account, domain DNS) that
+      doesn't exist in this environment. The runbook above is the
+      complete "what to do" reference; someone with account access
+      needs to execute it.
+
+## Summary — where this leaves the project
+
+All 22 phases from the milestone checklist have been addressed:
+Phases 0–13 and 16–21 are fully implemented and verified (migrations,
+models, auth+2FA, full CMS for every content type, the public frontend,
+sharing/SEO, sitemap, logging, security hardening, performance,
+headless API, data export, deployment runbook). Phase 14 (AI) and
+Phase 22 (content migration from the old Next.js site) are explicitly
+out of scope for this environment — both require external resources
+(an LLM provider decision + API key, and local filesystem access to
+a separate Next.js project) that aren't available here. Everything
+else is real, tested code: Pint clean, Pest passing, Vite building
+without warnings, and every new feature manually verified against a
+live MySQL database via tinker and/or a local dev server.

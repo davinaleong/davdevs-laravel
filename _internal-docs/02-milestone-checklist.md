@@ -301,13 +301,13 @@ Jokes are a special post type: stored in the `jokes` table (not `posts`), exclud
 
 ## Phase 21 — Laravel Cloud & Deployment
 
-- [ ] Staging and production environments on Laravel Cloud
-- [ ] All secrets in Cloud environment config (never in `.env` committed to git)
-- [ ] Scheduled jobs: sitemap regeneration, log pruning, export cleanup
-- [ ] Queue worker for: AI calls, export jobs, sitemap generation
-- [ ] Health check endpoint: `GET /up`
-- [ ] Zero-downtime deploys (Cloud rolling deploy)
-- [ ] Database backups: Cloud managed + weekly export to Cloudinary or R2
+- [ ] Staging and production environments on Laravel Cloud — **documented in `_internal-docs/09-deployment.md`, requires live Laravel Cloud account access to provision**
+- [x] All secrets in Cloud environment config (never in `.env` committed to git) — `.env.example` documents every required var; `.env` is gitignored
+- [x] Scheduled jobs: sitemap regeneration, log pruning, export cleanup
+- [x] Queue worker for: export jobs, sitemap generation (AI calls N/A — Phase 14 not implemented)
+- [x] Health check endpoint: `GET /up`
+- [ ] Zero-downtime deploys (Cloud rolling deploy) — **native to Laravel Cloud once provisioned; documented fallback (`artisan down/up`) for other hosts**
+- [ ] Database backups: Cloud managed + weekly export to Cloudinary or R2 — **Cloud-managed backups require provisioning; the weekly export-to-storage half is fully built (Phase 15 Data Export) and just needs a schedule entry once a destination is chosen**
 
 ---
 
