@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>2FA Verification — ~/dav/devs cms</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" href="/favicon.png">
     @vite(['resources/css/cms.css', 'resources/js/cms.js'])
 </head>
 <body style="background:var(--cms-bg-page);color:var(--cms-text-primary);font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;">

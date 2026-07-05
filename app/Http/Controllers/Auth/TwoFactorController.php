@@ -21,13 +21,14 @@ class TwoFactorController extends Controller
         $secret = session('totp_setup_secret') ?? $google2fa->generateSecretKey();
         session(['totp_setup_secret' => $secret]);
 
-        $qrUrl = $google2fa->getQRCodeUrl(
+        $qrCodeInline = preg_replace('/^<\?xml.*?\?>/', '', $google2fa->getQRCodeInline(
             config('app.name'),
             $user->email,
-            $secret
-        );
+            $secret,
+            160
+        ));
 
-        return view('auth.2fa-setup', compact('qrUrl', 'secret'));
+        return view('auth.2fa-setup', compact('qrCodeInline', 'secret'));
     }
 
     public function storeSetup(Request $request)
@@ -42,7 +43,7 @@ class TwoFactorController extends Controller
             return back()->withErrors(['code' => 'Invalid code. Please try again.']);
         }
 
-        $recoveryCodes = collect(range(1, 8))->map(fn () => strtoupper(bin2hex(random_bytes(5)))).all();
+        $recoveryCodes = collect(range(1, 8))->map(fn () => strtoupper(bin2hex(random_bytes(5))))->all();
 
         $user->update([
             'totp_secret' => encrypt($secret),

@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>2FA Setup — ~/dav/devs cms</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" href="/favicon.png">
     @vite(['resources/css/cms.css', 'resources/js/cms.js'])
 </head>
 <body style="background:var(--cms-bg-page);color:var(--cms-text-primary);font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;">
@@ -15,10 +17,8 @@
         </div>
 
         <div style="background:var(--cms-bg-surface-2);border:1px solid var(--cms-border);border-radius:8px;padding:16px;text-align:center;margin-bottom:20px;">
-            <img src="{{ $qrUrl }}" alt="2FA QR Code" style="width:180px;height:180px;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-            <div style="display:none;">
-                <p style="font-size:12px;color:var(--cms-text-muted);margin-bottom:8px;">Manual entry key:</p>
-                <code style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;letter-spacing:0.15em;background:var(--cms-bg-page);padding:8px 12px;border-radius:5px;display:block;">{{ $secret }}</code>
+            <div style="display:inline-block;width:180px;height:180px;background:#FFFFFF;border-radius:6px;padding:10px;box-sizing:border-box;">
+                {!! $qrCodeInline !!}
             </div>
         </div>
 

@@ -21,6 +21,16 @@ class ActivityLog extends Model
 
     protected function casts(): array
     {
-        return ['context' => 'array'];
+        return [
+            'context' => 'array',
+            'created_at' => 'datetime',
+        ];
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function (self $log) {
+            $log->created_at ??= now();
+        });
     }
 }

@@ -87,7 +87,7 @@
         </nav>
 
         {{-- Main content --}}
-        <main :style="sidebarOpen ? 'margin-left:200px' : 'margin-left:0'" style="flex:1;padding:24px;transition:margin-left 200ms ease;">
+        <main :style="sidebarOpen ? 'margin-left:200px;padding:32px;' : 'margin-left:0;padding:32px;'" style="flex:1;padding:32px;transition:margin-left 200ms ease;">
             @if(session('success'))
                 <div style="background:var(--cms-success-bg);border-left:3px solid var(--cms-success);padding:10px 14px;border-radius:5px;margin-bottom:16px;font-size:13px;color:var(--cms-success);">
                     {{ session('success') }}

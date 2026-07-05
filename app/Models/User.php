@@ -29,4 +29,13 @@ class User extends Authenticatable
     {
         return $this->totp_secret && $this->totp_enabled;
     }
+
+    protected static function booted(): void
+    {
+        static::creating(function (self $user) {
+            if (self::query()->exists()) {
+                throw new \RuntimeException('Only one user account may exist at a time. Delete the existing account before creating a new one.');
+            }
+        });
+    }
 }
