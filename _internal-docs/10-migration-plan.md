@@ -19,12 +19,11 @@ Status: **planning only** — no import code has been written yet. This document
 | `fem`                       | 24    | `entries`, content_type = fem                  |
 | `sermons`                   | 92    | `entries`, content_type = sermon               |
 | `static`                    | 5     | `entries`, content_type = page                 |
-| `technical-demos`           | 2     | **no matching content type yet — see §7.1**    |
 | `ebooks`                    | 7     | `publications` (separate table, not `entries`) |
 
 Total: ~230 markdown files, plus 212 files under `public/` (mostly PNG, some JPG/SVG) and per-ebook page images under `public/books/<slug>/`.
 
-The 8 content types already seeded (`database/seeders/ContentTypeSeeder.php`) — article, project, tool, notebook, knowledge-sharing, fem, sermon, page — cover everything except `technical-demos`.
+The 8 content types already seeded (`database/seeders/ContentTypeSeeder.php`) — article, project, tool, notebook, knowledge-sharing, fem, sermon, page — cover all content types.
 
 ## 3. Frontmatter → schema field mapping
 
@@ -44,8 +43,6 @@ Common old frontmatter fields: `title, slug, description, date, author, tags[], 
 | `links[]`                         | `entry_links` pivot      |                                                                                                                                                                                                               |
 | `author`                          | _(drop or `entry_meta`)_ | confirm whether multi-author support is needed; likely single-author site                                                                                                                                     |
 | body (markdown after frontmatter) | `entries.body`           | rendered through `MarkdownService` (league/commonmark, `html_input: strip`) — any raw HTML/JSX left in bodies will be silently stripped, so it must be converted to plain Markdown _before_ import, not after |
-
-`technical-demos` adds `postType, canonicalGroup, linkedPosts[]` — no matching columns; would need `entry_meta` rows or a schema decision (§7.1).
 
 Ebooks use a distinct schema (`publishedAt, coverImage, backImage, price, storeStatus, lqCheckoutBase, lqProductId, formats[], links{digital,print}, design{...}`) — maps reasonably well to `publications` + `publication_store`, since that table already has Lemon Squeezy–shaped fields. See §7.2 for the harder part (bespoke page layouts).
 
@@ -75,11 +72,7 @@ Old tags are freeform strings per file (`tags: [ai, azure, openai]`). Target sch
 
 ## 7. Open decisions (need answers before building the importer)
 
-### 7.1 `technical-demos` (2 items)
-
-No `ContentType` row exists for this. Options: (a) add a new seeded content type, (b) fold these 2 items into `project` or `tool` with an `entry_meta` marker. Given it's only 2 items, folding into an existing type is likely lower-effort — needs a decision, not a default assumption.
-
-### 7.2 eBooks — bespoke layouts
+### 7.1 eBooks — bespoke layouts
 
 On the old site, each ebook is a hand-built page at `app/ebooks/<slug>/page.tsx` + `layout.tsx` + `styles.css`, with page-turn-style images at `public/books/<slug>/000N.png`. The corresponding `app/content/ebooks/<slug>.md` file holds only summary frontmatter and one paragraph — it is **not** the source of the actual page content. The Laravel `publications` table + `publication` layout Blade component is metadata/body-driven, not a per-title custom layout system.
 
@@ -90,11 +83,11 @@ This means eBook migration is not a mechanical frontmatter-to-row import — it 
 
 This should be resolved with the user before writing the ebook importer, since it affects both the importer and possibly the `publication` Blade layout.
 
-### 7.3 Slug/URL stability
+### 7.2 Slug/URL stability
 
 Need to confirm the actual old-site slug convention (e.g. is it date-prefixed, or a plain freeform slug field?) before deciding whether imported entries can reuse old slugs directly or need `redirects` table entries for changed URLs.
 
-### 7.4 Author field
+### 7.3 Author field
 
 Old frontmatter has an `author` field; current Laravel schema doesn't appear to have per-entry authorship. Confirm whether this is single-author (drop the field) or needs to be preserved somewhere.
 
@@ -104,13 +97,30 @@ Old frontmatter has an `author` field; current Laravel schema doesn't appear to 
 2. **Images** — run the Cloudinary upload pass (§5), producing the path→`images.id` mapping.
 3. **Tags/categories** — seed normalized vocabulary (§6).
 4. **Import per content type** — one pass per old folder, mapping frontmatter (§3) and body into `entries`, resolving images/links/tags via the mappings built above.
-5. **Ebooks** — handled separately per whichever option is chosen in §7.2.
+5. **Ebooks** — handled separately per whichever option is chosen in §7.1.
 6. **Embeds** — manual/semi-automated pass over bodies for real embed URLs (§4), inserting into `video_embeds` + `entry_video_embeds`.
 7. **Validate** — row counts per type vs. file counts, spot-check rendered body output (confirm no content was silently stripped by `MarkdownService`'s `html_input: strip`), spot-check images load, spot-check tag/category assignment.
-8. **Cutover** — decide URL strategy (§7.3), then point the live domain at the Laravel app once validation passes.
+8. **Cutover** — decide URL strategy (§7.2), then point the live domain at the Laravel app once validation passes.
 
 ## 9. Explicitly out of scope for this migration
 
 - S3 storage — current image pipeline is Cloudinary; no S3 migration is planned here.
-- Building the `tool` content type's interactive React island — unrelated frontend feature, not a content migration task.
+- Building the `tool` content type's interactive React island — unrelated frontend feature, not a content migration task. (Note: a React build toolchain is being introduced regardless for the Component Manager, §10.1 — but rendering the tool island itself remains unbuilt and out of scope.)
 - Anything resembling a "jokes/quips" import — no corresponding content folder was found in the old site's source; the `quips` table appears to need its own content source if one exists outside this repo.
+
+## 10. New CMS manager features (schema additions)
+
+These are new CMS features, not part of importing old content — added here because they change the `entries`/`publications` schema before the importer is built. Full column definitions are in `07-db-schemas-v2.md`.
+
+### 10.1 React Component Manager
+
+- Folder: `resources/js/components/` — one `.jsx`/`.tsx` file per component, PascalCase file names (standard frontend convention). This requires introducing a React build toolchain to the project, which does not exist yet (see §9).
+- The manager scans this folder and lists all discovered components alphabetically by name in the CMS UI.
+- New `react_components` lookup table, synced from the folder scan (id, name, slug, file_path, description, active — inactive rather than deleted when a file disappears, so existing references don't break).
+- **Schema change:** `entries.react_component_id` — nullable FK → `react_components.id`. When creating/editing an entry, an optional field lets the author attach one component from the list.
+
+### 10.2 Publication Template Manager
+
+- Folder: `resources/views/publications/templates/<publication_type>/` (Laravel Blade view convention) — hand-crafted Blade templates, one subfolder per publication type (currently just `ebook`).
+- New `publication_templates` lookup table, synced from the folder scan (id, publication_type, name, slug, blade_path, description, active), scoped by `publication_type` so the manager only lists templates matching the publication being edited.
+- **Schema change:** `publications.publication_template_id` — nullable FK → `publication_templates.id`. When creating/editing a publication, an optional field lets the author pick a template from the type-matched list.

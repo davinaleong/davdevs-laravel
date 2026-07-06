@@ -160,6 +160,23 @@ Defines the shape and behaviour of each content type.
 
 All content types in `content_types` where `table_target = 'entries'`.
 
+### `react_components`
+
+Registry of React components available to attach to an entry, kept in sync with a folder scan of `resources/js/components/` (one `.jsx`/`.tsx` file per component, PascalCase file names — standard frontend convention). The Component Manager UI lists rows from this table in alphabetical order by `name`.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | BIGINT UNSIGNED PK | |
+| `name` | VARCHAR(200) | Display name, e.g. `Gallery` |
+| `slug` | VARCHAR(200) UNIQUE | Derived from file name |
+| `file_path` | VARCHAR(500) | Relative path under `resources/js/components/`, e.g. `Gallery.jsx` |
+| `description` | TEXT NULL | Internal note |
+| `active` | BOOLEAN DEFAULT TRUE | FALSE when the file is missing on the next folder scan — row is kept (not deleted) so existing `entries.react_component_id` references don't break |
+
+**Indexes:** `slug` (unique), `active`
+
+---
+
 ### `entries`
 
 | Column | Type | Notes |
@@ -170,6 +187,7 @@ All content types in `content_types` where `table_target = 'entries'`.
 | `layout_id` | BIGINT UNSIGNED FK → `layouts.id` | |
 | `category_id` | BIGINT UNSIGNED NULL FK → `categories.id` | |
 | `og_image_id` | BIGINT UNSIGNED NULL FK → `images.id` | |
+| `react_component_id` | BIGINT UNSIGNED NULL FK → `react_components.id` | Optional — attaches one component from the Component Manager, set during create/edit |
 | `title` | VARCHAR(500) | |
 | `slug` | VARCHAR(500) UNIQUE | `YYYYMMDD-slug` convention |
 | `excerpt` | TEXT NULL | |
@@ -181,7 +199,7 @@ All content types in `content_types` where `table_target = 'entries'`.
 | `published_at` | TIMESTAMP NULL | Future = scheduled |
 | `deleted_at` | TIMESTAMP NULL | |
 
-**Indexes:** `slug` (unique), `status`, `published_at`, `content_type_id`, `featured`
+**Indexes:** `slug` (unique), `status`, `published_at`, `content_type_id`, `featured`, `react_component_id`
 **Fulltext:** (`title`, `excerpt`, `body`)
 
 ---
@@ -262,6 +280,24 @@ Extensible key/value store for free content. Add new metadata types by conventio
 
 Handles e-books. Designed so a future paid content type (paid course, premium article, etc.) can be added with minimal schema change.
 
+### `publication_templates`
+
+Registry of hand-crafted Blade page templates available to a publication, kept in sync with a folder scan of `resources/views/publications/templates/<publication_type>/` (Laravel view naming convention — one subfolder per `publication_type`, kebab-case Blade file names). The Publication Template Manager lists rows scoped to the publication's `publication_type`.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | BIGINT UNSIGNED PK | |
+| `publication_type` | ENUM('ebook') DEFAULT 'ebook' | Matches `publications.publication_type` — extend enum together |
+| `name` | VARCHAR(200) | Display name, e.g. `Page Turn` |
+| `slug` | VARCHAR(200) | Derived from file name |
+| `blade_path` | VARCHAR(500) | Dot notation, e.g. `publications.templates.ebook.page-turn` — validated on save |
+| `description` | TEXT NULL | Internal note |
+| `active` | BOOLEAN DEFAULT TRUE | FALSE when the file is missing on the next folder scan — row is kept (not deleted) so existing `publications.publication_template_id` references don't break |
+
+**Indexes:** (`publication_type`, `slug`) UNIQUE, `active`
+
+---
+
 ### `publications`
 
 | Column | Type | Notes |
@@ -272,6 +308,7 @@ Handles e-books. Designed so a future paid content type (paid course, premium ar
 | `category_id` | BIGINT UNSIGNED NULL FK → `categories.id` | |
 | `og_image_id` | BIGINT UNSIGNED NULL FK → `images.id` | |
 | `cover_image_id` | BIGINT UNSIGNED NULL FK → `images.id` | Distinct from OG image — the book cover |
+| `publication_template_id` | BIGINT UNSIGNED NULL FK → `publication_templates.id` | Optional — picked during create/edit from templates matching this publication's `publication_type` |
 | `publication_type` | ENUM('ebook') DEFAULT 'ebook' | Extend enum when new paid types added |
 | `title` | VARCHAR(500) | |
 | `slug` | VARCHAR(500) UNIQUE | |
@@ -286,7 +323,7 @@ Handles e-books. Designed so a future paid content type (paid course, premium ar
 
 **Note:** No `read_time` — publications are sold, not read on-site. No `content_type_id` — `publication_type` serves that role.
 
-**Indexes:** `slug` (unique), `status`, `publication_type`, `featured`, `bundle`
+**Indexes:** `slug` (unique), `status`, `publication_type`, `featured`, `bundle`, `publication_template_id`
 **Fulltext:** (`title`, `tagline`, `excerpt`)
 
 ---
@@ -577,6 +614,7 @@ tags       ←── entries ── entry_images      ──→ images
 layouts    ──→ entries ── entry_video_embeds ──→ video_embeds
 images     ──→ entries ── entry_links        ──→ links
                entries ── entry_tags         ──→ tags
+react_components ──→ entries
 
                publications ── publication_meta
 images     ──→ publications ── publication_images  ──→ images
@@ -584,6 +622,7 @@ categories ←── publications ── publication_links   ──→ links
 layouts    ──→ publications ── publication_tags     ──→ tags
                publications ── publication_store
                publications ── publication_bundles  ──→ publications
+publication_templates ──→ publications
 
 reactions → entries      (reactionable_type = 'entry')
 reactions → publications (reactionable_type = 'publication')
