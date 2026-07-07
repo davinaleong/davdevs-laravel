@@ -4,8 +4,10 @@ namespace App\Console\Commands;
 
 use App\Models\Image;
 use App\Services\CloudinaryService;
+use App\Services\Migration\ContentTypeMap;
 use Illuminate\Console\Command;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 
 class MigrationImportImages extends Command
 {
@@ -29,18 +31,21 @@ class MigrationImportImages extends Command
         }
 
         // Old site's images live exactly one level deep: public/<content-folder>/<file>.
-        // public/books/** (ebooks) is excluded — ebooks are deferred. Extension match is
-        // case-insensitive on disk (a handful of files use .PNG), so filter manually rather
-        // than relying on glob()'s case sensitivity.
+        // Only folders in ContentTypeMap::FOLDERS are considered — this naturally excludes
+        // public/books/** (ebooks, deferred) and anything under technical-demos. Extension
+        // match is case-insensitive on disk (a handful of files use .PNG), so filter
+        // manually rather than relying on glob()'s case sensitivity.
         $extensions = ['png', 'jpg', 'jpeg', 'svg', 'gif', 'webp'];
-        $files = collect(glob($publicRoot.DIRECTORY_SEPARATOR.'*', GLOB_ONLYDIR))
-            ->reject(fn ($dir) => basename($dir) === 'books')
-            ->flatMap(fn ($dir) => glob($dir.DIRECTORY_SEPARATOR.'*.*'))
-            ->filter(fn ($path) => in_array(strtolower(pathinfo($path, PATHINFO_EXTENSION)), $extensions))
+        $files = collect(ContentTypeMap::FOLDERS)
+            ->keys()
+            ->filter(fn ($folder) => is_dir($publicRoot.DIRECTORY_SEPARATOR.$folder))
+            ->flatMap(fn ($folder) => collect(glob($publicRoot.DIRECTORY_SEPARATOR.$folder.DIRECTORY_SEPARATOR.'*.*'))
+                ->map(fn ($path) => ['folder' => $folder, 'path' => $path]))
+            ->filter(fn ($f) => in_array(strtolower(pathinfo($f['path'], PATHINFO_EXTENSION)), $extensions))
             ->values();
 
         if ($files->isEmpty()) {
-            $this->error('No images found (or all were under public/books/, which is excluded — ebooks are deferred).');
+            $this->error('No images found under the known content folders.');
 
             return self::FAILURE;
         }
@@ -49,8 +54,15 @@ class MigrationImportImages extends Command
         $bar = $this->output->createProgressBar($files->count());
         $bar->start();
 
-        foreach ($files as $path) {
-            $relative = str_replace('\\', '/', str_replace($publicRoot.DIRECTORY_SEPARATOR, '', $path));
+        foreach ($files as $file) {
+            ['folder' => $folder, 'path' => $path] = $file;
+            $relative = "{$folder}/".basename($path);
+            $typeSlug = ContentTypeMap::FOLDERS[$folder];
+            $basename = pathinfo($path, PATHINFO_FILENAME);
+            // e.g. davdevs/entries/article/20231229-0001-delving-into-ai — identifiable in the
+            // Cloudinary console by content type + the old site's own date/slug-bearing filename,
+            // with no need to cross-reference the database.
+            $publicId = "entries/{$typeSlug}/".Str::slug($basename);
 
             if ($dryRun) {
                 $map[$relative] = null;
@@ -59,7 +71,7 @@ class MigrationImportImages extends Command
                 continue;
             }
 
-            $upload = $cloudinary->upload(new UploadedFile($path, basename($path), null, null, true));
+            $upload = $cloudinary->upload(new UploadedFile($path, basename($path), null, null, true), publicId: $publicId);
 
             $image = Image::create([
                 'cloudinary_id' => $upload['cloudinary_id'],
@@ -84,7 +96,8 @@ class MigrationImportImages extends Command
         file_put_contents($mapPath, json_encode($map, JSON_PRETTY_PRINT));
 
         $this->info(($dryRun ? '[dry-run] ' : '')."Processed {$files->count()} images. Map written to {$mapPath}.");
-        $this->line('Sample paths: '.$files->take(5)->map(fn ($p) => str_replace($publicRoot.DIRECTORY_SEPARATOR, '', $p))->implode(', '));
+        $this->line('Sample old paths: '.$files->take(3)->map(fn ($f) => "{$f['folder']}/".basename($f['path']))->implode(', '));
+        $this->line('Sample Cloudinary public IDs: '.$files->take(3)->map(fn ($f) => 'davdevs/entries/'.ContentTypeMap::FOLDERS[$f['folder']].'/'.Str::slug(pathinfo($f['path'], PATHINFO_FILENAME)))->implode(', '));
 
         return self::SUCCESS;
     }

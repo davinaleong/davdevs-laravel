@@ -15,15 +15,30 @@ class CloudinaryService
         $this->cloudinary = new Cloudinary(config('services.cloudinary.url'));
     }
 
-    public function upload(UploadedFile $file, bool $stripExif = true): array
+    /**
+     * @param  string|null  $publicId  Slash-delimited path (relative to the `davdevs` root, e.g.
+     *                                 `entries/article/{slug}/01-name`) that becomes the asset's
+     *                                 Cloudinary public ID, making it identifiable by path alone
+     *                                 in the Cloudinary console. Omit for an auto-generated ID
+     *                                 under the flat `davdevs` folder (the CMS Image Manager's
+     *                                 standalone upload flow, which has no owning entry yet).
+     */
+    public function upload(UploadedFile $file, bool $stripExif = true, ?string $publicId = null): array
     {
-        $result = $this->cloudinary->uploadApi()->upload($file->getRealPath(), [
-            'folder' => 'davdevs',
+        $options = [
             'resource_type' => 'image',
             // Cloudinary strips EXIF/metadata from the delivered asset by default;
             // this explicitly keeps only color-profile data needed for correct rendering.
             'image_metadata' => false,
-        ]);
+        ];
+
+        if ($publicId !== null) {
+            $options['public_id'] = "davdevs/{$publicId}";
+        } else {
+            $options['folder'] = 'davdevs';
+        }
+
+        $result = $this->cloudinary->uploadApi()->upload($file->getRealPath(), $options);
 
         return [
             'cloudinary_id' => $result['public_id'],

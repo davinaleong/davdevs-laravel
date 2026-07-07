@@ -9,6 +9,7 @@ use App\Models\Image;
 use App\Models\Layout;
 use App\Models\Link;
 use App\Models\Tag;
+use App\Services\Migration\ContentTypeMap;
 use App\Services\Migration\FrontmatterParser;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
@@ -22,18 +23,6 @@ class MigrationImportEntries extends Command
         {--dry-run : Resolve and validate without writing to the database}';
 
     protected $description = 'Import old-site Markdown content into the entries table (10-migration-plan.md §8 step 4), excluding technical-demos and deferred ebooks';
-
-    /** Old folder => content_types.slug, per plan §2 / ContentTypeSeeder. Deliberately excludes technical-demos and ebooks. */
-    private array $folderToContentType = [
-        'articles' => 'article',
-        'projects' => 'project',
-        'tools' => 'tool',
-        'notebooks' => 'notebook',
-        'knowledge-sharing' => 'knowledge-sharing',
-        'fem' => 'fem',
-        'sermons' => 'sermon',
-        'static' => 'page',
-    ];
 
     /** content_types.slug => layouts.slug. Everything not listed falls back to 'standard'. */
     private array $contentTypeToLayout = [
@@ -67,7 +56,7 @@ class MigrationImportEntries extends Command
         $contentTypes = ContentType::pluck('id', 'slug');
         $layouts = Layout::pluck('id', 'slug');
 
-        foreach ($this->folderToContentType as $folder => $typeSlug) {
+        foreach (ContentTypeMap::FOLDERS as $folder => $typeSlug) {
             $folderPath = $contentRoot.DIRECTORY_SEPARATOR.$folder;
             if (! is_dir($folderPath)) {
                 $this->warn("Expected folder not found, skipping: {$folder}");
