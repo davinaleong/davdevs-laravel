@@ -46,8 +46,10 @@ class EntryController extends Controller
 
         $sort = $request->string('sort', 'newest');
         match ((string) $sort) {
-            'oldest' => $query->reorder('published_at', 'asc'),
-            'alpha' => $query->reorder('title', 'asc'),
+            // cursorPaginate requires the sort column(s) to be unique, or tied rows get
+            // silently dropped at page boundaries — id is appended as a tiebreaker.
+            'oldest' => $query->reorder('published_at', 'asc')->orderBy('id', 'asc'),
+            'alpha' => $query->reorder('title', 'asc')->orderBy('id', 'asc'),
             default => null, // already newest via id desc
         };
 

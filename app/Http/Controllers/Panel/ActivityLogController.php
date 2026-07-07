@@ -10,7 +10,10 @@ class ActivityLogController extends Controller
 {
     public function index(Request $request)
     {
-        $query = ActivityLog::query()->orderByDesc('created_at');
+        // cursorPaginate requires the sort column(s) to be unique, or tied rows get
+        // silently dropped at page boundaries — id is appended as a tiebreaker
+        // (multiple log rows can share the same created_at second).
+        $query = ActivityLog::query()->orderByDesc('created_at')->orderByDesc('id');
 
         if ($request->filled('channel')) {
             $query->where('channel', $request->string('channel'));

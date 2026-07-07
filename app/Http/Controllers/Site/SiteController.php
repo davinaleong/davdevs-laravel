@@ -47,11 +47,14 @@ class SiteController extends Controller
             $query->whereHas('tags', fn ($q) => $q->where('slug', $request->string('tag')));
         }
 
+        // cursorPaginate requires the sort column(s) to be unique, or tied rows get
+        // silently dropped at page boundaries — id is appended as a tiebreaker
+        // (entries commonly share the same published_at, e.g. same-day imports).
         $sort = $request->string('sort', 'newest');
         match ((string) $sort) {
-            'oldest' => $query->orderBy('published_at', 'asc'),
-            'alpha' => $query->orderBy('title', 'asc'),
-            default => $query->orderByDesc('published_at'),
+            'oldest' => $query->orderBy('published_at', 'asc')->orderBy('id', 'asc'),
+            'alpha' => $query->orderBy('title', 'asc')->orderBy('id', 'asc'),
+            default => $query->orderByDesc('published_at')->orderByDesc('id'),
         };
 
         $entries = $query->cursorPaginate(12)->withQueryString();
@@ -97,7 +100,9 @@ class SiteController extends Controller
     public function ebooks()
     {
         $bundles = Publication::published()->where('bundle', true)->with('coverImage', 'store')->orderByDesc('published_at')->get();
-        $publications = Publication::published()->where('bundle', false)->with('coverImage', 'store')->orderByDesc('published_at')->cursorPaginate(12);
+        // cursorPaginate requires the sort column(s) to be unique, or tied rows get
+        // silently dropped at page boundaries — id is appended as a tiebreaker.
+        $publications = Publication::published()->where('bundle', false)->with('coverImage', 'store')->orderByDesc('published_at')->orderByDesc('id')->cursorPaginate(12);
 
         $settings = Cache::remember('settings', 3600, function () {
             return Setting::all()->mapWithKeys(fn ($s) => [$s->key => $s->getTypedValue()])->all();
