@@ -10,6 +10,7 @@
         'header'     => 'Header',
         'footer'     => 'Footer',
         'lighthouse' => 'Lighthouse',
+        'publications' => 'Publications',
         'api'        => 'Headless API',
         'ai'         => 'AI Provider',
     ];
@@ -27,6 +28,7 @@
         'lh_accessibility'      => 'Accessibility score',
         'lh_seo'                => 'SEO score',
         'lh_best_practices'     => 'Best Practices score',
+        'publication_ebook_show_price' => 'Show price on E-Book listing (/ebooks)',
         'api_enabled'           => 'Enable public API',
         'ai_api_key'            => 'OpenAI API key',
         'ai_model'              => 'Model',

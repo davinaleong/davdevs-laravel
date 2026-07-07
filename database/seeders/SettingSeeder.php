@@ -27,6 +27,8 @@ class SettingSeeder extends Seeder
             ['key' => 'lh_accessibility',      'value' => null, 'cast' => 'integer', 'group' => 'lighthouse'],
             ['key' => 'lh_seo',                'value' => null, 'cast' => 'integer', 'group' => 'lighthouse'],
             ['key' => 'lh_best_practices',     'value' => null, 'cast' => 'integer', 'group' => 'lighthouse'],
+            // publications (per publication_type)
+            ['key' => 'publication_ebook_show_price', 'value' => '1', 'cast' => 'boolean', 'group' => 'publications'],
             // api
             ['key' => 'api_enabled',           'value' => '0',  'cast' => 'boolean', 'group' => 'api'],
             // ai (bonus)

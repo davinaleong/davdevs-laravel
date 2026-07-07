@@ -98,7 +98,12 @@ class SiteController extends Controller
     {
         $publications = Publication::published()->where('bundle', false)->orderByDesc('published_at')->cursorPaginate(12);
 
-        return view('site.ebooks', compact('publications'));
+        $settings = Cache::remember('settings', 3600, function () {
+            return Setting::all()->mapWithKeys(fn ($s) => [$s->key => $s->getTypedValue()])->all();
+        });
+        $showPrice = $settings['publication_ebook_show_price'] ?? true;
+
+        return view('site.ebooks', compact('publications', 'showPrice'));
     }
 
     public function ebookShow(string $slug)
