@@ -7,6 +7,8 @@
         selectedLinks: {{ json_encode($entry->links->pluck('id')->all()) }},
         selectedTags: {{ json_encode($entry->tags->pluck('id')->all()) }},
         metaRows: {{ json_encode($entry->meta->map(fn($m) => ['key' => $m->key, 'value' => $m->value])->values()->all() ?: [['key' => '', 'value' => '']]) }},
+        contentTypeId: {{ Js::from((string) old('content_type_id', $entry->content_type_id ?? '')) }},
+        reactIslandByType: {{ Js::from($contentTypes->pluck('react_island', 'id')) }},
         aiLoading: false,
         aiError: null,
         aiSuggestions: null,
@@ -188,7 +190,7 @@
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                         <div>
                             <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Content Type</label>
-                            <select name="content_type_id" required style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                            <select name="content_type_id" x-model="contentTypeId" required style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                                 @foreach($contentTypes as $ct)
                                 <option value="{{ $ct->id }}" {{ old('content_type_id', $entry->content_type_id) == $ct->id ? 'selected' : '' }}>{{ $ct->name }}</option>
                                 @endforeach
@@ -199,6 +201,15 @@
                             <select name="layout_id" required style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                                 @foreach($layouts as $l)
                                 <option value="{{ $l->id }}" {{ old('layout_id', $entry->layout_id) == $l->id ? 'selected' : '' }}>{{ $l->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div x-show="reactIslandByType[contentTypeId]" x-cloak>
+                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">React Component</label>
+                            <select name="react_component_id" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                                <option value="">— none —</option>
+                                @foreach($reactComponents as $rc)
+                                <option value="{{ $rc->id }}" {{ old('react_component_id', $entry->react_component_id) == $rc->id ? 'selected' : '' }}>{{ $rc->name }}</option>
                                 @endforeach
                             </select>
                         </div>

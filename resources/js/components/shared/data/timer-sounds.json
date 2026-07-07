@@ -1,0 +1,27 @@
+[
+  {
+    "label": "Bell",
+    "value": "bell",
+    "description": "Classic bell chime"
+  },
+  {
+    "label": "Beep",
+    "value": "beep",
+    "description": "Simple beep sound"
+  },
+  {
+    "label": "Chime",
+    "value": "chime",
+    "description": "Gentle chime"
+  },
+  {
+    "label": "Alert",
+    "value": "alert",
+    "description": "Alert notification"
+  },
+  {
+    "label": "None",
+    "value": "none",
+    "description": "Silent (no sound)"
+  }
+]

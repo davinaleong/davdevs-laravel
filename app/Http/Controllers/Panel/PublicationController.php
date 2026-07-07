@@ -8,6 +8,8 @@ use App\Models\Image;
 use App\Models\Layout;
 use App\Models\Link;
 use App\Models\Publication;
+use App\Models\PublicationTemplate;
+use App\Models\ReactComponent;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -45,6 +47,7 @@ class PublicationController extends Controller
         $publication->store()->create($this->storeValidated($request));
         $this->syncRelations($request, $publication);
         $this->syncMeta($request, $publication);
+        $this->syncVariants($request, $publication);
 
         return redirect()->route('panel.publications.edit', $publication)->with('success', 'Publication created.');
     }
@@ -67,6 +70,7 @@ class PublicationController extends Controller
         $publication->store()->updateOrCreate([], $this->storeValidated($request));
         $this->syncRelations($request, $publication);
         $this->syncMeta($request, $publication);
+        $this->syncVariants($request, $publication);
 
         return redirect()->route('panel.publications.edit', $publication)->with('success', 'Publication updated.');
     }
@@ -86,9 +90,12 @@ class PublicationController extends Controller
         $links = Link::orderBy('sort_order')->get();
         $tags = Tag::all();
         $bundleCandidates = Publication::where('id', '!=', $publication->id ?? 0)->orderBy('title')->get();
+        $templates = PublicationTemplate::where('publication_type', $publication->publication_type ?? 'ebook')
+            ->where('active', true)->orderBy('name')->get();
+        $reactComponents = ReactComponent::where('active', true)->orderBy('name')->get();
 
         return view('panel.publications-form', compact(
-            'publication', 'layouts', 'categories', 'images', 'links', 'tags', 'bundleCandidates'
+            'publication', 'layouts', 'categories', 'images', 'links', 'tags', 'bundleCandidates', 'templates', 'reactComponents'
         ));
     }
 
@@ -96,6 +103,8 @@ class PublicationController extends Controller
     {
         $data = $request->validate([
             'layout_id' => 'required|exists:layouts,id',
+            'publication_template_id' => 'nullable|exists:publication_templates,id',
+            'react_component_id' => 'nullable|exists:react_components,id',
             'category_id' => 'nullable|exists:categories,id',
             'og_image_id' => 'nullable|exists:images,id',
             'cover_image_id' => 'nullable|exists:images,id',
@@ -168,6 +177,27 @@ class PublicationController extends Controller
                 continue;
             }
             $publication->meta()->create(['key' => $key, 'value' => $values[$i] ?? null]);
+        }
+    }
+
+    protected function syncVariants(Request $request, Publication $publication): void
+    {
+        $publication->variants()->delete();
+
+        $names = $request->input('variant_name', []);
+        $prices = $request->input('variant_price_display', []);
+        $lsProductIds = $request->input('variant_ls_product_id', []);
+
+        foreach ($names as $i => $name) {
+            if (blank($name)) {
+                continue;
+            }
+            $publication->variants()->create([
+                'name' => $name,
+                'price_display' => $prices[$i] ?? null,
+                'ls_product_id' => $lsProductIds[$i] ?? null,
+                'sort_order' => $i,
+            ]);
         }
     }
 

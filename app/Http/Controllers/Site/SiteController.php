@@ -80,7 +80,7 @@ class SiteController extends Controller
 
         $entry = Entry::where('content_type_id', $type->id)
             ->where('slug', $slug)
-            ->with(['contentType', 'category', 'layout', 'images', 'videoEmbeds', 'links', 'tags', 'meta'])
+            ->with(['contentType', 'category', 'layout', 'reactComponent', 'images', 'videoEmbeds', 'links', 'tags', 'meta'])
             ->firstOrFail();
 
         if ($entry->status === 'private' && ! auth()->check()) {
@@ -104,11 +104,19 @@ class SiteController extends Controller
     public function ebookShow(string $slug)
     {
         $publication = Publication::where('slug', $slug)
-            ->with(['store', 'images', 'links', 'tags', 'bundleMembers'])
+            ->with([
+                'store', 'images', 'links', 'tags', 'meta',
+                'coverImage', 'ogImage', 'template', 'variants', 'reactComponent',
+                'bundleMembers.coverImage', 'bundleMembers.store',
+            ])
             ->firstOrFail();
 
         if ($publication->status === 'private' && ! auth()->check()) {
             return redirect()->route('login');
+        }
+
+        if ($publication->template) {
+            return view($publication->template->blade_path, compact('publication'));
         }
 
         return view('site.publication-detail', compact('publication'));

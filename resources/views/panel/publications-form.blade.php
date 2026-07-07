@@ -7,6 +7,7 @@
         selectedBundleMembers: {{ json_encode($publication->bundleMembers->pluck('id')->all()) }},
         isBundle: {{ $publication->bundle ? 'true' : 'false' }},
         metaRows: {{ json_encode($publication->meta->map(fn($m) => ['key' => $m->key, 'value' => $m->value])->values()->all() ?: [['key' => '', 'value' => '']]) }},
+        variantRows: {{ json_encode($publication->variants->map(fn($v) => ['name' => $v->name, 'price_display' => $v->price_display, 'ls_product_id' => $v->ls_product_id])->values()->all() ?: []) }},
     }">
         <h1 style="font-family:'Inter',sans-serif;font-size:20px;font-weight:600;color:var(--cms-text-primary);margin:0 0 20px;">{{ $publication->exists ? 'Edit Publication' : 'New Publication' }}</h1>
 
@@ -72,6 +73,19 @@
                     <div>
                         <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Free Sample URL</label>
                         <input type="text" name="free_sample_url" value="{{ old('free_sample_url', $publication->store?->free_sample_url) }}" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cms-input-text);">
+                    </div>
+
+                    <div>
+                        <div style="font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Pricing Variants (optional — e.g. "Ebook Only" vs "Ebook + Exercise Pack")</div>
+                        <template x-for="(row, i) in variantRows" :key="i">
+                            <div style="display:flex;gap:8px;margin-bottom:8px;">
+                                <input type="text" name="variant_name[]" x-model="row.name" placeholder="Variant name" style="flex:1;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-size:12px;color:var(--cms-input-text);">
+                                <input type="text" name="variant_price_display[]" x-model="row.price_display" placeholder="SGD 13" style="flex:0 0 110px;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-size:12px;color:var(--cms-input-text);">
+                                <input type="text" name="variant_ls_product_id[]" x-model="row.ls_product_id" placeholder="LS product ID" style="flex:0 0 200px;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cms-input-text);">
+                                <button type="button" @click="variantRows.splice(i, 1)" style="background:none;border:none;color:var(--cms-error);cursor:pointer;font-size:16px;">×</button>
+                            </div>
+                        </template>
+                        <button type="button" @click="variantRows.push({name:'',price_display:'',ls_product_id:''})" style="font-size:12px;color:var(--cms-accent);background:none;border:none;cursor:pointer;">+ Add variant</button>
                     </div>
 
                     <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
@@ -153,6 +167,24 @@
                             <select name="layout_id" required style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                                 @foreach($layouts as $l)
                                 <option value="{{ $l->id }}" {{ old('layout_id', $publication->layout_id) == $l->id ? 'selected' : '' }}>{{ $l->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Page Template</label>
+                            <select name="publication_template_id" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                                <option value="">— use default publication page —</option>
+                                @foreach($templates as $t)
+                                <option value="{{ $t->id }}" {{ old('publication_template_id', $publication->publication_template_id) == $t->id ? 'selected' : '' }}>{{ $t->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">React Component (optional interactive extra)</label>
+                            <select name="react_component_id" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                                <option value="">— none —</option>
+                                @foreach($reactComponents as $rc)
+                                <option value="{{ $rc->id }}" {{ old('react_component_id', $publication->react_component_id) == $rc->id ? 'selected' : '' }}>{{ $rc->name }}</option>
                                 @endforeach
                             </select>
                         </div>

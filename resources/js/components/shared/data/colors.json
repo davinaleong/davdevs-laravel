@@ -1,0 +1,167 @@
+{
+  "colorGroups": [
+    {
+      "groupTitle": "Website Theme Colors",
+      "colors": [
+        { "title": "Black", "hex": "#000000", "rgb": "rgb(0, 0, 0)", "hsl": "hsl(0, 0%, 0%)", "oklch": "oklch(0% 0 0)", "lab": "lab(0% 0 0)", "lch": "lch(0% 0 0)", "textColor": "#ffffff" },
+        { "title": "White", "hex": "#ffffff", "rgb": "rgb(255, 255, 255)", "hsl": "hsl(0, 0%, 100%)", "oklch": "oklch(100% 0 0)", "lab": "lab(100% 0 0)", "lch": "lch(100% 0 0)", "textColor": "#000000" },
+        { "title": "Blue 500", "hex": "#3b82f6", "rgb": "rgb(59, 130, 246)", "hsl": "hsl(217, 91%, 60%)", "oklch": "oklch(70.7% 0.165 254.6)", "lab": "lab(54.3% 5.7% -60.2%)", "lch": "lch(54.3% 60.5% 275.4°)", "textColor": "#ffffff" },
+        { "title": "Blue 300", "hex": "#93c5fd", "rgb": "rgb(147, 197, 253)", "hsl": "hsl(213, 93%, 78%)", "oklch": "oklch(84.3% 0.101 254.6)", "lab": "lab(78.4% 1.9% -32.7%)", "lch": "lch(78.4% 32.8% 273.3°)", "textColor": "#000000" },
+        { "title": "Blue 700", "hex": "#1d4ed8", "rgb": "rgb(29, 78, 216)", "hsl": "hsl(224, 76%, 48%)", "oklch": "oklch(56.2% 0.215 254.6)", "lab": "lab(35.2% 18.6% -67.5%)", "lch": "lch(35.2% 70.0% 285.4°)", "textColor": "#ffffff" },
+        { "title": "Slate 100", "hex": "#f1f5f9", "rgb": "rgb(241, 245, 249)", "hsl": "hsl(210, 40%, 96%)", "oklch": "oklch(97.1% 0.013 212.1)", "lab": "lab(96.1% -1.1% -2.7%)", "lch": "lch(96.1% 2.9% 247.8°)", "textColor": "#000000" },
+        { "title": "Slate 900", "hex": "#0f172a", "rgb": "rgb(15, 23, 42)", "hsl": "hsl(222, 48%, 11%)", "oklch": "oklch(13.8% 0.019 235.7)", "lab": "lab(8.7% 2.7% -8.7%)", "lch": "lch(8.7% 9.1% 287.2°)", "textColor": "#ffffff" },
+        { "title": "Gray 100", "hex": "#f3f4f6", "rgb": "rgb(243, 244, 246)", "hsl": "hsl(220, 14%, 96%)", "oklch": "oklch(96.9% 0.002 286.3)", "lab": "lab(96.0% -0.4% -1.4%)", "lch": "lch(96.0% 1.5% 254.2°)", "textColor": "#000000" },
+        { "title": "Gray 900", "hex": "#111827", "rgb": "rgb(17, 24, 39)", "hsl": "hsl(221, 39%, 11%)", "oklch": "oklch(15.2% 0.014 235.7)", "lab": "lab(9.2% 1.9% -6.9%)", "lch": "lch(9.2% 7.2% 285.4°)", "textColor": "#ffffff" },
+        { "title": "Orange 500", "hex": "#f97316", "rgb": "rgb(249, 115, 22)", "hsl": "hsl(25, 95%, 53%)", "oklch": "oklch(74.8% 0.153 41.9)", "lab": "lab(65.1% 31.2% 57.8%)", "lch": "lch(65.1% 65.8% 61.6°)", "textColor": "#ffffff" }
+      ]
+    },
+    {
+      "groupTitle": "Brand Colors",
+      "colors": [
+        { "title": "Blue", "hex": "#2B7FFF", "rgb": "rgb(43, 127, 255)", "hsl": "hsl(216, 100%, 58%)", "oklch": "oklch(69.4% 0.189 254.6)", "lab": "lab(53.8% 17.3% -78.2%)", "lch": "lch(53.8% 80.1% 282.5°)", "textColor": "#ffffff" },
+        { "title": "Dark Blue", "hex": "#1447E6", "rgb": "rgb(20, 71, 230)", "hsl": "hsl(225, 84%, 49%)", "oklch": "oklch(52.8% 0.239 254.6)", "lab": "lab(32.4% 25.8% -79.2%)", "lch": "lch(32.4% 83.4° 288.1°)", "textColor": "#ffffff" },
+        { "title": "Sky Blue", "hex": "#00A6F4", "rgb": "rgb(0, 166, 244)", "hsl": "hsl(199, 100%, 48%)", "oklch": "oklch(70.2% 0.139 235.4)", "lab": "lab(65.2% -9.8% -46.3%)", "lch": "lch(65.2% 47.3° 258.1°)", "textColor": "#ffffff" },
+        { "title": "Orange", "hex": "#FF6900", "rgb": "rgb(255, 105, 0)", "hsl": "hsl(25, 100%, 50%)", "oklch": "oklch(72.6% 0.178 49.8)", "lab": "lab(62.9% 44.8% 68.2%)", "lch": "lch(62.9% 81.7° 56.7°)", "textColor": "#ffffff" },
+        { "title": "Light Slate", "hex": "#F1F5F9", "rgb": "rgb(241, 245, 249)", "hsl": "hsl(210, 40%, 96%)", "oklch": "oklch(97.1% 0.013 212.1)", "lab": "lab(96.1% -1.1% -2.7%)", "lch": "lch(96.1% 2.9° 247.8°)", "textColor": "#000000" }
+      ]
+    },
+    {
+      "groupTitle": "Basic Colors",
+      "colors": [
+        { "title": "White", "hex": "#ffffff", "rgb": "rgb(255, 255, 255)", "hsl": "hsl(0, 0%, 100%)", "oklch": "oklch(100% 0 0)", "lab": "lab(100% 0 0)", "lch": "lch(100% 0 0)", "textColor": "#000000" },
+        { "title": "Black", "hex": "#000000", "rgb": "rgb(0, 0, 0)", "hsl": "hsl(0, 0%, 0%)", "oklch": "oklch(0% 0 0)", "lab": "lab(0% 0 0)", "lch": "lch(0% 0 0)", "textColor": "#ffffff" },
+        { "title": "Gray", "hex": "#888888", "rgb": "rgb(136, 136, 136)", "hsl": "hsl(0, 0%, 53%)", "oklch": "oklch(62.8% 0 0)", "lab": "lab(59.3% 0 0)", "lch": "lch(59.3% 0 0)", "textColor": "#000000" },
+        { "title": "Red", "hex": "#ff0000", "rgb": "rgb(255, 0, 0)", "hsl": "hsl(0, 100%, 50%)", "oklch": "oklch(62.8% 0.258 29.2)", "lab": "lab(54.3% 80.8% 69.9%)", "lch": "lch(54.3% 106.8° 40.9°)", "textColor": "#ffffff" },
+        { "title": "Yellow", "hex": "#ffff00", "rgb": "rgb(255, 255, 0)", "hsl": "hsl(60, 100%, 50%)", "oklch": "oklch(96.8% 0.211 109.8)", "lab": "lab(97.6% -15.8% 93.4%)", "lch": "lch(97.6% 94.8° 99.6°)", "textColor": "#000000" },
+        { "title": "Green", "hex": "#00ff00", "rgb": "rgb(0, 255, 0)", "hsl": "hsl(120, 100%, 50%)", "oklch": "oklch(86.6% 0.294 142.5)", "lab": "lab(87.8% -79.3% 80.9%)", "lch": "lch(87.8% 113.3° 134.4°)", "textColor": "#000000" },
+        { "title": "Cyan", "hex": "#00ffff", "rgb": "rgb(0, 255, 255)", "hsl": "hsl(180, 100%, 50%)", "oklch": "oklch(90.5% 0.155 195.1)", "lab": "lab(90.7% -50.7% -14.1%)", "lch": "lch(90.7% 52.6° 195.5°)", "textColor": "#000000" },
+        { "title": "Blue", "hex": "#0000ff", "rgb": "rgb(0, 0, 255)", "hsl": "hsl(240, 100%, 50%)", "oklch": "oklch(45.2% 0.313 264.1)", "lab": "lab(29.6% 68.3% -112.0%)", "lch": "lch(29.6% 131.2° 301.4°)", "textColor": "#ffffff" },
+        { "title": "Magenta", "hex": "#ff00ff", "rgb": "rgb(255, 0, 255)", "hsl": "hsl(300, 100%, 50%)", "oklch": "oklch(70.2% 0.323 328.4)", "lab": "lab(60.2% 93.6% -60.5%)", "lch": "lch(60.2% 111.4° 327.1°)", "textColor": "#ffffff" }
+      ]
+    },
+
+    {
+      "groupTitle": "Bootstrap Colors",
+      "colors": [
+        { "title": "Blue (Primary)", "hex": "#007bff", "rgb": "rgb(0, 123, 255)", "hsl": "hsl(211, 100%, 50%)", "oklch": "oklch(67.9% 0.172 254.6)", "lab": "lab(51.0% 8.1% -67.5%)", "lch": "lch(51.0% 68.0° 276.8°)", "textColor": "#ffffff" },
+        { "title": "Indigo", "hex": "#6610f2", "rgb": "rgb(102, 16, 242)", "hsl": "hsl(263, 90%, 51%)", "oklch": "oklch(51.0% 0.227 279.4)", "lab": "lab(35.4% 57.6% -89.5%)", "lch": "lch(35.4% 106.5° 302.8°)", "textColor": "#ffffff" },
+        { "title": "Purple", "hex": "#6f42c1", "rgb": "rgb(111, 66, 193)", "hsl": "hsl(262, 52%, 51%)", "oklch": "oklch(52.2% 0.164 290.1)", "lab": "lab(38.9% 44.8% -62.1%)", "lch": "lch(38.9% 76.8° 305.8°)", "textColor": "#ffffff" },
+        { "title": "Pink", "hex": "#e83e8c", "rgb": "rgb(232, 62, 140)", "hsl": "hsl(332, 79%, 58%)", "oklch": "oklch(65.7% 0.189 353.4)", "lab": "lab(55.4% 65.7% -5.4%)", "lch": "lch(55.4% 65.9° 355.3°)", "textColor": "#ffffff" },
+        { "title": "Red (Danger)", "hex": "#dc3545", "rgb": "rgb(220, 53, 69)", "hsl": "hsl(354, 70%, 54%)", "oklch": "oklch(58.2% 0.191 22.2)", "lab": "lab(47.7% 58.9% 27.8%)", "lch": "lch(47.7% 65.2° 25.3°)", "textColor": "#ffffff" },
+        { "title": "Orange", "hex": "#fd7e14", "rgb": "rgb(253, 126, 20)", "hsl": "hsl(27, 98%, 54%)", "oklch": "oklch(75.2% 0.154 45.4)", "lab": "lab(65.7% 35.2% 62.1%)", "lch": "lch(65.7% 71.6° 60.5°)", "textColor": "#000000" },
+        { "title": "Yellow (Warning)", "hex": "#ffc107", "rgb": "rgb(255, 193, 7)", "hsl": "hsl(45, 100%, 51%)", "oklch": "oklch(85.9% 0.123 85.9)", "lab": "lab(82.4% 2.8% 79.4%)", "lch": "lch(82.4% 79.5° 87.9°)", "textColor": "#000000" },
+        { "title": "Green (Success)", "hex": "#28a745", "rgb": "rgb(40, 167, 69)", "hsl": "hsl(134, 61%, 41%)", "oklch": "oklch(69.5% 0.156 142.4)", "lab": "lab(62.2% -52.2% 44.6%)", "lch": "lch(62.2% 68.7° 139.5°)", "textColor": "#000000" },
+        { "title": "Teal", "hex": "#20c997", "rgb": "rgb(32, 201, 151)", "hsl": "hsl(162, 73%, 46%)", "oklch": "oklch(78.1% 0.108 166.8)", "lab": "lab(73.4% -47.1% 18.0%)", "lch": "lch(73.4% 50.4° 159.8°)", "textColor": "#000000" },
+        { "title": "Cyan (Info)", "hex": "#17a2b8", "rgb": "rgb(23, 162, 184)", "hsl": "hsl(188, 78%, 41%)", "oklch": "oklch(67.4% 0.078 206.4)", "lab": "lab(62.1% -24.4% -22.9%)", "lch": "lch(62.1% 33.4° 223.2°)", "textColor": "#ffffff" }
+      ]
+    },
+
+    {
+      "groupTitle": "Pokémon Colors",
+      "colors": [
+        { "title": "Bug", "hex": "#a8b821", "rgb": "rgb(168, 184, 33)", "hsl": "hsl(66, 70%, 43%)", "oklch": "oklch(72.9% 0.098 87.4)", "lab": "lab(70.4% -17.8% 65.1%)", "lch": "lch(70.4% 67.5° 105.3°)", "textColor": "#000000" },
+        { "title": "Dark", "hex": "#6f5848", "rgb": "rgb(111, 88, 72)", "hsl": "hsl(25, 21%, 36%)", "oklch": "oklch(42.8% 0.035 41.9)", "lab": "lab(38.4% 7.1% 13.1%)", "lch": "lch(38.4% 14.9° 61.6°)", "textColor": "#ffffff" },
+        { "title": "Dragon", "hex": "#7038f9", "rgb": "rgb(112, 56, 249)", "hsl": "hsl(257, 94%, 60%)", "oklch": "oklch(53.1% 0.234 270.1)", "lab": "lab(37.8% 49.8% -98.7%)", "lch": "lch(37.8% 110.3° 296.8°)", "textColor": "#ffffff" },
+        { "title": "Electric", "hex": "#f8d030", "rgb": "rgb(248, 208, 48)", "hsl": "hsl(48, 93%, 58%)", "oklch": "oklch(87.2% 0.134 85.9)", "lab": "lab(83.8% -5.2% 72.1%)", "lch": "lch(83.8% 72.3° 94.1°)", "textColor": "#000000" },
+        { "title": "Fairy", "hex": "#ffaec9", "rgb": "rgb(255, 174, 201)", "hsl": "hsl(340, 100%, 84%)", "oklch": "oklch(82.1% 0.089 353.4)", "lab": "lab(77.4% 29.8% -3.2%)", "lch": "lch(77.4% 30.0° 353.9°)", "textColor": "#000000" },
+        { "title": "Fighting", "hex": "#c03028", "rgb": "rgb(192, 48, 40)", "hsl": "hsl(3, 66%, 45%)", "oklch": "oklch(54.8% 0.146 22.2)", "lab": "lab(44.8% 49.8% 31.2%)", "lch": "lch(44.8% 58.9° 32.0°)", "textColor": "#ffffff" },
+        { "title": "Fire", "hex": "#f07f2f", "rgb": "rgb(240, 127, 47)", "hsl": "hsl(25, 86%, 56%)", "oklch": "oklch(73.2% 0.145 45.4)", "lab": "lab(64.2% 31.8% 54.2%)", "lch": "lch(64.2% 63.1° 59.6°)", "textColor": "#000000" },
+        { "title": "Flying", "hex": "#a890f0", "rgb": "rgb(168, 144, 240)", "hsl": "hsl(255, 75%, 75%)", "oklch": "oklch(71.7% 0.112 284.7)", "lab": "lab(66.4% 24.2% -42.1%)", "lch": "lch(66.4% 48.6° 299.9°)", "textColor": "#000000" },
+        { "title": "Ghost", "hex": "#715899", "rgb": "rgb(113, 88, 153)", "hsl": "hsl(263, 27%, 47%)", "oklch": "oklch(44.3% 0.089 290.1)", "lab": "lab(41.2% 20.8% -27.1%)", "lch": "lch(41.2% 34.3° 307.5°)", "textColor": "#ffffff" },
+        { "title": "Grass", "hex": "#78c750", "rgb": "rgb(120, 199, 80)", "hsl": "hsl(100, 53%, 55%)", "oklch": "oklch(75.5% 0.108 123.4)", "lab": "lab(73.8% -38.7% 49.8%)", "lch": "lch(73.8% 63.2° 127.8°)", "textColor": "#000000" },
+        { "title": "Ground", "hex": "#debf67", "rgb": "rgb(222, 191, 103)", "hsl": "hsl(44, 63%, 64%)", "oklch": "oklch(80.2% 0.087 85.9)", "lab": "lab(78.1% -3.2% 47.2%)", "lch": "lch(78.1% 47.3° 93.9°)", "textColor": "#000000" },
+        { "title": "Ice", "hex": "#98d8d8", "rgb": "rgb(152, 216, 216)", "hsl": "hsl(180, 47%, 72%)", "oklch": "oklch(84.7% 0.045 195.1)", "lab": "lab(83.1% -23.1% -6.8%)", "lch": "lch(83.1% 24.1° 196.4°)", "textColor": "#000000" },
+        { "title": "Normal", "hex": "#a9a878", "rgb": "rgb(169, 168, 120)", "hsl": "hsl(59, 22%, 57%)", "oklch": "oklch(69.1% 0.045 87.4)", "lab": "lab(67.2% -7.8% 25.8%)", "lch": "lch(67.2% 27.0° 106.8°)", "textColor": "#000000" },
+        { "title": "Poison", "hex": "#a040a1", "rgb": "rgb(160, 64, 161)", "hsl": "hsl(299, 43%, 44%)", "oklch": "oklch(49.8% 0.134 328.4)", "lab": "lab(42.1% 48.2% -31.8%)", "lch": "lch(42.1% 57.4° 326.6°)", "textColor": "#ffffff" },
+        { "title": "Psychic", "hex": "#f85788", "rgb": "rgb(248, 87, 136)", "hsl": "hsl(342, 91%, 66%)", "oklch": "oklch(67.2% 0.177 353.4)", "lab": "lab(59.8% 64.8% -1.2%)", "lch": "lch(59.8% 64.8° 358.9°)", "textColor": "#ffffff" },
+        { "title": "Rock", "hex": "#b89f38", "rgb": "rgb(184, 159, 56)", "hsl": "hsl(48, 53%, 47%)", "oklch": "oklch(66.1% 0.089 87.4)", "lab": "lab(64.1% -9.8% 52.1%)", "lch": "lch(64.1% 53.0° 100.6°)", "textColor": "#ffffff" },
+        { "title": "Steel", "hex": "#b8b8d0", "rgb": "rgb(184, 184, 208)", "hsl": "hsl(240, 20%, 77%)", "oklch": "oklch(76.9% 0.045 284.7)", "lab": "lab(75.1% 6.8% -12.1%)", "lch": "lch(75.1% 13.9° 299.3°)", "textColor": "#000000" },
+        { "title": "Water", "hex": "#6890f0", "rgb": "rgb(104, 144, 240)", "hsl": "hsl(222, 81%, 67%)", "oklch": "oklch(68.2% 0.123 254.6)", "lab": "lab(60.4% 8.9% -54.8%)", "lch": "lch(60.4% 55.5° 279.2°)", "textColor": "#000000" }
+      ]
+    },
+
+    {
+      "groupTitle": "Tailwind Grays",
+      "colors": [
+        { "title": "Slate 300", "hex": "#cbd5e1", "rgb": "rgb(203, 213, 225)", "hsl": "hsl(213, 27%, 84%)", "oklch": "oklch(86.7% 0.016 235.7)", "lab": "lab(85.4% -2.8% -7.8%)", "lch": "lch(85.4% 8.3° 250.2°)", "textColor": "#000000" },
+        { "title": "Slate 500", "hex": "#64748b", "rgb": "rgb(100, 116, 139)", "hsl": "hsl(215, 16%, 47%)", "oklch": "oklch(52.1% 0.022 235.7)", "lab": "lab(48.4% -1.2% -14.8%)", "lch": "lch(48.4% 14.9° 265.4°)", "textColor": "#ffffff" },
+        { "title": "Slate 700", "hex": "#334155", "rgb": "rgb(51, 65, 85)", "hsl": "hsl(215, 25%, 27%)", "oklch": "oklch(32.5% 0.019 235.7)", "lab": "lab(28.1% -1.8% -12.8%)", "lch": "lch(28.1% 13.0° 262.0°)", "textColor": "#ffffff" },
+        { "title": "Gray 300", "hex": "#d1d5db", "rgb": "rgb(209, 213, 219)", "hsl": "hsl(216, 12%, 84%)", "oklch": "oklch(87.1% 0.005 286.3)", "lab": "lab(85.7% -1.2% -3.2%)", "lch": "lch(85.7% 3.4° 249.4°)", "textColor": "#000000" },
+        { "title": "Gray 500", "hex": "#6b7280", "rgb": "rgb(107, 114, 128)", "hsl": "hsl(220, 9%, 46%)", "oklch": "oklch(52.9% 0.004 286.3)", "lab": "lab(48.9% -0.8% -8.1%)", "lch": "lch(48.9% 8.1° 264.4°)", "textColor": "#ffffff" },
+        { "title": "Gray 700", "hex": "#374151", "rgb": "rgb(55, 65, 81)", "hsl": "hsl(217, 19%, 27%)", "oklch": "oklch(33.1% 0.009 286.3)", "lab": "lab(28.4% -1.2% -9.8%)", "lch": "lch(28.4% 9.9° 262.9°)", "textColor": "#ffffff" },
+        { "title": "Zinc 300", "hex": "#d4d4d8", "rgb": "rgb(212, 212, 216)", "hsl": "hsl(240, 5%, 84%)", "oklch": "oklch(87.0% 0.003 286.3)", "lab": "lab(85.6% -0.2% -1.6%)", "lch": "lch(85.6% 1.6° 262.8°)", "textColor": "#000000" },
+        { "title": "Zinc 500", "hex": "#71717a", "rgb": "rgb(113, 113, 122)", "hsl": "hsl(240, 4%, 46%)", "oklch": "oklch(52.7% 0.006 286.3)", "lab": "lab(48.7% 0.2% -3.6%)", "lch": "lch(48.7% 3.6° 273.2°)", "textColor": "#ffffff" },
+        { "title": "Zinc 700", "hex": "#3f3f46", "rgb": "rgb(63, 63, 70)", "hsl": "hsl(240, 5%, 26%)", "oklch": "oklch(32.7% 0.007 286.3)", "lab": "lab(27.8% 0.2% -2.8%)", "lch": "lch(27.8% 2.8° 274.1°)", "textColor": "#ffffff" }
+      ]
+    },
+
+    {
+      "groupTitle": "Tailwind Colors",
+      "colors": [
+        { "title": "Red 500", "hex": "#ef4444", "rgb": "rgb(239, 68, 68)", "hsl": "hsl(0, 84%, 60%)", "oklch": "oklch(62.2% 0.209 27.3)", "lab": "lab(54.2% 62.8% 41.2%)", "lch": "lch(54.2% 74.8° 33.3°)", "textColor": "#ffffff" },
+        { "title": "Orange 500", "hex": "#f97316", "rgb": "rgb(249, 115, 22)", "hsl": "hsl(25, 95%, 53%)", "oklch": "oklch(74.8% 0.153 41.9)", "lab": "lab(65.1% 31.2% 57.8%)", "lch": "lch(65.1% 65.8° 61.6°)", "textColor": "#ffffff" },
+        { "title": "Amber 500", "hex": "#f59e0b", "rgb": "rgb(245, 158, 11)", "hsl": "hsl(38, 92%, 50%)", "oklch": "oklch(76.9% 0.134 71.7)", "lab": "lab(69.8% 10.8% 69.2%)", "lch": "lch(69.8% 70.0° 81.1°)", "textColor": "#000000" },
+        { "title": "Yellow 500", "hex": "#eab308", "rgb": "rgb(234, 179, 8)", "hsl": "hsl(45, 93%, 47%)", "oklch": "oklch(78.7% 0.134 85.9)", "lab": "lab(74.8% -2.1% 76.2%)", "lch": "lch(74.8% 76.3° 91.6°)", "textColor": "#000000" },
+        { "title": "Lime 500", "hex": "#84cc16", "rgb": "rgb(132, 204, 22)", "hsl": "hsl(84, 81%, 44%)", "oklch": "oklch(78.0% 0.134 109.8)", "lab": "lab(76.2% -31.2% 70.8%)", "lch": "lch(76.2% 77.4° 113.8°)", "textColor": "#000000" },
+        { "title": "Green 500", "hex": "#22c55e", "rgb": "rgb(34, 197, 94)", "hsl": "hsl(142, 71%, 45%)", "oklch": "oklch(74.6% 0.149 142.5)", "lab": "lab(72.2% -57.8% 46.2%)", "lch": "lch(72.2% 73.9° 141.4°)", "textColor": "#000000" },
+        { "title": "Emerald 500", "hex": "#10b981", "rgb": "rgb(16, 185, 129)", "hsl": "hsl(160, 84%, 39%)", "oklch": "oklch(70.9% 0.123 156.6)", "lab": "lab(68.2% -52.8% 24.2%)", "lch": "lch(68.2% 58.1° 155.5°)", "textColor": "#ffffff" },
+        { "title": "Teal 500", "hex": "#14b8a6", "rgb": "rgb(20, 184, 166)", "hsl": "hsl(173, 80%, 40%)", "oklch": "oklch(70.8% 0.098 180.8)", "lab": "lab(68.2% -42.8% 2.1%)", "lch": "lch(68.2% 42.9° 177.2°)", "textColor": "#ffffff" },
+        { "title": "Cyan 500", "hex": "#06b6d4", "rgb": "rgb(6, 182, 212)", "hsl": "hsl(189, 94%, 43%)", "oklch": "oklch(70.0% 0.098 195.1)", "lab": "lab(67.8% -32.2% -21.2%)", "lch": "lch(67.8% 38.6° 213.3°)", "textColor": "#ffffff" },
+        { "title": "Sky 500", "hex": "#0ea5e9", "rgb": "rgb(14, 165, 233)", "hsl": "hsl(199, 89%, 48%)", "oklch": "oklch(68.5% 0.123 235.4)", "lab": "lab(65.2% -9.8% -46.3%)", "lch": "lch(65.2% 47.3° 258.1°)", "textColor": "#ffffff" },
+        { "title": "Blue 500", "hex": "#3b82f6", "rgb": "rgb(59, 130, 246)", "hsl": "hsl(217, 91%, 60%)", "oklch": "oklch(70.7% 0.165 254.6)", "lab": "lab(54.3% 5.7% -60.2%)", "lch": "lch(54.3% 60.5° 275.4°)", "textColor": "#ffffff" },
+        { "title": "Indigo 500", "hex": "#6366f1", "rgb": "rgb(99, 102, 241)", "hsl": "hsl(239, 84%, 67%)", "oklch": "oklch(62.2% 0.165 273.9)", "lab": "lab(49.2% 32.8% -78.2%)", "lch": "lch(49.2% 85.0° 292.7°)", "textColor": "#ffffff" },
+        { "title": "Violet 500", "hex": "#8b5cf6", "rgb": "rgb(139, 92, 246)", "hsl": "hsl(258, 90%, 66%)", "oklch": "oklch(64.6% 0.196 293.4)", "lab": "lab(53.2% 44.8% -78.2%)", "lch": "lch(53.2% 90.1° 299.8°)", "textColor": "#ffffff" },
+        { "title": "Purple 500", "hex": "#a855f7", "rgb": "rgb(168, 85, 247)", "hsl": "hsl(271, 91%, 65%)", "oklch": "oklch(64.6% 0.196 303.4)", "lab": "lab(55.2% 56.8% -71.2%)", "lch": "lch(55.2% 91.2° 308.6°)", "textColor": "#ffffff" },
+        { "title": "Fuchsia 500", "hex": "#d946ef", "rgb": "rgb(217, 70, 239)", "hsl": "hsl(292, 84%, 61%)", "oklch": "oklch(69.7% 0.222 328.4)", "lab": "lab(61.2% 74.8% -52.8%)", "lch": "lch(61.2% 91.8° 324.8°)", "textColor": "#ffffff" },
+        { "title": "Pink 500", "hex": "#ec4899", "rgb": "rgb(236, 72, 153)", "hsl": "hsl(330, 81%, 60%)", "oklch": "oklch(65.7% 0.189 353.4)", "lab": "lab(57.2% 65.8% -7.2%)", "lch": "lch(57.2% 66.2° 353.8°)", "textColor": "#ffffff" },
+        { "title": "Rose 500", "hex": "#f43f5e", "rgb": "rgb(244, 63, 94)", "hsl": "hsl(350, 89%, 60%)", "oklch": "oklch(63.2% 0.189 12.2)", "lab": "lab(55.8% 61.8% 18.2%)", "lch": "lch(55.8% 64.4° 16.4°)", "textColor": "#ffffff" }
+      ]
+    },
+
+    {
+      "groupTitle": "Tailwind Light Shades",
+      "colors": [
+        { "title": "Red 300", "hex": "#fca5a5", "rgb": "rgb(252, 165, 165)", "hsl": "hsl(0, 93%, 82%)", "oklch": "oklch(79.1% 0.123 27.3)", "lab": "lab(74.8% 37.2% 24.1%)", "lch": "lch(74.8% 44.3° 32.9°)", "textColor": "#000000" },
+        { "title": "Orange 300", "hex": "#fdba74", "rgb": "rgb(253, 186, 116)", "hsl": "hsl(31, 97%, 72%)", "oklch": "oklch(82.4% 0.089 41.9)", "lab": "lab(78.4% 18.2% 38.1%)", "lch": "lch(78.4% 42.2° 64.4°)", "textColor": "#000000" },
+        { "title": "Amber 300", "hex": "#fcd34d", "rgb": "rgb(252, 211, 77)", "hsl": "hsl(46, 96%, 65%)", "oklch": "oklch(87.2% 0.098 71.7)", "lab": "lab(84.8% -2.1% 58.1%)", "lch": "lch(84.8% 58.2° 92.1°)", "textColor": "#000000" },
+        { "title": "Yellow 300", "hex": "#fde047", "rgb": "rgb(253, 224, 71)", "hsl": "hsl(50, 98%, 64%)", "oklch": "oklch(90.7% 0.098 85.9)", "lab": "lab(89.4% -8.2% 69.2%)", "lch": "lch(89.4% 69.7° 96.7°)", "textColor": "#000000" },
+        { "title": "Lime 300", "hex": "#bef264", "rgb": "rgb(190, 242, 100)", "hsl": "hsl(82, 84%, 67%)", "oklch": "oklch(87.8% 0.098 109.8)", "lab": "lab(89.4% -34.2% 58.1%)", "lch": "lch(89.4% 67.3° 120.5°)", "textColor": "#000000" },
+        { "title": "Green 300", "hex": "#86efac", "rgb": "rgb(134, 239, 172)", "hsl": "hsl(142, 76%, 73%)", "oklch": "oklch(87.8% 0.098 142.5)", "lab": "lab(89.4% -44.2% 32.1%)", "lch": "lch(89.4% 54.2° 144.0°)", "textColor": "#000000" },
+        { "title": "Emerald 300", "hex": "#6ee7b7", "rgb": "rgb(110, 231, 183)", "hsl": "hsl(156, 73%, 67%)", "oklch": "oklch(85.8% 0.078 156.6)", "lab": "lab(87.4% -42.8% 15.2%)", "lch": "lch(87.4% 45.5° 160.4°)", "textColor": "#000000" },
+        { "title": "Teal 300", "hex": "#5eead4", "rgb": "rgb(94, 234, 212)", "hsl": "hsl(171, 76%, 64%)", "oklch": "oklch(87.0% 0.067 180.8)", "lab": "lab(88.4% -35.2% 1.2%)", "lch": "lch(88.4% 35.2° 178.0°)", "textColor": "#000000" },
+        { "title": "Cyan 300", "hex": "#67e8f9", "rgb": "rgb(103, 232, 249)", "hsl": "hsl(187, 92%, 69%)", "oklch": "oklch(87.0% 0.067 195.1)", "lab": "lab(88.4% -26.2% -17.2%)", "lch": "lch(88.4% 31.2° 213.3°)", "textColor": "#000000" },
+        { "title": "Sky 300", "hex": "#7dd3fc", "rgb": "rgb(125, 211, 252)", "hsl": "hsl(199, 95%, 74%)", "oklch": "oklch(84.3% 0.089 235.4)", "lab": "lab(82.4% -8.2% -31.2%)", "lch": "lch(82.4% 32.3° 255.2°)", "textColor": "#000000" },
+        { "title": "Blue 300", "hex": "#93c5fd", "rgb": "rgb(147, 197, 253)", "hsl": "hsl(213, 93%, 78%)", "oklch": "oklch(84.3% 0.101 254.6)", "lab": "lab(78.4% 1.9% -32.7%)", "lch": "lch(78.4% 32.8° 273.3°)", "textColor": "#000000" },
+        { "title": "Indigo 300", "hex": "#a5b4fc", "rgb": "rgb(165, 180, 252)", "hsl": "hsl(230, 91%, 82%)", "oklch": "oklch(78.7% 0.101 273.9)", "lab": "lab(74.4% 15.8% -35.2%)", "lch": "lch(74.4% 38.6° 294.2°)", "textColor": "#000000" },
+        { "title": "Violet 300", "hex": "#c4b5fd", "rgb": "rgb(196, 181, 253)", "hsl": "hsl(253, 95%, 85%)", "oklch": "oklch(80.7% 0.112 293.4)", "lab": "lab(76.4% 21.8% -38.2%)", "lch": "lch(76.4% 44.1° 299.7°)", "textColor": "#000000" },
+        { "title": "Purple 300", "hex": "#d8b4fe", "rgb": "rgb(216, 180, 254)", "hsl": "hsl(269, 96%, 85%)", "oklch": "oklch(80.7% 0.112 303.4)", "lab": "lab(76.4% 28.2% -35.2%)", "lch": "lch(76.4% 45.1° 308.9°)", "textColor": "#000000" },
+        { "title": "Fuchsia 300", "hex": "#f0abfc", "rgb": "rgb(240, 171, 252)", "hsl": "hsl(291, 93%, 83%)", "oklch": "oklch(82.1% 0.123 328.4)", "lab": "lab(77.4% 41.2% -25.2%)", "lch": "lch(77.4% 48.4° 328.6°)", "textColor": "#000000" },
+        { "title": "Pink 300", "hex": "#f9a8d4", "rgb": "rgb(249, 168, 212)", "hsl": "hsl(327, 87%, 82%)", "oklch": "oklch(79.1% 0.112 353.4)", "lab": "lab(74.4% 38.2% -4.2%)", "lch": "lch(74.4% 38.4° 353.7°)", "textColor": "#000000" },
+        { "title": "Rose 300", "hex": "#fda4af", "rgb": "rgb(253, 164, 175)", "hsl": "hsl(353, 96%, 82%)", "oklch": "oklch(80.2% 0.112 12.2)", "lab": "lab(75.4% 35.2% 10.8%)", "lch": "lch(75.4% 36.8° 17.1°)", "textColor": "#000000" }
+      ]
+    },
+
+    {
+      "groupTitle": "Tailwind Dark Shades", 
+      "colors": [
+        { "title": "Red 700", "hex": "#b91c1c", "rgb": "rgb(185, 28, 28)", "hsl": "hsl(0, 74%, 42%)", "oklch": "oklch(47.2% 0.177 27.3)", "lab": "lab(39.2% 52.8% 34.2%)", "lch": "lch(39.2% 62.8° 33.0°)", "textColor": "#ffffff" },
+        { "title": "Orange 700", "hex": "#c2410c", "rgb": "rgb(194, 65, 12)", "hsl": "hsl(17, 88%, 40%)", "oklch": "oklch(55.6% 0.134 41.9)", "lab": "lab(45.2% 42.8% 48.1%)", "lch": "lch(45.2% 64.2° 48.3°)", "textColor": "#ffffff" },
+        { "title": "Amber 700", "hex": "#b45309", "rgb": "rgb(180, 83, 9)", "hsl": "hsl(26, 90%, 37%)", "oklch": "oklch(56.7% 0.123 71.7)", "lab": "lab(47.2% 22.8% 54.2%)", "lch": "lch(47.2% 58.8° 67.1°)", "textColor": "#ffffff" },
+        { "title": "Yellow 700", "hex": "#a16207", "rgb": "rgb(161, 98, 7)", "hsl": "hsl(35, 92%, 33%)", "oklch": "oklch(56.1% 0.112 85.9)", "lab": "lab(47.2% 8.2% 54.2%)", "lch": "lch(47.2% 54.8° 81.4°)", "textColor": "#ffffff" },
+        { "title": "Lime 700", "hex": "#4d7c0f", "rgb": "rgb(77, 124, 15)", "hsl": "hsl(86, 78%, 27%)", "oklch": "oklch(48.5% 0.098 109.8)", "lab": "lab(46.2% -21.2% 42.8%)", "lch": "lch(46.2% 47.8° 116.3°)", "textColor": "#ffffff" },
+        { "title": "Green 700", "hex": "#15803d", "rgb": "rgb(21, 128, 61)", "hsl": "hsl(142, 72%, 29%)", "oklch": "oklch(48.2% 0.112 142.5)", "lab": "lab(46.2% -38.2% 28.2%)", "lch": "lch(46.2% 47.8° 143.6°)", "textColor": "#ffffff" },
+        { "title": "Emerald 700", "hex": "#047857", "rgb": "rgb(4, 120, 87)", "hsl": "hsl(163, 94%, 24%)", "oklch": "oklch(44.5% 0.089 156.6)", "lab": "lab(42.2% -35.2% 12.8%)", "lch": "lch(42.2% 37.5° 160.0°)", "textColor": "#ffffff" },
+        { "title": "Teal 700", "hex": "#0f766e", "rgb": "rgb(15, 118, 110)", "hsl": "hsl(175, 77%, 26%)", "oklch": "oklch(44.2% 0.067 180.8)", "lab": "lab(42.2% -28.2% 2.1%)", "lch": "lch(42.2% 28.3° 175.7°)", "textColor": "#ffffff" },
+        { "title": "Cyan 700", "hex": "#0e7490", "rgb": "rgb(14, 116, 144)", "hsl": "hsl(193, 82%, 31%)", "oklch": "oklch(44.2% 0.067 195.1)", "lab": "lab(42.2% -18.2% -15.2%)", "lch": "lch(42.2% 23.8° 219.9°)", "textColor": "#ffffff" },
+        { "title": "Sky 700", "hex": "#0369a1", "rgb": "rgb(3, 105, 161)", "hsl": "hsl(201, 96%, 32%)", "oklch": "oklch(42.2% 0.089 235.4)", "lab": "lab(39.2% -5.8% -35.2%)", "lch": "lch(39.2% 35.7° 260.7°)", "textColor": "#ffffff" },
+        { "title": "Blue 700", "hex": "#1d4ed8", "rgb": "rgb(29, 78, 216)", "hsl": "hsl(224, 76%, 48%)", "oklch": "oklch(56.2% 0.215 254.6)", "lab": "lab(35.2% 18.6% -67.5%)", "lch": "lch(35.2% 70.0° 285.4°)", "textColor": "#ffffff" },
+        { "title": "Indigo 700", "hex": "#4338ca", "rgb": "rgb(67, 56, 202)", "hsl": "hsl(245, 58%, 51%)", "oklch": "oklch(41.7% 0.134 273.9)", "lab": "lab(31.2% 28.2% -62.8%)", "lch": "lch(31.2% 68.9° 294.2°)", "textColor": "#ffffff" },
+        { "title": "Violet 700", "hex": "#6d28d9", "rgb": "rgb(109, 40, 217)", "hsl": "hsl(263, 70%, 50%)", "oklch": "oklch(44.8% 0.164 293.4)", "lab": "lab(34.2% 42.8% -68.2%)", "lch": "lch(34.2% 80.2° 302.1°)", "textColor": "#ffffff" },
+        { "title": "Purple 700", "hex": "#7c3aed", "rgb": "rgb(124, 58, 237)", "hsl": "hsl(262, 83%, 58%)", "oklch": "oklch(49.8% 0.177 303.4)", "lab": "lab(39.2% 48.2% -72.2%)", "lch": "lch(39.2% 86.8° 303.7°)", "textColor": "#ffffff" },
+        { "title": "Fuchsia 700", "hex": "#a21caf", "rgb": "rgb(162, 28, 175)", "hsl": "hsl(295, 72%, 40%)", "oklch": "oklch(48.2% 0.164 328.4)", "lab": "lab(39.2% 58.2% -42.8%)", "lch": "lch(39.2% 72.2° 323.7°)", "textColor": "#ffffff" },
+        { "title": "Pink 700", "hex": "#be185d", "rgb": "rgb(190, 24, 93)", "hsl": "hsl(335, 78%, 42%)", "oklch": "oklch(45.7% 0.145 353.4)", "lab": "lab(37.2% 52.8% -8.2%)", "lch": "lch(37.2% 53.4° 351.2°)", "textColor": "#ffffff" },
+        { "title": "Rose 700", "hex": "#be123c", "rgb": "rgb(190, 18, 60)", "hsl": "hsl(345, 83%, 41%)", "oklch": "oklch(44.2% 0.154 12.2)", "lab": "lab(36.2% 52.8% 18.2%)", "lch": "lch(36.2% 55.8° 19.0°)", "textColor": "#ffffff" }
+      ]
+    }
+  ]
+}

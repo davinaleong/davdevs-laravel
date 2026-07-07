@@ -35,6 +35,11 @@ $jsonLd = match ($entry->contentType->slug) {
         </div>
         @endif
 
+        @if($entry->contentType->react_island && $entry->reactComponent)
+        <div data-react-component="{{ $entry->reactComponent->slug }}" style="margin-bottom:32px;"></div>
+        @vite('resources/js/tool-loader.jsx')
+        @endif
+
         <div class="prose" style="font-family:'Lora',serif;font-size:14px;line-height:1.8;color:var(--text-body);">@markdown($entry->body)</div>
 
         @if($entry->videoEmbeds->isNotEmpty())

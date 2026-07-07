@@ -163,3 +163,138 @@ body {
     color: var(--text-primary);
     font-family: var(--font-sans);
 }
+
+/* ─── React tool islands (resources/js/components) ─── */
+.tool-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: opacity var(--duration-fast) var(--easing-default);
+}
+.tool-btn:hover { opacity: 0.75; }
+.tool-btn:disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+.tool-btn-primary {
+    background: var(--accent);
+    color: var(--bg-page);
+    border: none;
+}
+.tool-btn-secondary {
+    background: var(--bg-page);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+}
+.tool-btn-danger {
+    background: var(--tertiary);
+    color: var(--bg-page);
+    border: none;
+}
+.tool-btn-success {
+    background: var(--secondary);
+    color: var(--bg-page);
+    border: none;
+}
+.tool-btn-gray {
+    background: var(--bg-surface-2);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+}
+.tool-btn-icon {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--border-default);
+    padding: 0.25rem;
+}
+.tool-btn-icon:hover { border-color: var(--accent); opacity: 1; }
+.tool-btn-list {
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem;
+    border-radius: 0;
+    border-bottom: 1px solid var(--border-default);
+    background: transparent;
+    color: var(--text-primary);
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+}
+.tool-btn-list:hover { background: var(--bg-surface-1); opacity: 1; }
+.tool-btn-list:last-child { border-bottom: none; }
+
+.tool-panel {
+    background: var(--bg-page);
+    border: 1px solid var(--border-default);
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+.tool-panel-icon {
+    background: var(--accent-tint);
+    color: var(--accent);
+    border-radius: 6px;
+    padding: 0.5rem;
+    display: flex;
+}
+.tool-panel-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+}
+.tool-panel-description {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.tool-input {
+    min-height: 2.5em;
+    width: 100%;
+    display: block;
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-default);
+    background: var(--bg-page);
+    color: var(--text-primary);
+    border-radius: 5px;
+}
+.tool-input::placeholder { color: var(--text-muted); }
+.tool-input-surface {
+    background: var(--bg-surface-2);
+    border: 1px solid var(--border-default);
+    border-radius: 5px;
+}
+
+.tool-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+.tool-label-required { color: var(--tertiary); margin-left: 0.25rem; }
+
+.tool-surface-muted {
+    background: var(--bg-surface-2);
+    border: 1px solid var(--border-default);
+}
+.tool-callout-accent {
+    background: var(--accent-tint);
+    border: 1px solid var(--accent-border);
+    color: var(--text-primary);
+}
+.tool-callout-success {
+    background: var(--secondary-tint);
+    border: 1px solid var(--secondary-border);
+    color: var(--text-primary);
+}
+.tool-callout-danger {
+    background: var(--tertiary-tint);
+    border: 1px solid var(--tertiary-border);
+    color: var(--text-primary);
+}
+.tool-text-accent { color: var(--accent); }
+.tool-text-success { color: var(--secondary); }
+.tool-text-danger { color: var(--tertiary); }
+.tool-text-muted { color: var(--text-muted); }

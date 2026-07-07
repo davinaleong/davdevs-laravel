@@ -13,6 +13,7 @@ class Publication extends Model
 
     protected $fillable = [
         'ulid', 'layout_id', 'category_id', 'og_image_id', 'cover_image_id',
+        'publication_template_id', 'react_component_id',
         'publication_type', 'title', 'slug', 'tagline', 'excerpt', 'body',
         'status', 'featured', 'bundle', 'published_at',
     ];
@@ -60,9 +61,29 @@ class Publication extends Model
         return $this->hasOne(PublicationStore::class);
     }
 
+    public function template()
+    {
+        return $this->belongsTo(PublicationTemplate::class, 'publication_template_id');
+    }
+
+    public function reactComponent()
+    {
+        return $this->belongsTo(ReactComponent::class);
+    }
+
+    public function variants()
+    {
+        return $this->hasMany(PublicationVariant::class)->orderBy('sort_order');
+    }
+
     public function meta()
     {
         return $this->hasMany(PublicationMeta::class);
+    }
+
+    public function getMeta(string $key): ?string
+    {
+        return $this->meta()->where('key', $key)->value('value');
     }
 
     public function images()

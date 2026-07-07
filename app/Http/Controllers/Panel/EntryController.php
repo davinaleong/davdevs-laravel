@@ -9,6 +9,7 @@ use App\Models\Entry;
 use App\Models\Image;
 use App\Models\Layout;
 use App\Models\Link;
+use App\Models\ReactComponent;
 use App\Models\Tag;
 use App\Models\VideoEmbed;
 use Illuminate\Http\Request;
@@ -161,9 +162,10 @@ class EntryController extends Controller
         $images = Image::orderByDesc('id')->limit(60)->get();
         $videoEmbeds = VideoEmbed::orderByDesc('id')->limit(60)->get();
         $links = Link::orderBy('sort_order')->get();
+        $reactComponents = ReactComponent::where('active', true)->orderBy('name')->get();
 
         return view('panel.entries-form', compact(
-            'entry', 'contentTypes', 'layouts', 'categories', 'tags', 'images', 'videoEmbeds', 'links'
+            'entry', 'contentTypes', 'layouts', 'categories', 'tags', 'images', 'videoEmbeds', 'links', 'reactComponents'
         ));
     }
 
@@ -174,6 +176,7 @@ class EntryController extends Controller
             'layout_id' => 'required|exists:layouts,id',
             'category_id' => 'nullable|exists:categories,id',
             'og_image_id' => 'nullable|exists:images,id',
+            'react_component_id' => 'nullable|exists:react_components,id',
             'title' => 'required|string|max:500',
             'excerpt' => 'nullable|string',
             'body' => 'nullable|string',
