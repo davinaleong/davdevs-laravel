@@ -29,9 +29,12 @@ class SiteController extends Controller
             ];
         });
 
-        $settings = $this->settings();
+        $publications = Publication::published()->where('bundle', false)->with('coverImage', 'store')->orderByDesc('published_at')->orderByDesc('id')->limit(4)->get();
 
-        return view('site.home', compact('types', 'sections', 'settings'));
+        $settings = $this->settings();
+        $showPrice = $settings['publication_ebook_show_price'] ?? true;
+
+        return view('site.home', compact('types', 'sections', 'publications', 'settings', 'showPrice'));
     }
 
     public function listing(Request $request, string $typeSlug)
