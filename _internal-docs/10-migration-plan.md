@@ -83,6 +83,17 @@ This means eBook migration is not a mechanical frontmatter-to-row import — it 
 
 This should be resolved with the user before writing the ebook importer, since it affects both the importer and possibly the `publication` Blade layout.
 
+**Audit update (2026-07-07):** the 6 real ebook files (`_template.md` excluded) are not one shape — there are 4:
+
+1. Plain single ebook (`carried-by-grace.md`) — matches the flat schema in §3.
+2. Bundle-of-existing-books (`carried-guided-held.md`) — bundle-level `price`/`individualTotal`/`savings` plus a nested `includes[]` referencing 3 other ebook slugs by title/subtitle/description/coverImage/price. Maps to the existing `publications` + `publication_bundles` tables reasonably well.
+3. Variant-pricing single ebook (`its-not-magic-code.md`) — `basePrice` + a `variants[]` array (name/price/description/**own** `lqProductId` per variant, e.g. "Ebook Only" vs "Ebook + Exercise Pack"). **No table in the current schema represents multiple purchasable SKUs of one title** — needs a schema decision (e.g. a `publication_variants` table) before this can import correctly.
+4. Multi-volume series (`scrolls-for-the-screen-generation.md`) — a `volumes[]` array of 6 entries, each with its own title/description/coverImage/backImage/`lqProductId`, plus a series-level `bundlePrice`/`bundleSavings`/`lqBundleProductId`. Each volume is close to a full standalone book embedded inline, unlike case 2's reference-by-slug.
+
+`jesus-and-ai.md` also carries a full bespoke landing page in frontmatter (`heroSubtitle/heroBody*`, `aboutHeading1/2`, `aboutBody[]` rich blocks, `quote{text,citation}`, `themes[]` cards, `cta*` fields) — this is the §7.1 bespoke-layout problem in concrete form, and it's richer than title/description/body/images can capture.
+
+**Decision (2026-07-07):** ebooks are deferred entirely from the first migration pass (articles/projects/tools/notebooks/knowledge-sharing/fem/sermons/static only). Come back to this once the variant/bundle schema question above is settled.
+
 ### 7.2 Slug/URL stability
 
 Need to confirm the actual old-site slug convention (e.g. is it date-prefixed, or a plain freeform slug field?) before deciding whether imported entries can reuse old slugs directly or need `redirects` table entries for changed URLs.
