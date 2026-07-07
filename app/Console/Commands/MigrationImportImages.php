@@ -51,6 +51,7 @@ class MigrationImportImages extends Command
         }
 
         $map = [];
+        $failures = [];
         $bar = $this->output->createProgressBar($files->count());
         $bar->start();
 
@@ -63,6 +64,7 @@ class MigrationImportImages extends Command
             // Cloudinary console by content type + the old site's own date/slug-bearing filename,
             // with no need to cross-reference the database.
             $publicId = "entries/{$typeSlug}/".Str::slug($basename);
+            $fullCloudinaryId = "davdevs/{$publicId}";
 
             if ($dryRun) {
                 $map[$relative] = null;
@@ -71,22 +73,49 @@ class MigrationImportImages extends Command
                 continue;
             }
 
-            $upload = $cloudinary->upload(new UploadedFile($path, basename($path), null, null, true), publicId: $publicId);
+            // Resumable across partial runs (e.g. a prior run aborted partway through):
+            // if this path's asset already exists in Cloudinary/the DB, reuse it instead of
+            // re-uploading and creating a duplicate `images` row.
+            $existing = Image::where('cloudinary_id', $fullCloudinaryId)->first();
+            if ($existing) {
+                $map[$relative] = $existing->id;
+                $bar->advance();
 
-            $image = Image::create([
-                'cloudinary_id' => $upload['cloudinary_id'],
-                'url' => $upload['url'],
-                'width' => $upload['width'],
-                'height' => $upload['height'],
-                'format' => $upload['format'],
-                'bytes' => $upload['bytes'],
-            ]);
+                continue;
+            }
 
-            $map[$relative] = $image->id;
+            try {
+                $upload = $cloudinary->upload(new UploadedFile($path, basename($path), null, null, true), publicId: $publicId);
+
+                $image = Image::create([
+                    'cloudinary_id' => $upload['cloudinary_id'],
+                    'url' => $upload['url'],
+                    'width' => $upload['width'],
+                    'height' => $upload['height'],
+                    'format' => $upload['format'],
+                    'bytes' => $upload['bytes'],
+                ]);
+
+                $map[$relative] = $image->id;
+            } catch (\Throwable $e) {
+                // Don't let one bad file (e.g. over Cloudinary's plan file-size limit) abort
+                // the whole batch — record it as unresolved and keep going.
+                $failures[] = "{$relative}: {$e->getMessage()}";
+                $map[$relative] = null;
+            }
+
             $bar->advance();
         }
 
         $bar->finish();
+
+        if (! empty($failures)) {
+            $this->newLine(2);
+            $this->warn('Failed to import '.count($failures).' image(s):');
+            foreach ($failures as $f) {
+                $this->line("  - {$f}");
+            }
+        }
         $this->newLine(2);
 
         $mapPath = $this->option('map') ?: storage_path('app/migration/image-map.json');
