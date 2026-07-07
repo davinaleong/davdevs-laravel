@@ -1,8 +1,8 @@
 @php
+    $hasVariants = $publication->variants->isNotEmpty();
     $storeUrl = $publication->store?->ls_store_url;
     $priceDisplay = $publication->store?->price_display;
-    $comingSoonNote = $publication->getMeta('store_note');
-    $available = filled($storeUrl);
+    $available = $hasVariants || filled($storeUrl);
     $individualTotal = $publication->getMeta('individual_total');
     $savings = $publication->getMeta('savings');
     $quote = json_decode($publication->getMeta('quote') ?? 'null', true);
@@ -16,7 +16,7 @@
     <header class="pub-nav">
         <span class="pub-nav-title">{{ $publication->title }}</span>
         @if($available)
-            <a href="#get-the-bundle" class="pub-btn pub-btn-outline pub-btn-sm">Get the Bundle</a>
+            <a href="#get-the-bundle" class="pub-btn pub-btn-outline pub-btn-sm">{{ $hasVariants ? 'Choose Your Version' : 'Get the Bundle' }}</a>
         @else
             <span class="pub-btn pub-btn-coming-soon pub-btn-sm">Coming Soon</span>
         @endif
@@ -37,7 +37,9 @@
                     @endif
                     <div class="flex flex-wrap items-center gap-4">
                         @if($available)
-                            <a href="#get-the-bundle" class="pub-btn pub-btn-primary">Get the Bundle — {{ $priceDisplay }}</a>
+                            <a href="#get-the-bundle" class="pub-btn pub-btn-primary">
+                                {{ $hasVariants ? 'Choose Your Version' : 'Get the Bundle — '.$priceDisplay }}
+                            </a>
                         @else
                             <span class="pub-btn pub-btn-coming-soon">Coming Soon</span>
                         @endif
@@ -100,23 +102,16 @@
             <div class="max-w-3xl mx-auto text-center">
                 <hr class="pub-divider mb-16">
                 <p class="pub-label">Get the Bundle</p>
-                <h2 class="pub-heading text-3xl lg:text-4xl mb-6">{{ $memberCount }} books. One gift.</h2>
+                <h2 class="pub-heading text-3xl lg:text-4xl mb-6">{{ $hasVariants ? 'Choose Your Version' : $memberCount.' books. One gift.' }}</h2>
 
-                @if($available)
-                    <div class="pub-heading text-4xl mb-2 pub-accent">{{ $priceDisplay }}</div>
-                    @if($individualTotal || $savings)
-                    <p class="pub-prose mb-8">
-                        @if($individualTotal)<span style="text-decoration: line-through; opacity: 0.5;">{{ $individualTotal }} individually</span>@endif
-                        @if($savings)<span class="pub-accent"> · Save {{ $savings }}</span>@endif
-                    </p>
-                    @endif
-                    <a href="{{ $storeUrl }}" class="pub-btn pub-btn-primary pub-btn-lg">Get the Bundle — {{ $priceDisplay }}</a>
-                @else
-                    <div>
-                        <span class="pub-btn pub-btn-coming-soon"><span class="pub-badge-dot"></span>Coming Soon</span>
-                        @if($comingSoonNote)<p class="pub-prose mt-4">{{ $comingSoonNote }}</p>@endif
-                    </div>
+                @if(!$hasVariants && $available && ($individualTotal || $savings))
+                <p class="pub-prose mb-8">
+                    @if($individualTotal)<span style="text-decoration: line-through; opacity: 0.5;">{{ $individualTotal }} individually</span>@endif
+                    @if($savings)<span class="pub-accent"> · Save {{ $savings }}</span>@endif
+                </p>
                 @endif
+
+                @include('publications.templates.ebook.partials.pricing', ['publication' => $publication, 'buttonLabel' => 'Get the Bundle'])
             </div>
         </section>
 

@@ -109,28 +109,7 @@
                 <p class="pub-label">Get Your Copy</p>
                 <h2 class="pub-heading text-3xl lg:text-4xl mb-10">{{ $hasVariants ? 'Choose Your Version' : 'Get Your Copy' }}</h2>
 
-                @if($available)
-                    @if($hasVariants)
-                    <div class="grid gap-6 sm:grid-cols-2">
-                        @foreach($publication->variants as $variant)
-                        <div class="pub-card">
-                            <h3 class="pub-prose font-semibold text-lg mb-2" style="opacity: 1;">{{ $variant->name }}</h3>
-                            <div class="pub-heading text-2xl mb-4 pub-accent">{{ $variant->price_display }}</div>
-                            <a href="{{ $variant->ls_product_id ? \Illuminate\Support\Str::finish($storeUrl ?? '#', '/').$variant->ls_product_id : '#' }}" class="pub-btn pub-btn-primary">
-                                Get This Version
-                            </a>
-                        </div>
-                        @endforeach
-                    </div>
-                    @else
-                    <a href="{{ $storeUrl }}" class="pub-btn pub-btn-primary pub-btn-lg">Get the Book — {{ $priceDisplay }}</a>
-                    @endif
-                @else
-                    <div>
-                        <span class="pub-btn pub-btn-coming-soon"><span class="pub-badge-dot"></span>Coming Soon</span>
-                        @if($comingSoonNote)<p class="pub-prose mt-4">{{ $comingSoonNote }}</p>@endif
-                    </div>
-                @endif
+                @include('publications.templates.ebook.partials.pricing', ['publication' => $publication, 'buttonLabel' => 'Get the Book'])
             </div>
         </section>
 
