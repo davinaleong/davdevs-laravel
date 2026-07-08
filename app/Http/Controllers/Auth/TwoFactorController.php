@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -80,7 +81,31 @@ class TwoFactorController extends Controller
         $request->validate(['code' => 'required|digits:6']);
 
         $user = $request->user();
-        $secret = decrypt($user->totp_secret);
+
+        try {
+            $secret = decrypt($user->totp_secret);
+        } catch (DecryptException) {
+            // The stored secret is unreadable (e.g. APP_KEY was rotated).
+            // Clear the corrupted 2FA state and force the user to re-enroll.
+            $user->update([
+                'totp_secret' => null,
+                'totp_enabled' => false,
+                'totp_confirmed_at' => null,
+                'recovery_codes' => null,
+            ]);
+
+            session()->forget('2fa_verified');
+
+            ActivityLog::create([
+                'channel' => 'auth',
+                'level' => 'warning',
+                'message' => "2FA secret decryption failed for {$user->email}; 2FA has been reset.",
+            ]);
+
+            return redirect()->route('2fa.setup')
+                ->withErrors(['code' => 'Your two-factor secret could not be read (the encryption key may have changed). Please set up 2FA again.']);
+        }
+
         $google2fa = app('pragmarx.google2fa');
 
         if (! $google2fa->verifyKey($secret, $request->code)) {
