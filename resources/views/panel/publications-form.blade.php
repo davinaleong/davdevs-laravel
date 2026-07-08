@@ -126,7 +126,10 @@
                             @foreach($links as $l)
                             <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
                                 <input type="checkbox" value="{{ $l->id }}" x-model="selectedLinks" name="links[]" style="accent-color:var(--cms-accent);">
-                                <span style="font-size:12px;color:var(--cms-text-secondary);">{{ $l->label }}</span>
+                                <span style="display:flex;flex-direction:column;overflow:hidden;">
+                                    <span style="font-size:12px;color:var(--cms-text-secondary);">{{ $l->label }}</span>
+                                    <span style="font-size:11px;color:var(--cms-text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ $l->url }}</span>
+                                </span>
                             </label>
                             @endforeach
                         </div>
