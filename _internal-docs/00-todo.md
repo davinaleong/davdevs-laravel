@@ -1,6 +1,7 @@
 # TODO - For Maintenance &amp; Ad-hoc Tasks
 
-- [ ] Add my latest ebook
+- [ ] Add my latest ebook: It's Not Scary (Debug)
+- [ ] Associate the favicons and OG images to their respective publications
 - [ ] Panel broadcast module when a new Entry/Publication is created
     - Make it toggable per social media platform:
         - LinkedIn
@@ -22,3 +23,4 @@
     - Entry/Publication Exercpt: help to generate
     - Entry/Publication Content: have a "prompt" field to instruct AI on how to handle the content.
 - [ ] Panel: create a markdown editor for the Entry/Publication Content field
+- [ ] Panel: in the links selector when attaching them to an entry/publication, also show the URLs of the links
