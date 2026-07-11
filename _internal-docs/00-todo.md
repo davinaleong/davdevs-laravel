@@ -22,5 +22,5 @@
     - Entry/Publication title: help to geneerate
     - Entry/Publication Exercpt: help to generate
     - Entry/Publication Content: have a "prompt" field to instruct AI on how to handle the content.
-- [ ] Panel: create a markdown editor for the Entry/Publication Content field
+- [x] Panel: create a markdown editor for the Entry/Publication Content field
 - [x] Panel: in the links selector when attaching them to an entry/publication, also show the URLs of the links

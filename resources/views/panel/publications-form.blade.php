@@ -9,97 +9,155 @@
         metaRows: {{ json_encode($publication->meta->map(fn($m) => ['key' => $m->key, 'value' => $m->value])->values()->all() ?: [['key' => '', 'value' => '']]) }},
         variantRows: {{ json_encode($publication->variants->map(fn($v) => ['name' => $v->name, 'price_display' => $v->price_display, 'ls_product_id' => $v->ls_product_id])->values()->all() ?: []) }},
     }">
-        <h1 style="font-family:'Inter',sans-serif;font-size:20px;font-weight:600;color:var(--cms-text-primary);margin:0 0 20px;">{{ $publication->exists ? 'Edit Publication' : 'New Publication' }}</h1>
+        <h1
+            style="font-family:'Inter',sans-serif;font-size:20px;font-weight:600;color:var(--cms-text-primary);margin:0 0 20px;">
+            {{ $publication->exists ? 'Edit Publication' : 'New Publication' }}</h1>
 
-        <form method="POST" action="{{ $publication->exists ? route('panel.publications.update', $publication) : route('panel.publications.store') }}">
+        <form method="POST"
+            action="{{ $publication->exists ? route('panel.publications.update', $publication) : route('panel.publications.store') }}">
             @csrf
-            @if($publication->exists) @method('PUT') @endif
+            @if ($publication->exists)
+                @method('PUT')
+            @endif
 
             <div style="display:flex;gap:2px;margin-bottom:16px;border-bottom:1px solid var(--cms-border);">
-                @foreach(['content' => 'Content', 'store' => 'Store', 'media' => 'Media & Links', 'meta' => 'Meta', 'settings' => 'Settings'] as $key => $label)
-                <button type="button" @click="tab = '{{ $key }}'"
-                        :style="tab === '{{ $key }}' ? 'border-bottom:2px solid var(--cms-accent);color:var(--cms-text-primary);' : 'border-bottom:2px solid transparent;color:var(--cms-text-muted);'"
+                @foreach (['content' => 'Content', 'store' => 'Store', 'media' => 'Media & Links', 'meta' => 'Meta', 'settings' => 'Settings'] as $key => $label)
+                    <button type="button" @click="tab = '{{ $key }}'"
+                        :style="tab === '{{ $key }}' ?
+                            'border-bottom:2px solid var(--cms-accent);color:var(--cms-text-primary);' :
+                            'border-bottom:2px solid transparent;color:var(--cms-text-muted);'"
                         style="padding:10px 20px;background:none;border-top:none;border-left:none;border-right:none;font-size:13px;font-weight:500;cursor:pointer;">{{ $label }}</button>
                 @endforeach
             </div>
 
             <div x-show="tab === 'content'">
-                <div style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px;margin-bottom:16px;">
+                <div
+                    style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px;margin-bottom:16px;">
                     <div>
-                        <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Title</label>
-                        <input type="text" name="title" value="{{ old('title', $publication->title) }}" required style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:9px 12px;font-size:15px;color:var(--cms-input-text);">
+                        <label
+                            style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Title</label>
+                        <input type="text" name="title" value="{{ old('title', $publication->title) }}" required
+                            style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:9px 12px;font-size:15px;color:var(--cms-input-text);">
                     </div>
                     <div>
-                        <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Tagline</label>
-                        <input type="text" name="tagline" value="{{ old('tagline', $publication->tagline) }}" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                        <label
+                            style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Tagline</label>
+                        <input type="text" name="tagline" value="{{ old('tagline', $publication->tagline) }}"
+                            style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                     </div>
                     <div>
-                        <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Excerpt</label>
-                        <textarea name="excerpt" rows="2" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">{{ old('excerpt', $publication->excerpt) }}</textarea>
+                        <label
+                            style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Excerpt</label>
+                        <textarea name="excerpt" rows="2"
+                            style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">{{ old('excerpt', $publication->excerpt) }}</textarea>
                     </div>
                     <div>
-                        <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Body (Markdown)</label>
-                        <textarea name="body" rows="16" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.6;color:var(--cms-input-text);">{{ old('body', $publication->body) }}</textarea>
+                        <label
+                            style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Body
+                            (Markdown)</label>
+                        <textarea name="body" rows="16" id="pub-body" data-markdown-editor style="width:100%;box-sizing:border-box;">{{ old('body', $publication->body) }}</textarea>
                     </div>
                 </div>
             </div>
 
             <div x-show="tab === 'store'" x-cloak>
-                <div style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px;margin-bottom:16px;">
+                <div
+                    style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px;margin-bottom:16px;">
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                         <div>
-                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Lemon Squeezy Product ID</label>
-                            <input type="text" name="ls_product_id" value="{{ old('ls_product_id', $publication->store?->ls_product_id) }}" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cms-input-text);">
+                            <label
+                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Lemon
+                                Squeezy Product ID</label>
+                            <input type="text" name="ls_product_id"
+                                value="{{ old('ls_product_id', $publication->store?->ls_product_id) }}"
+                                style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cms-input-text);">
                         </div>
                         <div>
-                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Lemon Squeezy Variant ID</label>
-                            <input type="text" name="ls_variant_id" value="{{ old('ls_variant_id', $publication->store?->ls_variant_id) }}" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cms-input-text);">
+                            <label
+                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Lemon
+                                Squeezy Variant ID</label>
+                            <input type="text" name="ls_variant_id"
+                                value="{{ old('ls_variant_id', $publication->store?->ls_variant_id) }}"
+                                style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cms-input-text);">
                         </div>
                     </div>
                     <div>
-                        <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Store URL</label>
-                        <input type="text" name="ls_store_url" value="{{ old('ls_store_url', $publication->store?->ls_store_url) }}" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cms-input-text);">
+                        <label
+                            style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Store
+                            URL</label>
+                        <input type="text" name="ls_store_url"
+                            value="{{ old('ls_store_url', $publication->store?->ls_store_url) }}"
+                            style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cms-input-text);">
                     </div>
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                         <div>
-                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Price Display</label>
-                            <input type="text" name="price_display" value="{{ old('price_display', $publication->store?->price_display) }}" placeholder="SGD 9.90" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                            <label
+                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Price
+                                Display</label>
+                            <input type="text" name="price_display"
+                                value="{{ old('price_display', $publication->store?->price_display) }}"
+                                placeholder="SGD 9.90"
+                                style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                         </div>
                         <div>
-                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Currency</label>
-                            <input type="text" name="currency" value="{{ old('currency', $publication->store?->currency ?? 'SGD') }}" maxlength="3" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                            <label
+                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Currency</label>
+                            <input type="text" name="currency"
+                                value="{{ old('currency', $publication->store?->currency ?? 'SGD') }}" maxlength="3"
+                                style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                         </div>
                     </div>
                     <div>
-                        <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Free Sample URL</label>
-                        <input type="text" name="free_sample_url" value="{{ old('free_sample_url', $publication->store?->free_sample_url) }}" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cms-input-text);">
+                        <label
+                            style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Free
+                            Sample URL</label>
+                        <input type="text" name="free_sample_url"
+                            value="{{ old('free_sample_url', $publication->store?->free_sample_url) }}"
+                            style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cms-input-text);">
                     </div>
 
                     <div>
-                        <div style="font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Pricing Variants (optional — e.g. "Ebook Only" vs "Ebook + Exercise Pack")</div>
+                        <div style="font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">
+                            Pricing Variants (optional — e.g. "Ebook Only" vs "Ebook + Exercise Pack")</div>
                         <template x-for="(row, i) in variantRows" :key="i">
                             <div style="display:flex;gap:8px;margin-bottom:8px;">
-                                <input type="text" name="variant_name[]" x-model="row.name" placeholder="Variant name" style="flex:1;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-size:12px;color:var(--cms-input-text);">
-                                <input type="text" name="variant_price_display[]" x-model="row.price_display" placeholder="SGD 13" style="flex:0 0 110px;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-size:12px;color:var(--cms-input-text);">
-                                <input type="text" name="variant_ls_product_id[]" x-model="row.ls_product_id" placeholder="LS product ID" style="flex:0 0 200px;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cms-input-text);">
-                                <button type="button" @click="variantRows.splice(i, 1)" style="background:none;border:none;color:var(--cms-error);cursor:pointer;font-size:16px;">×</button>
+                                <input type="text" name="variant_name[]" x-model="row.name"
+                                    placeholder="Variant name"
+                                    style="flex:1;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-size:12px;color:var(--cms-input-text);">
+                                <input type="text" name="variant_price_display[]" x-model="row.price_display"
+                                    placeholder="SGD 13"
+                                    style="flex:0 0 110px;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-size:12px;color:var(--cms-input-text);">
+                                <input type="text" name="variant_ls_product_id[]" x-model="row.ls_product_id"
+                                    placeholder="LS product ID"
+                                    style="flex:0 0 200px;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cms-input-text);">
+                                <button type="button" @click="variantRows.splice(i, 1)"
+                                    style="background:none;border:none;color:var(--cms-error);cursor:pointer;font-size:16px;">×</button>
                             </div>
                         </template>
-                        <button type="button" @click="variantRows.push({name:'',price_display:'',ls_product_id:''})" style="font-size:12px;color:var(--cms-accent);background:none;border:none;cursor:pointer;">+ Add variant</button>
+                        <button type="button" @click="variantRows.push({name:'',price_display:'',ls_product_id:''})"
+                            style="font-size:12px;color:var(--cms-accent);background:none;border:none;cursor:pointer;">+
+                            Add variant</button>
                     </div>
 
                     <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-                        <input type="checkbox" name="bundle" value="1" x-model="isBundle" style="width:16px;height:16px;accent-color:var(--cms-accent);">
-                        <span style="font-size:12px;color:var(--cms-text-muted);">This is a bundle of other publications</span>
+                        <input type="checkbox" name="bundle" value="1" x-model="isBundle"
+                            style="width:16px;height:16px;accent-color:var(--cms-accent);">
+                        <span style="font-size:12px;color:var(--cms-text-muted);">This is a bundle of other
+                            publications</span>
                     </label>
                     <div x-show="isBundle" x-cloak>
-                        <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Bundle members</label>
+                        <label
+                            style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Bundle
+                            members</label>
                         <div style="max-height:160px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;">
-                            @foreach($bundleCandidates as $bc)
-                            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-                                <input type="checkbox" value="{{ $bc->id }}" x-model="selectedBundleMembers" name="bundle_members[]" style="accent-color:var(--cms-accent);">
-                                <span style="font-size:12px;color:var(--cms-text-secondary);">{{ $bc->title }}</span>
-                            </label>
+                            @foreach ($bundleCandidates as $bc)
+                                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                                    <input type="checkbox" value="{{ $bc->id }}"
+                                        x-model="selectedBundleMembers" name="bundle_members[]"
+                                        style="accent-color:var(--cms-accent);">
+                                    <span
+                                        style="font-size:12px;color:var(--cms-text-secondary);">{{ $bc->title }}</span>
+                                </label>
                             @endforeach
                         </div>
                     </div>
@@ -108,40 +166,55 @@
 
             <div x-show="tab === 'media'" x-cloak>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-                    <div style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:16px;">
-                        <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--cms-text-primary);">Images</div>
+                    <div
+                        style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:16px;">
+                        <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--cms-text-primary);">
+                            Images</div>
                         <div style="max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;">
-                            @foreach($images as $img)
-                            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-                                <input type="checkbox" value="{{ $img->id }}" x-model="selectedImages" name="images[]" style="accent-color:var(--cms-accent);">
-                                <img src="{{ $img->url }}" style="width:32px;height:32px;object-fit:cover;border-radius:3px;">
-                                <span style="font-size:12px;color:var(--cms-text-secondary);">{{ $img->title ?: 'Untitled' }}</span>
-                            </label>
+                            @foreach ($images as $img)
+                                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                                    <input type="checkbox" value="{{ $img->id }}" x-model="selectedImages"
+                                        name="images[]" style="accent-color:var(--cms-accent);">
+                                    <img src="{{ $img->url }}"
+                                        style="width:32px;height:32px;object-fit:cover;border-radius:3px;">
+                                    <span
+                                        style="font-size:12px;color:var(--cms-text-secondary);">{{ $img->title ?: 'Untitled' }}</span>
+                                </label>
                             @endforeach
                         </div>
                     </div>
-                    <div style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:16px;">
-                        <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--cms-text-primary);">Links</div>
+                    <div
+                        style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:16px;">
+                        <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--cms-text-primary);">
+                            Links</div>
                         <div style="max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;">
-                            @foreach($links as $l)
-                            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-                                <input type="checkbox" value="{{ $l->id }}" x-model="selectedLinks" name="links[]" style="accent-color:var(--cms-accent);">
-                                <span style="display:flex;flex-direction:column;overflow:hidden;">
-                                    <span style="font-size:12px;color:var(--cms-text-secondary);">{{ $l->label }}</span>
-                                    <span style="font-size:11px;color:var(--cms-text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ $l->url }}</span>
-                                </span>
-                            </label>
+                            @foreach ($links as $l)
+                                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                                    <input type="checkbox" value="{{ $l->id }}" x-model="selectedLinks"
+                                        name="links[]" style="accent-color:var(--cms-accent);">
+                                    <span style="display:flex;flex-direction:column;overflow:hidden;">
+                                        <span
+                                            style="font-size:12px;color:var(--cms-text-secondary);">{{ $l->label }}</span>
+                                        <span
+                                            style="font-size:11px;color:var(--cms-text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ $l->url }}</span>
+                                    </span>
+                                </label>
                             @endforeach
                         </div>
                     </div>
-                    <div style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:16px;">
-                        <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--cms-text-primary);">Tags</div>
+                    <div
+                        style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:16px;">
+                        <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--cms-text-primary);">
+                            Tags</div>
                         <div style="display:flex;flex-wrap:wrap;gap:6px;">
-                            @foreach($tags as $t)
-                            <label style="display:flex;align-items:center;gap:4px;cursor:pointer;padding:3px 8px;border-radius:3px;background:var(--cms-bg-surface-2);">
-                                <input type="checkbox" value="{{ $t->id }}" x-model="selectedTags" name="tags[]" style="accent-color:var(--cms-accent);">
-                                <span style="font-size:11px;color:var(--cms-text-secondary);">{{ $t->name }}</span>
-                            </label>
+                            @foreach ($tags as $t)
+                                <label
+                                    style="display:flex;align-items:center;gap:4px;cursor:pointer;padding:3px 8px;border-radius:3px;background:var(--cms-bg-surface-2);">
+                                    <input type="checkbox" value="{{ $t->id }}" x-model="selectedTags"
+                                        name="tags[]" style="accent-color:var(--cms-accent);">
+                                    <span
+                                        style="font-size:11px;color:var(--cms-text-secondary);">{{ $t->name }}</span>
+                                </label>
                             @endforeach
                         </div>
                     </div>
@@ -149,99 +222,150 @@
             </div>
 
             <div x-show="tab === 'meta'" x-cloak>
-                <div style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:16px;margin-bottom:16px;">
-                    <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--cms-text-primary);">Custom Meta (page_count, word_count, isbn, edition, publisher...)</div>
+                <div
+                    style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:16px;margin-bottom:16px;">
+                    <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--cms-text-primary);">
+                        Custom Meta (page_count, word_count, isbn, edition, publisher...)</div>
                     <template x-for="(row, i) in metaRows" :key="i">
                         <div style="display:flex;gap:8px;margin-bottom:8px;">
-                            <input type="text" name="meta_key[]" x-model="row.key" placeholder="key" style="flex:0 0 200px;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cms-input-text);">
-                            <input type="text" name="meta_value[]" x-model="row.value" placeholder="value" style="flex:1;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-size:12px;color:var(--cms-input-text);">
-                            <button type="button" @click="metaRows.splice(i, 1)" style="background:none;border:none;color:var(--cms-error);cursor:pointer;font-size:16px;">×</button>
+                            <input type="text" name="meta_key[]" x-model="row.key" placeholder="key"
+                                style="flex:0 0 200px;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cms-input-text);">
+                            <input type="text" name="meta_value[]" x-model="row.value" placeholder="value"
+                                style="flex:1;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-size:12px;color:var(--cms-input-text);">
+                            <button type="button" @click="metaRows.splice(i, 1)"
+                                style="background:none;border:none;color:var(--cms-error);cursor:pointer;font-size:16px;">×</button>
                         </div>
                     </template>
-                    <button type="button" @click="metaRows.push({key:'',value:''})" style="font-size:12px;color:var(--cms-accent);background:none;border:none;cursor:pointer;">+ Add field</button>
+                    <button type="button" @click="metaRows.push({key:'',value:''})"
+                        style="font-size:12px;color:var(--cms-accent);background:none;border:none;cursor:pointer;">+
+                        Add field</button>
                 </div>
             </div>
 
             <div x-show="tab === 'settings'" x-cloak>
-                <div style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:16px;margin-bottom:16px;">
+                <div
+                    style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:16px;margin-bottom:16px;">
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                         <div>
-                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Content Type</label>
-                            <select name="content_type_id" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                            <label
+                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Content
+                                Type</label>
+                            <select name="content_type_id"
+                                style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                                 <option value="">— none —</option>
-                                @foreach($contentTypes as $ct)
-                                <option value="{{ $ct->id }}" {{ old('content_type_id', $publication->content_type_id) == $ct->id ? 'selected' : '' }}>{{ $ct->name }}</option>
+                                @foreach ($contentTypes as $ct)
+                                    <option value="{{ $ct->id }}"
+                                        {{ old('content_type_id', $publication->content_type_id) == $ct->id ? 'selected' : '' }}>
+                                        {{ $ct->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
-                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Layout</label>
-                            <select name="layout_id" required style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
-                                @foreach($layouts as $l)
-                                <option value="{{ $l->id }}" {{ old('layout_id', $publication->layout_id) == $l->id ? 'selected' : '' }}>{{ $l->name }}</option>
+                            <label
+                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Layout</label>
+                            <select name="layout_id" required
+                                style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                                @foreach ($layouts as $l)
+                                    <option value="{{ $l->id }}"
+                                        {{ old('layout_id', $publication->layout_id) == $l->id ? 'selected' : '' }}>
+                                        {{ $l->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
-                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Page Template</label>
-                            <select name="publication_template_id" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                            <label
+                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Page
+                                Template</label>
+                            <select name="publication_template_id"
+                                style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                                 <option value="">— use default publication page —</option>
-                                @foreach($templates as $t)
-                                <option value="{{ $t->id }}" {{ old('publication_template_id', $publication->publication_template_id) == $t->id ? 'selected' : '' }}>{{ $t->name }}</option>
+                                @foreach ($templates as $t)
+                                    <option value="{{ $t->id }}"
+                                        {{ old('publication_template_id', $publication->publication_template_id) == $t->id ? 'selected' : '' }}>
+                                        {{ $t->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
-                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">React Component (optional interactive extra)</label>
-                            <select name="react_component_id" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                            <label
+                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">React
+                                Component (optional interactive extra)</label>
+                            <select name="react_component_id"
+                                style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                                 <option value="">— none —</option>
-                                @foreach($reactComponents as $rc)
-                                <option value="{{ $rc->id }}" {{ old('react_component_id', $publication->react_component_id) == $rc->id ? 'selected' : '' }}>{{ $rc->name }}</option>
+                                @foreach ($reactComponents as $rc)
+                                    <option value="{{ $rc->id }}"
+                                        {{ old('react_component_id', $publication->react_component_id) == $rc->id ? 'selected' : '' }}>
+                                        {{ $rc->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
-                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Category</label>
-                            <select name="category_id" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                            <label
+                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Category</label>
+                            <select name="category_id"
+                                style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                                 <option value="">— none —</option>
-                                @foreach($categories as $c)
-                                <option value="{{ $c->id }}" {{ old('category_id', $publication->category_id) == $c->id ? 'selected' : '' }}>{{ $c->name }}</option>
+                                @foreach ($categories as $c)
+                                    <option value="{{ $c->id }}"
+                                        {{ old('category_id', $publication->category_id) == $c->id ? 'selected' : '' }}>
+                                        {{ $c->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
-                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Cover Image</label>
-                            <select name="cover_image_id" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                            <label
+                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Cover
+                                Image</label>
+                            <select name="cover_image_id"
+                                style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                                 <option value="">— none —</option>
-                                @foreach($images as $img)
-                                <option value="{{ $img->id }}" {{ old('cover_image_id', $publication->cover_image_id) == $img->id ? 'selected' : '' }}>{{ $img->title ?: 'Image #'.$img->id }}</option>
+                                @foreach ($images as $img)
+                                    <option value="{{ $img->id }}"
+                                        {{ old('cover_image_id', $publication->cover_image_id) == $img->id ? 'selected' : '' }}>
+                                        {{ $img->title ?: 'Image #' . $img->id }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
-                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">OG Image</label>
-                            <select name="og_image_id" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                            <label
+                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">OG
+                                Image</label>
+                            <select name="og_image_id"
+                                style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                                 <option value="">— none —</option>
-                                @foreach($images as $img)
-                                <option value="{{ $img->id }}" {{ old('og_image_id', $publication->og_image_id) == $img->id ? 'selected' : '' }}>{{ $img->title ?: 'Image #'.$img->id }}</option>
+                                @foreach ($images as $img)
+                                    <option value="{{ $img->id }}"
+                                        {{ old('og_image_id', $publication->og_image_id) == $img->id ? 'selected' : '' }}>
+                                        {{ $img->title ?: 'Image #' . $img->id }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
-                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Status</label>
-                            <select name="status" required style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
-                                @foreach(['draft','private','published','archived'] as $s)
-                                <option value="{{ $s }}" {{ old('status', $publication->status) === $s ? 'selected' : '' }}>{{ ucfirst($s) }}</option>
+                            <label
+                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Status</label>
+                            <select name="status" required
+                                style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                                @foreach (['draft', 'private', 'published', 'archived'] as $s)
+                                    <option value="{{ $s }}"
+                                        {{ old('status', $publication->status) === $s ? 'selected' : '' }}>
+                                        {{ ucfirst($s) }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
-                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Publish at</label>
-                            <input type="datetime-local" name="published_at" value="{{ old('published_at', $publication->published_at?->format('Y-m-d\TH:i')) }}" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                            <label
+                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Publish
+                                at</label>
+                            <input type="datetime-local" name="published_at"
+                                value="{{ old('published_at', $publication->published_at?->format('Y-m-d\TH:i')) }}"
+                                style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                         </div>
                         <div style="display:flex;align-items:end;">
                             <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-                                <input type="checkbox" name="featured" value="1" {{ old('featured', $publication->featured) ? 'checked' : '' }} style="width:16px;height:16px;accent-color:var(--cms-accent);">
+                                <input type="checkbox" name="featured" value="1"
+                                    {{ old('featured', $publication->featured) ? 'checked' : '' }}
+                                    style="width:16px;height:16px;accent-color:var(--cms-accent);">
                                 <span style="font-size:12px;color:var(--cms-text-muted);">Featured</span>
                             </label>
                         </div>
@@ -250,8 +374,11 @@
             </div>
 
             <div style="display:flex;gap:10px;">
-                <button type="submit" style="background:var(--cms-btn-primary-bg);color:var(--cms-btn-primary-text);border:none;border-radius:5px;padding:10px 20px;font-size:13px;font-weight:500;cursor:pointer;">Save Publication</button>
-                <a href="{{ route('panel.publications.index') }}" style="background:var(--cms-btn-secondary-bg);border:1px solid var(--cms-btn-secondary-border);color:var(--cms-btn-secondary-text);padding:10px 20px;border-radius:5px;font-size:13px;text-decoration:none;">Cancel</a>
+                <button type="submit"
+                    style="background:var(--cms-btn-primary-bg);color:var(--cms-btn-primary-text);border:none;border-radius:5px;padding:10px 20px;font-size:13px;font-weight:500;cursor:pointer;">Save
+                    Publication</button>
+                <a href="{{ route('panel.publications.index') }}"
+                    style="background:var(--cms-btn-secondary-bg);border:1px solid var(--cms-btn-secondary-border);color:var(--cms-btn-secondary-text);padding:10px 20px;border-radius:5px;font-size:13px;text-decoration:none;">Cancel</a>
             </div>
         </form>
     </div>

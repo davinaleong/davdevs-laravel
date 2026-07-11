@@ -1,7 +1,6 @@
 <x-cms-layout title="{{ $entry->exists ? 'Edit Entry' : 'New Entry' }}">
     <div x-data="{
         tab: 'content',
-        preview: false,
         selectedImages: {{ json_encode($entry->images->pluck('id')->all()) }},
         selectedVideos: {{ json_encode($entry->videoEmbeds->pluck('id')->all()) }},
         selectedLinks: {{ json_encode($entry->links->pluck('id')->all()) }},
@@ -25,13 +24,18 @@
                 this.aiLoading = false;
                 if (d.error) { this.aiError = d.error; return; }
                 document.querySelector('[name=excerpt]').value = d.excerpt;
-                document.getElementById('entry-body').value = d.body;
-            }).catch(() => { this.aiLoading = false;
-                this.aiError = 'Request failed.'; });
+                const mde = window._easyMdeInstances['entry-body'];
+                if (mde) mde.value(d.body);
+                else document.getElementById('entry-body').value = d.body;
+            }).catch(() => {
+                this.aiLoading = false;
+                this.aiError = 'Request failed.';
+            });
         },
         auditContent() {
             const title = document.querySelector('[name=title]').value;
-            const body = document.getElementById('entry-body').value;
+            const mde = window._easyMdeInstances['entry-body'];
+            const body = mde ? mde.value() : document.getElementById('entry-body').value;
             if (!body) { this.aiError = 'Nothing to audit yet.'; return; }
             this.aiLoading = true;
             this.aiError = null;
@@ -44,8 +48,10 @@
                 this.aiLoading = false;
                 if (d.error) { this.aiError = d.error; return; }
                 this.aiSuggestions = d.suggestions;
-            }).catch(() => { this.aiLoading = false;
-                this.aiError = 'Request failed.'; });
+            }).catch(() => {
+                this.aiLoading = false;
+                this.aiError = 'Request failed.';
+            });
         },
     }">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
@@ -106,20 +112,13 @@
                                 <button type="button" @click="auditContent()" :disabled="aiLoading"
                                     style="font-size:11px;color:var(--cms-accent);background:none;border:none;cursor:pointer;">🔍
                                     Audit</button>
-                                <button type="button" @click="preview = !preview"
-                                    style="font-size:11px;color:var(--cms-accent);background:none;border:none;cursor:pointer;"
-                                    x-text="preview ? 'Edit' : 'Preview'"></button>
                             </div>
                         </div>
                         <p x-show="aiLoading" style="font-size:11px;color:var(--cms-text-muted);margin:0 0 6px;">
                             Working…</p>
                         <p x-show="aiError" x-text="aiError"
                             style="font-size:11px;color:var(--cms-error);margin:0 0 6px;"></p>
-                        <textarea name="body" id="entry-body" rows="18" x-show="!preview"
-                            style="width:100%;box-sizing:border-box;background:var(--cms-editor-bg,var(--cms-input-bg));border:1px solid var(--cms-input-border);border-radius:5px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.6;color:var(--cms-input-text);">{{ old('body', $entry->body) }}</textarea>
-                        <div x-show="preview" x-cloak
-                            style="border:1px solid var(--cms-border);border-radius:5px;padding:16px;background:var(--cms-bg-surface-2);font-family:'Lora',serif;font-size:14px;line-height:1.8;color:var(--cms-text-primary);white-space:pre-wrap;"
-                            x-text="document.getElementById('entry-body').value"></div>
+                        <textarea name="body" id="entry-body" rows="18" data-markdown-editor style="width:100%;box-sizing:border-box;">{{ old('body', $entry->body) }}</textarea>
 
                         <div x-show="aiSuggestions && aiSuggestions.length" x-cloak
                             style="margin-top:12px;border:1px solid var(--cms-border);border-radius:6px;padding:12px;background:var(--cms-bg-surface-2);">
