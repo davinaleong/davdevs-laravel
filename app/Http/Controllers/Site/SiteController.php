@@ -29,7 +29,7 @@ class SiteController extends Controller
             ];
         });
 
-        $publications = Publication::published()->where('bundle', false)->with('coverImage', 'store')->orderByDesc('published_at')->orderByDesc('id')->limit(4)->get();
+        $publications = Publication::published()->where('bundle', false)->with('coverImage', 'store', 'contentType')->orderByDesc('published_at')->orderByDesc('id')->limit(4)->get();
 
         $settings = $this->settings();
         $showPrice = $settings['publication_ebook_show_price'] ?? true;
@@ -105,7 +105,7 @@ class SiteController extends Controller
         $bundles = Publication::published()->where('bundle', true)->with('coverImage', 'store')->orderByDesc('published_at')->get();
         // cursorPaginate requires the sort column(s) to be unique, or tied rows get
         // silently dropped at page boundaries — id is appended as a tiebreaker.
-        $publications = Publication::published()->where('bundle', false)->with('coverImage', 'store')->orderByDesc('published_at')->orderByDesc('id')->cursorPaginate(12);
+        $publications = Publication::published()->where('bundle', false)->with('coverImage', 'store', 'contentType')->orderByDesc('published_at')->orderByDesc('id')->cursorPaginate(12);
 
         $settings = Cache::remember('settings', 3600, function () {
             return Setting::all()->mapWithKeys(fn ($s) => [$s->key => $s->getTypedValue()])->all();

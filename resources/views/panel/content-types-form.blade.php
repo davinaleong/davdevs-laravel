@@ -26,6 +26,10 @@
                 <input type="checkbox" name="listed" value="1" {{ old('listed', $contentType->listed ?? true) ? 'checked' : '' }} style="width:16px;height:16px;accent-color:var(--cms-accent);">
                 <span style="font-size:12px;color:var(--cms-text-muted);">Listed (shown in homepage/sitemap/listings)</span>
             </label>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                <input type="checkbox" name="show_price" value="1" {{ old('show_price', $contentType->show_price ?? true) ? 'checked' : '' }} style="width:16px;height:16px;accent-color:var(--cms-accent);">
+                <span style="font-size:12px;color:var(--cms-text-muted);">Show price on frontend (publications only)</span>
+            </label>
         </div>
         <div style="display:flex;gap:10px;margin-top:16px;">
             <button type="submit" style="background:var(--cms-btn-primary-bg);color:var(--cms-btn-primary-text);border:none;border-radius:5px;padding:10px 20px;font-size:13px;font-weight:500;cursor:pointer;">Save</button>

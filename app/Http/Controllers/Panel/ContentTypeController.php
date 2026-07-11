@@ -62,10 +62,12 @@ class ContentTypeController extends Controller
             'description' => 'nullable|string',
             'react_island' => 'nullable|boolean',
             'listed' => 'nullable|boolean',
+            'show_price' => 'nullable|boolean',
         ]);
 
         $data['react_island'] = $request->boolean('react_island');
         $data['listed'] = $request->boolean('listed');
+        $data['show_price'] = $request->boolean('show_price');
 
         return $data;
     }

@@ -10,8 +10,8 @@
         - Threads
 - [x] Make muted text more visible
 - [x] Layouts are for Publications, not Entries
-- [ ] Content Types for Publications
-- [ ] A "Show Price" Toggle for Publications per Content Type
+- [x] Content Types for Publications
+- [x] A "Show Price" Toggle for Publications per Content Type
 - [x] There seems to be a bug with the filters
     - The content on the listing page doesn't correspond to the selected filters: Seems to be sorted by Alpha while "Newest" is selected
 - [x] Make the muted texts more visible in both dark and light mode

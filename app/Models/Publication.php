@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\ContentType;
 use App\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,7 +13,7 @@ class Publication extends Model
     use LogsActivity, SoftDeletes;
 
     protected $fillable = [
-        'ulid', 'layout_id', 'category_id', 'og_image_id', 'cover_image_id',
+        'ulid', 'layout_id', 'content_type_id', 'category_id', 'og_image_id', 'cover_image_id',
         'publication_template_id', 'react_component_id',
         'publication_type', 'title', 'slug', 'tagline', 'excerpt', 'body',
         'status', 'featured', 'bundle', 'published_at',
@@ -39,6 +40,11 @@ class Publication extends Model
     public function layout()
     {
         return $this->belongsTo(Layout::class);
+    }
+
+    public function contentType()
+    {
+        return $this->belongsTo(ContentType::class);
     }
 
     public function category()

@@ -11,16 +11,21 @@ class ContentType extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['name', 'slug', 'table_target', 'react_island', 'listed', 'description'];
+    protected $fillable = ['name', 'slug', 'table_target', 'react_island', 'listed', 'show_price', 'description'];
 
     protected function casts(): array
     {
-        return ['react_island' => 'boolean', 'listed' => 'boolean'];
+        return ['react_island' => 'boolean', 'listed' => 'boolean', 'show_price' => 'boolean'];
     }
 
     public function entries()
     {
         return $this->hasMany(Entry::class);
+    }
+
+    public function publications()
+    {
+        return $this->hasMany(Publication::class);
     }
 
     public function categories()

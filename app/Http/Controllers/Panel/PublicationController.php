@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\ContentType;
 use App\Models\Image;
 use App\Models\Layout;
 use App\Models\Link;
@@ -85,6 +86,7 @@ class PublicationController extends Controller
     protected function form(Publication $publication)
     {
         $layouts = Layout::where('active', true)->orderBy('name')->get();
+        $contentTypes = ContentType::where('table_target', 'publications')->orderBy('name')->get();
         $categories = Category::orderBy('name')->get();
         $images = Image::orderByDesc('id')->limit(60)->get();
         $links = Link::orderBy('sort_order')->get();
@@ -95,13 +97,14 @@ class PublicationController extends Controller
         $reactComponents = ReactComponent::where('active', true)->orderBy('name')->get();
 
         return view('panel.publications-form', compact(
-            'publication', 'layouts', 'categories', 'images', 'links', 'tags', 'bundleCandidates', 'templates', 'reactComponents'
+            'publication', 'layouts', 'contentTypes', 'categories', 'images', 'links', 'tags', 'bundleCandidates', 'templates', 'reactComponents'
         ));
     }
 
     protected function validated(Request $request): array
     {
         $data = $request->validate([
+            'content_type_id' => 'nullable|exists:content_types,id',
             'layout_id' => 'required|exists:layouts,id',
             'publication_template_id' => 'nullable|exists:publication_templates,id',
             'react_component_id' => 'nullable|exists:react_components,id',

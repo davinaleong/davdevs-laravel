@@ -166,6 +166,15 @@
                 <div style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:16px;margin-bottom:16px;">
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                         <div>
+                            <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Content Type</label>
+                            <select name="content_type_id" style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
+                                <option value="">— none —</option>
+                                @foreach($contentTypes as $ct)
+                                <option value="{{ $ct->id }}" {{ old('content_type_id', $publication->content_type_id) == $ct->id ? 'selected' : '' }}>{{ $ct->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
                             <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Layout</label>
                             <select name="layout_id" required style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                                 @foreach($layouts as $l)
