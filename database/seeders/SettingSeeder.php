@@ -13,6 +13,7 @@ class SettingSeeder extends Seeder
             // display
             ['key' => 'frontend_date_format', 'value' => 'D MMM YYYY', 'cast' => 'string', 'group' => 'display'],
             ['key' => 'cms_date_format',       'value' => 'YYYY-MM-DD', 'cast' => 'string', 'group' => 'display'],
+            ['key' => 'favicon_image_id',      'value' => null,          'cast' => 'integer', 'group' => 'display'],
             // header
             ['key' => 'brand_name',            'value' => 'Dav/Devs',   'cast' => 'string', 'group' => 'header'],
             ['key' => 'brand_image_id',        'value' => null,          'cast' => 'integer', 'group' => 'header'],

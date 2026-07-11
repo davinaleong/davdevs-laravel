@@ -23,6 +23,7 @@
             'cms_date_format' => 'CMS date format',
             'brand_name' => 'Brand name',
             'brand_image_id' => 'Brand image ID',
+            'favicon_image_id' => 'Favicon image ID',
             'copyright_text' => 'Copyright text (supports {year})',
             'lh_show_performance' => 'Show Performance badge',
             'lh_show_accessibility' => 'Show Accessibility badge',

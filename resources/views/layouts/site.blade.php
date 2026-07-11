@@ -7,8 +7,12 @@
     <title>{{ $title }} — {{ $settings['brand_name'] ?? 'Dav/Devs' }}</title>
     @if($description)<meta name="description" content="{{ $description }}">@endif
     <link rel="canonical" href="{{ url()->current() }}">
+    @if($faviconUrl)
+    <link rel="icon" href="{{ $faviconUrl }}">
+    @else
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/png" href="/favicon.png">
+    @endif
 
     {{-- Open Graph --}}
     <meta property="og:title" content="{{ $title }}">

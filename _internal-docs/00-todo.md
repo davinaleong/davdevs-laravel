@@ -1,26 +1,4 @@
 # TODO - For Maintenance &amp; Ad-hoc Tasks
 
-- [ ] Manual: Add my latest ebook: It's Not Scary (Debug)
-- [x] Associate the favicons and OG images to their respective publications
-- [x] Panel broadcast module when a new Entry/Publication is created
-    - Make it toggable per social media platform:
-        - LinkedIn
-        - Facebook
-        - Instagram
-        - Threads
-- [x] Make muted text more visible
-- [x] Layouts are for Publications, not Entries
-- [x] Content Types for Publications
-- [x] A "Show Price" Toggle for Publications per Content Type
-- [x] There seems to be a bug with the filters
-    - The content on the listing page doesn't correspond to the selected filters: Seems to be sorted by Alpha while "Newest" is selected
-- [x] Make the muted texts more visible in both dark and light mode
-- [x] Panel: add some padding to the tabs and buttons
-- [x] Panel: QR Code 2FA session doesn't seem to be "retained"
-    - Always have to scan a new QR Code per login
-- [x] Panel: AI features:
-    - Entry/Publication title: help to geneerate
-    - Entry/Publication Exercpt: help to generate
-    - Entry/Publication Content: have a "prompt" field to instruct AI on how to handle the content.
-- [x] Panel: create a markdown editor for the Entry/Publication Content field
-- [x] Panel: in the links selector when attaching them to an entry/publication, also show the URLs of the links
+- [x] Panel: Update Entries and Publications to only register the publication date and not the time.
+- [x] Bug: Selected Image to be Favicon is not showing on the frontend page.

@@ -440,8 +440,8 @@
                             <label
                                 style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Publish
                                 at</label>
-                            <input type="datetime-local" name="published_at"
-                                value="{{ old('published_at', $publication->published_at?->format('Y-m-d\TH:i')) }}"
+                            <input type="date" name="published_at"
+                                value="{{ old('published_at', $publication->published_at?->format('Y-m-d')) }}"
                                 style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                         </div>
                         <div style="display:flex;align-items:end;">
