@@ -6,7 +6,7 @@
         <div style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px;">
             <div>
                 <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">File</label>
-                <input type="file" name="file" accept="image/*" required
+                <input type="file" name="file" accept="image/*,.svg" required
                        style="width:100%;font-family:'Inter',sans-serif;font-size:13px;color:var(--cms-input-text);">
                 @error('file')<p style="color:var(--cms-error);font-size:12px;margin-top:4px;">{{ $message }}</p>@enderror
             </div>

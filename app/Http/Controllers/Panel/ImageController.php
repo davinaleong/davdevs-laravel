@@ -40,7 +40,7 @@ class ImageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'file' => 'required|image|max:10240|mimes:jpg,jpeg,png,webp,gif',
+            'file' => 'required|file|max:10240|mimes:jpg,jpeg,png,webp,gif,svg',
             'title' => 'nullable|string|max:500',
             'alt' => 'nullable|string|max:500',
             'caption' => 'nullable|string',
@@ -72,7 +72,7 @@ class ImageController extends Controller
     public function update(Request $request, Image $image)
     {
         $request->validate([
-            'file' => 'nullable|image|max:10240|mimes:jpg,jpeg,png,webp,gif',
+            'file' => 'nullable|file|max:10240|mimes:jpg,jpeg,png,webp,gif,svg',
             'title' => 'nullable|string|max:500',
             'alt' => 'nullable|string|max:500',
             'caption' => 'nullable|string',

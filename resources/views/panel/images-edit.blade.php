@@ -22,7 +22,7 @@
             <div style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px;">
                 <div>
                     <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Replace file (optional)</label>
-                    <input type="file" name="file" accept="image/*" style="width:100%;font-size:13px;">
+                    <input type="file" name="file" accept="image/*,.svg" style="width:100%;font-size:13px;">
                 </div>
                 <div>
                     <label style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Title</label>
