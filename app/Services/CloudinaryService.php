@@ -28,24 +28,29 @@ class CloudinaryService
         $isSvg = in_array($file->getMimeType(), ['image/svg+xml', 'image/svg'], true)
             || strtolower($file->getClientOriginalExtension()) === 'svg';
 
-        // SVG is a vector format — Cloudinary requires resource_type='raw' for it
-        // (the default 'image' type is restricted to raster formats by most account plans).
-        $options = [
-            'resource_type' => $isSvg ? 'raw' : 'image',
-        ];
-
-        if (! $isSvg) {
-            // Only relevant for raster uploads
-            $options['image_metadata'] = false;
-        }
+        $baseOptions = [];
 
         if ($publicId !== null) {
-            $options['public_id'] = "davdevs/{$publicId}";
+            $baseOptions['public_id'] = "davdevs/{$publicId}";
         } else {
-            $options['folder'] = 'davdevs';
+            $baseOptions['folder'] = 'davdevs';
         }
 
-        $result = $this->cloudinary->uploadApi()->upload($file->getRealPath(), $options);
+        // Try uploading as 'image'. If Cloudinary rejects it (e.g. SVG blocked on this plan,
+        // or the file is a vector format), fall back to resource_type='raw' automatically.
+        try {
+            $options = array_merge($baseOptions, [
+                'resource_type' => 'image',
+                'image_metadata' => false,
+            ]);
+            $result = $this->cloudinary->uploadApi()->upload($file->getRealPath(), $options);
+            $isSvg = false; // successfully stored as image
+        } catch (\Cloudinary\Api\Exception\NotAllowed|\Cloudinary\Api\Exception\BadRequest $e) {
+            // Retry as raw (covers SVG and other non-raster formats)
+            $options = array_merge($baseOptions, ['resource_type' => 'raw']);
+            $result = $this->cloudinary->uploadApi()->upload($file->getRealPath(), $options);
+            $isSvg = true; // mark so we skip width/height
+        }
 
         return [
             'cloudinary_id' => $result['public_id'],
