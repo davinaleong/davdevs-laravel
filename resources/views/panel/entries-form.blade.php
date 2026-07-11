@@ -26,8 +26,10 @@
                 this.aiLoading = false;
                 if (d.error) { this.aiError = d.error; return; }
                 document.querySelector('[name=title]').value = d.title;
-            }).catch(() => { this.aiLoading = false;
-                this.aiError = 'Request failed.'; });
+            }).catch(() => {
+                this.aiLoading = false;
+                this.aiError = 'Request failed.';
+            });
         },
         generateExcerpt() {
             const title = document.querySelector('[name=title]').value;
@@ -42,8 +44,10 @@
                 this.aiLoading = false;
                 if (d.error) { this.aiError = d.error; return; }
                 document.querySelector('[name=excerpt]').value = d.excerpt;
-            }).catch(() => { this.aiLoading = false;
-                this.aiError = 'Request failed.'; });
+            }).catch(() => {
+                this.aiLoading = false;
+                this.aiError = 'Request failed.';
+            });
         },
         generateContent() {
             const title = document.querySelector('[name=title]').value;
@@ -406,6 +410,36 @@
 
                 </div>
             </div>
+
+            {{-- Broadcast section (shown when at least one platform is enabled globally) --}}
+            @php
+                $broadcastSettings = \App\Models\Setting::whereIn('key', [
+                    'broadcast_linkedin_enabled',
+                    'broadcast_facebook_enabled',
+                    'broadcast_instagram_enabled',
+                    'broadcast_threads_enabled',
+                ])->pluck('value', 'key');
+                $enabledPlatforms = collect(['linkedin', 'facebook', 'instagram', 'threads'])->filter(
+                    fn($p) => filter_var($broadcastSettings["broadcast_{$p}_enabled"] ?? '0', FILTER_VALIDATE_BOOLEAN),
+                );
+            @endphp
+            @if ($enabledPlatforms->isNotEmpty())
+                <div
+                    style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:16px;margin-bottom:16px;">
+                    <div style="font-size:12px;font-weight:600;color:var(--cms-text-secondary);margin-bottom:10px;">📡
+                        Broadcast when saving as Published</div>
+                    <div style="display:flex;gap:16px;flex-wrap:wrap;">
+                        @foreach ($enabledPlatforms as $platform)
+                            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+                                <input type="checkbox" name="broadcast[]" value="{{ $platform }}"
+                                    style="width:14px;height:14px;accent-color:var(--cms-accent);">
+                                <span
+                                    style="font-size:12px;color:var(--cms-text-secondary);">{{ ucfirst($platform) }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
 
             <div style="display:flex;gap:10px;align-items:center;">
                 <button type="submit"

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\ContentType;
+use App\Models\SocialBroadcast;
 use App\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -126,6 +127,11 @@ class Publication extends Model
     public function reactions()
     {
         return $this->morphMany(Reaction::class, 'reactionable');
+    }
+
+    public function socialBroadcasts()
+    {
+        return $this->morphMany(SocialBroadcast::class, 'broadcastable');
     }
 
     public function scopePublished($query)

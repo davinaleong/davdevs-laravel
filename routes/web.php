@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ReactionController;
 use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\Panel\ActivityLogController;
 use App\Http\Controllers\Panel\AiController;
+use App\Http\Controllers\Panel\BroadcastController;
 use App\Http\Controllers\Panel\CategoryController;
 use App\Http\Controllers\Panel\ContentTypeController;
 use App\Http\Controllers\Panel\DashboardController;
@@ -102,6 +103,9 @@ Route::middleware(['cms.ip', 'auth', 'two_factor'])->prefix('panel')->name('pane
     Route::post('ai/generate-excerpt', [AiController::class, 'generateExcerpt'])->name('ai.generate-excerpt');
     Route::post('ai/generate', [AiController::class, 'generate'])->name('ai.generate');
     Route::post('ai/audit', [AiController::class, 'audit'])->name('ai.audit');
+
+    // Broadcast history
+    Route::get('broadcasts', [BroadcastController::class, 'index'])->name('broadcasts.index');
 });
 
 // Static mockups (dev only)

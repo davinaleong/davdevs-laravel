@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\BroadcastPost;
 use App\Models\Category;
 use App\Models\ContentType;
 use App\Models\Image;
@@ -49,6 +50,7 @@ class PublicationController extends Controller
         $this->syncRelations($request, $publication);
         $this->syncMeta($request, $publication);
         $this->syncVariants($request, $publication);
+        $this->dispatchBroadcast($request, $publication);
 
         return redirect()->route('panel.publications.edit', $publication)->with('success', 'Publication created.');
     }
@@ -72,6 +74,7 @@ class PublicationController extends Controller
         $this->syncRelations($request, $publication);
         $this->syncMeta($request, $publication);
         $this->syncVariants($request, $publication);
+        $this->dispatchBroadcast($request, $publication);
 
         return redirect()->route('panel.publications.edit', $publication)->with('success', 'Publication updated.');
     }
@@ -216,5 +219,14 @@ class PublicationController extends Controller
         }
 
         return $slug;
+    }
+
+    protected function dispatchBroadcast(Request $request, Publication $publication): void
+    {
+        $platforms = $request->input('broadcast', []);
+        if (empty($platforms) || $publication->status !== 'published') {
+            return;
+        }
+        BroadcastPost::dispatch($publication->load(['ogImage', 'coverImage']), $platforms);
     }
 }

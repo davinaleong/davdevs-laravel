@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SocialBroadcast;
 use App\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -100,6 +101,11 @@ class Entry extends Model
     public function reactions()
     {
         return $this->morphMany(Reaction::class, 'reactionable');
+    }
+
+    public function socialBroadcasts()
+    {
+        return $this->morphMany(SocialBroadcast::class, 'broadcastable');
     }
 
     public function getMeta(string $key): ?string

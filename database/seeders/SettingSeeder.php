@@ -34,6 +34,19 @@ class SettingSeeder extends Seeder
             // ai (bonus)
             ['key' => 'ai_api_key',            'value' => null, 'cast' => 'string', 'group' => 'ai'],
             ['key' => 'ai_model',              'value' => 'gpt-4o', 'cast' => 'string', 'group' => 'ai'],
+            // broadcast
+            ['key' => 'broadcast_linkedin_enabled',      'value' => '0', 'cast' => 'boolean', 'group' => 'broadcast'],
+            ['key' => 'broadcast_linkedin_token',        'value' => null, 'cast' => 'string',  'group' => 'broadcast'],
+            ['key' => 'broadcast_linkedin_urn',          'value' => null, 'cast' => 'string',  'group' => 'broadcast'],
+            ['key' => 'broadcast_facebook_enabled',      'value' => '0', 'cast' => 'boolean', 'group' => 'broadcast'],
+            ['key' => 'broadcast_facebook_token',        'value' => null, 'cast' => 'string',  'group' => 'broadcast'],
+            ['key' => 'broadcast_facebook_page_id',      'value' => null, 'cast' => 'string',  'group' => 'broadcast'],
+            ['key' => 'broadcast_instagram_enabled',     'value' => '0', 'cast' => 'boolean', 'group' => 'broadcast'],
+            ['key' => 'broadcast_instagram_token',       'value' => null, 'cast' => 'string',  'group' => 'broadcast'],
+            ['key' => 'broadcast_instagram_user_id',     'value' => null, 'cast' => 'string',  'group' => 'broadcast'],
+            ['key' => 'broadcast_threads_enabled',       'value' => '0', 'cast' => 'boolean', 'group' => 'broadcast'],
+            ['key' => 'broadcast_threads_token',         'value' => null, 'cast' => 'string',  'group' => 'broadcast'],
+            ['key' => 'broadcast_threads_user_id',       'value' => null, 'cast' => 'string',  'group' => 'broadcast'],
         ];
 
         foreach ($settings as $setting) {
