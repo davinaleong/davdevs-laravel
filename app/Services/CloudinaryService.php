@@ -25,9 +25,6 @@ class CloudinaryService
      */
     public function upload(UploadedFile $file, bool $stripExif = true, ?string $publicId = null): array
     {
-        $isSvg = in_array($file->getMimeType(), ['image/svg+xml', 'image/svg'], true)
-            || strtolower($file->getClientOriginalExtension()) === 'svg';
-
         $baseOptions = [];
 
         if ($publicId !== null) {
@@ -36,20 +33,31 @@ class CloudinaryService
             $baseOptions['folder'] = 'davdevs';
         }
 
-        // Try uploading as 'image'. If Cloudinary rejects it (e.g. SVG blocked on this plan,
-        // or the file is a vector format), fall back to resource_type='raw' automatically.
+        $isSvg = false;
+
+        // First attempt: resource_type=image (works for jpg/png/webp/gif etc.)
         try {
             $options = array_merge($baseOptions, [
                 'resource_type' => 'image',
                 'image_metadata' => false,
             ]);
             $result = $this->cloudinary->uploadApi()->upload($file->getRealPath(), $options);
-            $isSvg = false; // successfully stored as image
         } catch (\Cloudinary\Api\Exception\NotAllowed|\Cloudinary\Api\Exception\BadRequest $e) {
-            // Retry as raw (covers SVG and other non-raster formats)
-            $options = array_merge($baseOptions, ['resource_type' => 'raw']);
-            $result = $this->cloudinary->uploadApi()->upload($file->getRealPath(), $options);
-            $isSvg = true; // mark so we skip width/height
+            // Fallback: resource_type=raw for SVG and other non-raster formats.
+            // Requires the Cloudinary API key to have "raw" upload permission.
+            // If this also fails, a clear RuntimeException is thrown below.
+            try {
+                $options = array_merge($baseOptions, ['resource_type' => 'raw']);
+                $result = $this->cloudinary->uploadApi()->upload($file->getRealPath(), $options);
+                $isSvg = true;
+            } catch (\Cloudinary\Api\Exception\NotAllowed $e2) {
+                throw new \RuntimeException(
+                    'Cloudinary upload blocked: the API key does not have permission to create '.
+                    '"raw" assets. To upload SVG files, go to Cloudinary → Settings → '.
+                    'Security → Allowed upload formats and enable "raw", or grant the API '.
+                    'key "raw" resource-type upload permission. Original error: '.$e2->getMessage()
+                );
+            }
         }
 
         return [
