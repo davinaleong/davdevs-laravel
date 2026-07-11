@@ -110,7 +110,7 @@
             @endif
 
             {{-- Tabs --}}
-            <div style="display:flex;gap:2px;margin-bottom:16px;border-bottom:1px solid var(--cms-border);">
+            <div style="display:flex;gap:5px;margin-bottom:16px;border-bottom:1px solid var(--cms-border);">
                 @foreach (['content' => 'Content', 'media' => 'Media & Links', 'meta' => 'Meta', 'settings' => 'Settings'] as $key => $label)
                     <button type="button" @click="tab = '{{ $key }}'"
                         :style="tab === '{{ $key }}' ?
