@@ -41,7 +41,7 @@ document.documentElement.setAttribute('data-theme', theme)" :data-theme="theme"
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit"
-                    style="background:none;border:none;cursor:pointer;color:inherit;font-family:'Inter',sans-serif;font-size:11px;opacity:0.7;text-decoration:underline;">logout</button>
+                    style="background:rgba(0,0,0,0.15);border:1px solid rgba(255,255,255,0.15);border-radius:4px;cursor:pointer;color:inherit;font-family:'Inter',sans-serif;font-size:11px;padding:3px 10px;opacity:0.85;letter-spacing:0.02em;">logout</button>
             </form>
         </div>
     </header>
