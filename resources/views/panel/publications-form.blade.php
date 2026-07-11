@@ -19,7 +19,7 @@
                 @foreach(['content' => 'Content', 'store' => 'Store', 'media' => 'Media & Links', 'meta' => 'Meta', 'settings' => 'Settings'] as $key => $label)
                 <button type="button" @click="tab = '{{ $key }}'"
                         :style="tab === '{{ $key }}' ? 'border-bottom:2px solid var(--cms-accent);color:var(--cms-text-primary);' : 'border-bottom:2px solid transparent;color:var(--cms-text-muted);'"
-                        style="padding:8px 16px;background:none;border-top:none;border-left:none;border-right:none;font-size:13px;font-weight:500;cursor:pointer;">{{ $label }}</button>
+                        style="padding:10px 20px;background:none;border-top:none;border-left:none;border-right:none;font-size:13px;font-weight:500;cursor:pointer;">{{ $label }}</button>
                 @endforeach
             </div>
 
@@ -241,8 +241,8 @@
             </div>
 
             <div style="display:flex;gap:10px;">
-                <button type="submit" style="background:var(--cms-btn-primary-bg);color:var(--cms-btn-primary-text);border:none;border-radius:5px;padding:9px 18px;font-size:13px;font-weight:500;cursor:pointer;">Save Publication</button>
-                <a href="{{ route('panel.publications.index') }}" style="background:var(--cms-btn-secondary-bg);border:1px solid var(--cms-btn-secondary-border);color:var(--cms-btn-secondary-text);padding:9px 18px;border-radius:5px;font-size:13px;text-decoration:none;">Cancel</a>
+                <button type="submit" style="background:var(--cms-btn-primary-bg);color:var(--cms-btn-primary-text);border:none;border-radius:5px;padding:10px 20px;font-size:13px;font-weight:500;cursor:pointer;">Save Publication</button>
+                <a href="{{ route('panel.publications.index') }}" style="background:var(--cms-btn-secondary-bg);border:1px solid var(--cms-btn-secondary-border);color:var(--cms-btn-secondary-text);padding:10px 20px;border-radius:5px;font-size:13px;text-decoration:none;">Cancel</a>
             </div>
         </form>
     </div>

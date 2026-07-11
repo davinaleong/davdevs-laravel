@@ -15,7 +15,7 @@
             <option value="image" {{ request('type') === 'image' ? 'selected' : '' }}>Images only</option>
             <option value="qr" {{ request('type') === 'qr' ? 'selected' : '' }}>QR codes only</option>
         </select>
-        <button type="submit" style="background:var(--cms-btn-secondary-bg);border:1px solid var(--cms-btn-secondary-border);color:var(--cms-btn-secondary-text);border-radius:5px;padding:8px 16px;font-size:13px;cursor:pointer;">Filter</button>
+        <button type="submit" style="background:var(--cms-btn-secondary-bg);border:1px solid var(--cms-btn-secondary-border);color:var(--cms-btn-secondary-text);border-radius:5px;padding:10px 20px;font-size:13px;cursor:pointer;">Filter</button>
     </form>
 
     <div x-data="{ lightboxImage: null }">

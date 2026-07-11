@@ -75,7 +75,7 @@
         @endforeach
 
         <div style="display:flex;gap:10px;">
-            <button type="submit" style="background:var(--cms-btn-primary-bg);color:var(--cms-btn-primary-text);border:none;border-radius:5px;padding:8px 16px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;">Save Settings</button>
+            <button type="submit" style="background:var(--cms-btn-primary-bg);color:var(--cms-btn-primary-text);border:none;border-radius:5px;padding:10px 20px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;">Save Settings</button>
         </div>
     </form>
 

@@ -34,7 +34,7 @@
     <div style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;overflow:hidden;">
         @forelse($logs as $log)
         @php $lc = $levelColors[$log->level] ?? $levelColors['info']; @endphp
-        <div style="display:flex;align-items:center;gap:12px;padding:8px 16px;border-top:0.5px solid var(--cms-table-border);background:{{ in_array($log->level, ['warning','error','critical']) ? $lc['bg'] : 'transparent' }};">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 20px;border-top:0.5px solid var(--cms-table-border);background:{{ in_array($log->level, ['warning','error','critical']) ? $lc['bg'] : 'transparent' }};">
             <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cms-text-muted);white-space:nowrap;">[{{ $log->channel }}]</span>
             <span style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 6px;border-radius:3px;color:{{ $lc['c'] }};background:{{ $lc['bg'] }};white-space:nowrap;">{{ $log->level }}</span>
             <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cms-text-primary);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ $log->message }}</span>
