@@ -8,13 +8,13 @@
         - Facebook
         - Instagram
         - Threads
-- [ ] Make muted text more visible
+- [x] Make muted text more visible
 - [ ] Layouts are for Publications, not Entries
 - [ ] Content Types for Publications
 - [ ] A "Show Price" Toggle for Publications per Content Type
 - [ ] There seems to be a bug with the filters
     - The content on the listing page doesn't correspond to the selected filters: Seems to be sorted by Alpha while "Newest" is selected
-- [ ] Make the muted texts more visible in both dark and light mode
+- [x] Make the muted texts more visible in both dark and light mode
 - [ ] Panel: add some padding to the tabs and buttons
 - [ ] Panel: QR Code 2FA session doesn't seem to be "retained"
     - Always have to scan a new QR Code per login
