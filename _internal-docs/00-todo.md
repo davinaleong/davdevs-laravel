@@ -1,7 +1,7 @@
 # TODO - For Maintenance &amp; Ad-hoc Tasks
 
 - [ ] Manual: Add my latest ebook: It's Not Scary (Debug)
-- [ ] Associate the favicons and OG images to their respective publications
+- [x] Associate the favicons and OG images to their respective publications
 - [ ] Panel broadcast module when a new Entry/Publication is created
     - Make it toggable per social media platform:
         - LinkedIn
