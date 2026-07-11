@@ -16,7 +16,7 @@
     - The content on the listing page doesn't correspond to the selected filters: Seems to be sorted by Alpha while "Newest" is selected
 - [x] Make the muted texts more visible in both dark and light mode
 - [x] Panel: add some padding to the tabs and buttons
-- [ ] Panel: QR Code 2FA session doesn't seem to be "retained"
+- [x] Panel: QR Code 2FA session doesn't seem to be "retained"
     - Always have to scan a new QR Code per login
 - [ ] Panel: AI features:
     - Entry/Publication title: help to geneerate
