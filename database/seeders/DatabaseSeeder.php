@@ -10,6 +10,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             ContentTypeSeeder::class,
+            PublicationTypeSeeder::class,
             LayoutSeeder::class,
             SettingSeeder::class,
         ]);
