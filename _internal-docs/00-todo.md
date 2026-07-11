@@ -12,7 +12,7 @@
 - [ ] Layouts are for Publications, not Entries
 - [ ] Content Types for Publications
 - [ ] A "Show Price" Toggle for Publications per Content Type
-- [ ] There seems to be a bug with the filters
+- [x] There seems to be a bug with the filters
     - The content on the listing page doesn't correspond to the selected filters: Seems to be sorted by Alpha while "Newest" is selected
 - [x] Make the muted texts more visible in both dark and light mode
 - [x] Panel: add some padding to the tabs and buttons

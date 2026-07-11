@@ -50,17 +50,17 @@ class SiteController extends Controller
             $query->whereHas('tags', fn ($q) => $q->where('slug', $request->string('tag')));
         }
 
-        // cursorPaginate requires the sort column(s) to be unique, or tied rows get
-        // silently dropped at page boundaries — id is appended as a tiebreaker
-        // (entries commonly share the same published_at, e.g. same-day imports).
+        // COALESCE falls back to created_at for entries without an explicit publish date,
+        // preventing NULL published_at from making "newest" look alphabetical.
+        // Uses paginate (not cursorPaginate) so that arbitrary expressions work as sort keys.
         $sort = $request->string('sort', 'newest');
         match ((string) $sort) {
-            'oldest' => $query->orderBy('published_at', 'asc')->orderBy('id', 'asc'),
+            'oldest' => $query->orderByRaw('COALESCE(published_at, created_at) ASC')->orderBy('id', 'asc'),
             'alpha' => $query->orderBy('title', 'asc')->orderBy('id', 'asc'),
-            default => $query->orderByDesc('published_at')->orderByDesc('id'),
+            default => $query->orderByRaw('COALESCE(published_at, created_at) DESC')->orderByDesc('id'),
         };
 
-        $entries = $query->cursorPaginate(12)->withQueryString();
+        $entries = $query->paginate(12)->withQueryString();
 
         if ($request->wantsJson()) {
             return response()->json([
