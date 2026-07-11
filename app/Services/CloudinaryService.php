@@ -25,12 +25,19 @@ class CloudinaryService
      */
     public function upload(UploadedFile $file, bool $stripExif = true, ?string $publicId = null): array
     {
+        $isSvg = in_array($file->getMimeType(), ['image/svg+xml', 'image/svg'], true)
+            || strtolower($file->getClientOriginalExtension()) === 'svg';
+
+        // SVG is a vector format — Cloudinary requires resource_type='raw' for it
+        // (the default 'image' type is restricted to raster formats by most account plans).
         $options = [
-            'resource_type' => 'image',
-            // Cloudinary strips EXIF/metadata from the delivered asset by default;
-            // this explicitly keeps only color-profile data needed for correct rendering.
-            'image_metadata' => false,
+            'resource_type' => $isSvg ? 'raw' : 'image',
         ];
+
+        if (! $isSvg) {
+            // Only relevant for raster uploads
+            $options['image_metadata'] = false;
+        }
 
         if ($publicId !== null) {
             $options['public_id'] = "davdevs/{$publicId}";
@@ -42,17 +49,22 @@ class CloudinaryService
 
         return [
             'cloudinary_id' => $result['public_id'],
-            'url' => $result['secure_url'],
-            'width' => $result['width'] ?? null,
-            'height' => $result['height'] ?? null,
-            'format' => $result['format'] ?? null,
-            'bytes' => $result['bytes'] ?? null,
+            'url'           => $result['secure_url'],
+            'width'         => $isSvg ? null : ($result['width'] ?? null),
+            'height'        => $isSvg ? null : ($result['height'] ?? null),
+            'format'        => $result['format'] ?? ($isSvg ? 'svg' : null),
+            'bytes'         => $result['bytes'] ?? null,
         ];
     }
 
     public function destroy(string $publicId): void
     {
-        $this->cloudinary->uploadApi()->destroy($publicId);
+        // Try image type first; if it fails, retry as raw (SVG files are stored as raw)
+        try {
+            $this->cloudinary->uploadApi()->destroy($publicId, ['resource_type' => 'image']);
+        } catch (\Throwable) {
+            $this->cloudinary->uploadApi()->destroy($publicId, ['resource_type' => 'raw']);
+        }
     }
 
     public function transformedUrl(string $publicId, array $options = []): string
