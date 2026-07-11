@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme', theme)" :data-theme="theme"
             {{-- Theme toggle --}}
             <button
                 @click="theme = theme === 'light' ? 'dark' : 'light'; localStorage.setItem('cms_theme', theme); $el.closest('[data-cms]').setAttribute('data-theme', theme); document.documentElement.setAttribute('data-theme', theme)"
-                style="background:none;border:none;cursor:pointer;color:inherit;padding:4px;font-size:10px;font-family:'JetBrains Mono',monospace;">
+                style="background:none;border:none;cursor:pointer;color:inherit;padding:4px;font-size:14px;font-family:'JetBrains Mono',monospace;">
                 <span x-text="theme === 'dark' ? '☀' : '☾'"></span>
             </button>
             <span style="font-family:'Inter',sans-serif;font-size:12px;opacity:0.8;">{{ auth()->user()->name }}</span>
