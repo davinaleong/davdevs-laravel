@@ -9,7 +9,7 @@
         - Instagram
         - Threads
 - [x] Make muted text more visible
-- [ ] Layouts are for Publications, not Entries
+- [x] Layouts are for Publications, not Entries
 - [ ] Content Types for Publications
 - [ ] A "Show Price" Toggle for Publications per Content Type
 - [x] There seems to be a bug with the filters

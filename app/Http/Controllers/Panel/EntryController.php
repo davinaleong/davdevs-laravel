@@ -7,7 +7,6 @@ use App\Models\Category;
 use App\Models\ContentType;
 use App\Models\Entry;
 use App\Models\Image;
-use App\Models\Layout;
 use App\Models\Link;
 use App\Models\ReactComponent;
 use App\Models\Tag;
@@ -154,7 +153,6 @@ class EntryController extends Controller
     protected function form(Entry $entry)
     {
         $contentTypes = ContentType::orderBy('name')->get();
-        $layouts = Layout::where('active', true)->orderBy('name')->get();
         $categories = $entry->content_type_id
             ? Category::where('content_type_id', $entry->content_type_id)->orWhereNull('content_type_id')->get()
             : Category::all();
@@ -167,7 +165,7 @@ class EntryController extends Controller
         $reactComponents = ReactComponent::where('active', true)->orderBy('name')->get();
 
         return view('panel.entries-form', compact(
-            'entry', 'contentTypes', 'layouts', 'categories', 'tags', 'images', 'videoEmbeds', 'links', 'reactComponents'
+            'entry', 'contentTypes', 'categories', 'tags', 'images', 'videoEmbeds', 'links', 'reactComponents'
         ));
     }
 
@@ -175,7 +173,6 @@ class EntryController extends Controller
     {
         $data = $request->validate([
             'content_type_id' => 'required|exists:content_types,id',
-            'layout_id' => 'required|exists:layouts,id',
             'category_id' => 'nullable|exists:categories,id',
             'og_image_id' => 'nullable|exists:images,id',
             'react_component_id' => 'nullable|exists:react_components,id',

@@ -12,7 +12,7 @@ class Entry extends Model
     use LogsActivity, SoftDeletes;
 
     protected $fillable = [
-        'ulid', 'content_type_id', 'layout_id', 'category_id', 'og_image_id', 'react_component_id',
+        'ulid', 'content_type_id', 'category_id', 'og_image_id', 'react_component_id',
         'title', 'slug', 'excerpt', 'body', 'read_time', 'status',
         'visibility', 'featured', 'published_at',
     ];

@@ -86,7 +86,7 @@ class SiteController extends Controller
 
         $entry = Entry::where('content_type_id', $type->id)
             ->where('slug', $slug)
-            ->with(['contentType', 'category', 'layout', 'reactComponent', 'images', 'videoEmbeds', 'links', 'tags', 'meta'])
+            ->with(['contentType', 'category', 'reactComponent', 'images', 'videoEmbeds', 'links', 'tags', 'meta'])
             ->firstOrFail();
 
         if ($entry->status === 'private' && ! auth()->check()) {
