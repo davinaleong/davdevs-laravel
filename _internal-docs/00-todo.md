@@ -18,7 +18,7 @@
 - [x] Panel: add some padding to the tabs and buttons
 - [x] Panel: QR Code 2FA session doesn't seem to be "retained"
     - Always have to scan a new QR Code per login
-- [ ] Panel: AI features:
+- [x] Panel: AI features:
     - Entry/Publication title: help to geneerate
     - Entry/Publication Exercpt: help to generate
     - Entry/Publication Content: have a "prompt" field to instruct AI on how to handle the content.

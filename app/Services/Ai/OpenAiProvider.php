@@ -12,11 +12,41 @@ class OpenAiProvider implements AiProvider
         protected string $model = 'gpt-4o',
     ) {}
 
-    public function generateContent(string $title, string $type, array $tags = []): array
+    public function generateTitle(string $topic, string $type): array
     {
+        $prompt = "Suggest a concise, compelling title for a {$type} about \"{$topic}\". ".
+            'Respond as JSON: {"title": "..."}';
+
+        $result = $this->chat($prompt);
+        $decoded = json_decode($result['content'], true) ?? ['title' => $result['content']];
+
+        return [
+            'title' => $decoded['title'] ?? '',
+            'tokens' => $result['tokens'],
+        ];
+    }
+
+    public function generateExcerpt(string $title, string $type): array
+    {
+        $prompt = "Write a one-sentence excerpt (max 160 characters) for a {$type} titled \"{$title}\". ".
+            'Respond as JSON: {"excerpt": "..."}';
+
+        $result = $this->chat($prompt);
+        $decoded = json_decode($result['content'], true) ?? ['excerpt' => $result['content']];
+
+        return [
+            'excerpt' => $decoded['excerpt'] ?? '',
+            'tokens' => $result['tokens'],
+        ];
+    }
+
+    public function generateContent(string $title, string $type, array $tags = [], string $instructions = ''): array
+    {
+        $extra = $instructions ? "\nAdditional instructions: {$instructions}" : '';
         $prompt = 'Write a short excerpt (1-2 sentences) and a Markdown body draft (3-5 paragraphs) '.
             "for a {$type} titled \"{$title}\"".
             (count($tags) ? ' covering: '.implode(', ', $tags) : '').
+            $extra.
             '. Respond as JSON: {"excerpt": "...", "body": "..."}';
 
         $result = $this->chat($prompt);

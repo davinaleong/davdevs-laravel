@@ -98,6 +98,8 @@ Route::middleware(['cms.ip', 'auth', 'two_factor'])->prefix('panel')->name('pane
     Route::get('exports/{exportJob}/download', [ExportController::class, 'download'])->name('exports.download');
 
     // AI (bonus)
+    Route::post('ai/generate-title', [AiController::class, 'generateTitle'])->name('ai.generate-title');
+    Route::post('ai/generate-excerpt', [AiController::class, 'generateExcerpt'])->name('ai.generate-excerpt');
     Route::post('ai/generate', [AiController::class, 'generate'])->name('ai.generate');
     Route::post('ai/audit', [AiController::class, 'audit'])->name('ai.audit');
 });

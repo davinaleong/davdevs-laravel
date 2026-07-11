@@ -8,6 +8,67 @@
         isBundle: {{ $publication->bundle ? 'true' : 'false' }},
         metaRows: {{ json_encode($publication->meta->map(fn($m) => ['key' => $m->key, 'value' => $m->value])->values()->all() ?: [['key' => '', 'value' => '']]) }},
         variantRows: {{ json_encode($publication->variants->map(fn($v) => ['name' => $v->name, 'price_display' => $v->price_display, 'ls_product_id' => $v->ls_product_id])->values()->all() ?: []) }},
+        aiLoading: false,
+        aiError: null,
+        aiPrompt: '',
+        generateTitle() {
+            const title = document.querySelector('[name=title]').value;
+            const topic = title || this.aiPrompt;
+            if (!topic) { this.aiError = 'Enter a title or topic first.'; return; }
+            this.aiLoading = true;
+            this.aiError = null;
+            fetch('{{ route('panel.ai.generate-title') }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, 'Accept': 'application/json' },
+                body: JSON.stringify({ topic, type: 'publication' }),
+            }).then(r => r.json()).then(d => {
+                this.aiLoading = false;
+                if (d.error) { this.aiError = d.error; return; }
+                document.querySelector('[name=title]').value = d.title;
+            }).catch(() => {
+                this.aiLoading = false;
+                this.aiError = 'Request failed.';
+            });
+        },
+        generateExcerpt() {
+            const title = document.querySelector('[name=title]').value;
+            if (!title) { this.aiError = 'Add a title first.'; return; }
+            this.aiLoading = true;
+            this.aiError = null;
+            fetch('{{ route('panel.ai.generate-excerpt') }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, 'Accept': 'application/json' },
+                body: JSON.stringify({ title, type: 'publication' }),
+            }).then(r => r.json()).then(d => {
+                this.aiLoading = false;
+                if (d.error) { this.aiError = d.error; return; }
+                document.querySelector('[name=excerpt]').value = d.excerpt;
+            }).catch(() => {
+                this.aiLoading = false;
+                this.aiError = 'Request failed.';
+            });
+        },
+        generateContent() {
+            const title = document.querySelector('[name=title]').value;
+            if (!title) { this.aiError = 'Add a title first.'; return; }
+            this.aiLoading = true;
+            this.aiError = null;
+            fetch('{{ route('panel.ai.generate') }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, 'Accept': 'application/json' },
+                body: JSON.stringify({ title, type: 'publication', tags: [], instructions: this.aiPrompt }),
+            }).then(r => r.json()).then(d => {
+                this.aiLoading = false;
+                if (d.error) { this.aiError = d.error; return; }
+                document.querySelector('[name=excerpt]').value = d.excerpt;
+                const mde = window._easyMdeInstances['pub-body'];
+                if (mde) mde.value(d.body);
+                else document.getElementById('pub-body').value = d.body;
+            }).catch(() => {
+                this.aiLoading = false;
+                this.aiError = 'Request failed.';
+            });
+        },
     }">
         <h1
             style="font-family:'Inter',sans-serif;font-size:20px;font-weight:600;color:var(--cms-text-primary);margin:0 0 20px;">
@@ -34,8 +95,12 @@
                 <div
                     style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px;margin-bottom:16px;">
                     <div>
-                        <label
-                            style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Title</label>
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                            <label style="font-size:12px;font-weight:500;color:var(--cms-text-secondary);">Title</label>
+                            <button type="button" @click="generateTitle()" :disabled="aiLoading"
+                                style="font-size:11px;color:var(--cms-accent);background:none;border:none;cursor:pointer;">✨
+                                Generate title</button>
+                        </div>
                         <input type="text" name="title" value="{{ old('title', $publication->title) }}" required
                             style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:9px 12px;font-size:15px;color:var(--cms-input-text);">
                     </div>
@@ -46,15 +111,33 @@
                             style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">
                     </div>
                     <div>
-                        <label
-                            style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Excerpt</label>
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                            <label
+                                style="font-size:12px;font-weight:500;color:var(--cms-text-secondary);">Excerpt</label>
+                            <button type="button" @click="generateExcerpt()" :disabled="aiLoading"
+                                style="font-size:11px;color:var(--cms-accent);background:none;border:none;cursor:pointer;">✨
+                                Generate excerpt</button>
+                        </div>
                         <textarea name="excerpt" rows="2"
                             style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">{{ old('excerpt', $publication->excerpt) }}</textarea>
                     </div>
                     <div>
-                        <label
-                            style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Body
-                            (Markdown)</label>
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                            <label style="font-size:12px;font-weight:500;color:var(--cms-text-secondary);">Body
+                                (Markdown)</label>
+                            <div style="display:flex;gap:12px;align-items:center;">
+                                <button type="button" @click="generateContent()" :disabled="aiLoading"
+                                    style="font-size:11px;color:var(--cms-accent);background:none;border:none;cursor:pointer;">✨
+                                    Generate</button>
+                            </div>
+                        </div>
+                        <input type="text" x-model="aiPrompt"
+                            placeholder="AI prompt (e.g. 'focus on beginners, use simple language')"
+                            style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-size:12px;color:var(--cms-input-text);margin-bottom:6px;font-style:italic;">
+                        <p x-show="aiLoading" style="font-size:11px;color:var(--cms-text-muted);margin:0 0 6px;">
+                            Working…</p>
+                        <p x-show="aiError" x-text="aiError"
+                            style="font-size:11px;color:var(--cms-error);margin:0 0 6px;"></p>
                         <textarea name="body" rows="16" id="pub-body" data-markdown-editor style="width:100%;box-sizing:border-box;">{{ old('body', $publication->body) }}</textarea>
                     </div>
                 </div>

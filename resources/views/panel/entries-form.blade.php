@@ -11,6 +11,40 @@
         aiLoading: false,
         aiError: null,
         aiSuggestions: null,
+        aiPrompt: '',
+        generateTitle() {
+            const title = document.querySelector('[name=title]').value;
+            const topic = title || this.aiPrompt;
+            if (!topic) { this.aiError = 'Enter a title or topic first.'; return; }
+            this.aiLoading = true;
+            this.aiError = null;
+            fetch('{{ route('panel.ai.generate-title') }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, 'Accept': 'application/json' },
+                body: JSON.stringify({ topic, type: '{{ $entry->contentType->name ?? 'Article' }}' }),
+            }).then(r => r.json()).then(d => {
+                this.aiLoading = false;
+                if (d.error) { this.aiError = d.error; return; }
+                document.querySelector('[name=title]').value = d.title;
+            }).catch(() => { this.aiLoading = false;
+                this.aiError = 'Request failed.'; });
+        },
+        generateExcerpt() {
+            const title = document.querySelector('[name=title]').value;
+            if (!title) { this.aiError = 'Add a title first.'; return; }
+            this.aiLoading = true;
+            this.aiError = null;
+            fetch('{{ route('panel.ai.generate-excerpt') }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, 'Accept': 'application/json' },
+                body: JSON.stringify({ title, type: '{{ $entry->contentType->name ?? 'Article' }}' }),
+            }).then(r => r.json()).then(d => {
+                this.aiLoading = false;
+                if (d.error) { this.aiError = d.error; return; }
+                document.querySelector('[name=excerpt]').value = d.excerpt;
+            }).catch(() => { this.aiLoading = false;
+                this.aiError = 'Request failed.'; });
+        },
         generateContent() {
             const title = document.querySelector('[name=title]').value;
             if (!title) { this.aiError = 'Add a title first.'; return; }
@@ -19,7 +53,7 @@
             fetch('{{ route('panel.ai.generate') }}', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, 'Accept': 'application/json' },
-                body: JSON.stringify({ title, type: '{{ $entry->contentType->name ?? 'Article' }}', tags: [] }),
+                body: JSON.stringify({ title, type: '{{ $entry->contentType->name ?? 'Article' }}', tags: [], instructions: this.aiPrompt }),
             }).then(r => r.json()).then(d => {
                 this.aiLoading = false;
                 if (d.error) { this.aiError = d.error; return; }
@@ -87,8 +121,12 @@
                 <div
                     style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px;margin-bottom:16px;">
                     <div>
-                        <label
-                            style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Title</label>
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                            <label style="font-size:12px;font-weight:500;color:var(--cms-text-secondary);">Title</label>
+                            <button type="button" @click="generateTitle()" :disabled="aiLoading"
+                                style="font-size:11px;color:var(--cms-accent);background:none;border:none;cursor:pointer;">✨
+                                Generate title</button>
+                        </div>
                         <input type="text" name="title" value="{{ old('title', $entry->title) }}" required
                             style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:9px 12px;font-family:'Inter',sans-serif;font-size:15px;color:var(--cms-input-text);">
                         @error('title')
@@ -96,8 +134,13 @@
                         @enderror
                     </div>
                     <div>
-                        <label
-                            style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Excerpt</label>
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                            <label
+                                style="font-size:12px;font-weight:500;color:var(--cms-text-secondary);">Excerpt</label>
+                            <button type="button" @click="generateExcerpt()" :disabled="aiLoading"
+                                style="font-size:11px;color:var(--cms-accent);background:none;border:none;cursor:pointer;">✨
+                                Generate excerpt</button>
+                        </div>
                         <textarea name="excerpt" rows="2"
                             style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-size:13px;color:var(--cms-input-text);">{{ old('excerpt', $entry->excerpt) }}</textarea>
                     </div>
@@ -114,6 +157,9 @@
                                     Audit</button>
                             </div>
                         </div>
+                        <input type="text" x-model="aiPrompt"
+                            placeholder="AI prompt (e.g. 'focus on beginners, use simple language')"
+                            style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-size:12px;color:var(--cms-input-text);margin-bottom:6px;font-style:italic;">
                         <p x-show="aiLoading" style="font-size:11px;color:var(--cms-text-muted);margin:0 0 6px;">
                             Working…</p>
                         <p x-show="aiError" x-text="aiError"
