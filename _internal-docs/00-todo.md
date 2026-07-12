@@ -1,6 +1,6 @@
 # TODO - For Maintenance &amp; Ad-hoc Tasks
 
-- [ ]: Panel: Refactor the broadcast module.
+- [ ] Panel: Refactor the broadcast module.
     - DO NOT auto post to social media on create/edit of an Entry/Publication
     - Instead, give me a broadcast form:
         - Published Entry/Publication dropdown
@@ -10,3 +10,4 @@
             - Sanity check for grammar, spelling mistakes, and inappropriate content
             - Auto correct if failed sanity check
             - Only then, then post to social media platforms
+- [ ] Bug: Publications to allow defining of main foreground colour in the meta settings per record.
