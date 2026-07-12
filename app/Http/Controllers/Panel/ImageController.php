@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Image;
 use App\Services\CloudinaryService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ImageController extends Controller
 {
@@ -96,6 +97,9 @@ class ImageController extends Controller
 
         $image->update($data);
 
+        Cache::forget("favicon_url_{$image->id}");
+        Cache::forget("favicon_image_{$image->id}");
+
         return redirect()->route('panel.images.index')->with('success', 'Image updated.');
     }
 
@@ -108,6 +112,8 @@ class ImageController extends Controller
         }
 
         $this->cloudinary->destroy($image->cloudinary_id);
+        Cache::forget("favicon_url_{$image->id}");
+        Cache::forget("favicon_image_{$image->id}");
         $image->delete();
 
         return redirect()->route('panel.images.index')->with('success', 'Image deleted.');

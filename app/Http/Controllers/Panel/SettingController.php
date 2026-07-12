@@ -51,6 +51,7 @@ class SettingController extends Controller
         }
 
         Cache::forget('settings');
+        self::forgetFaviconCache();
 
         ActivityLog::create(['channel' => 'cms', 'level' => 'info', 'message' => 'Settings saved by '.auth()->user()->email]);
 
@@ -60,7 +61,17 @@ class SettingController extends Controller
     public function flushCache()
     {
         Cache::forget('settings');
+        self::forgetFaviconCache();
 
         return redirect()->route('panel.settings.index')->with('success', 'Cache flushed.');
+    }
+
+    private static function forgetFaviconCache(): void
+    {
+        $id = Setting::where('key', 'favicon_image_id')->value('value');
+        if ($id) {
+            Cache::forget("favicon_url_{$id}");
+            Cache::forget("favicon_image_{$id}");
+        }
     }
 }
