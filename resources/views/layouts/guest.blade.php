@@ -12,16 +12,25 @@
             \Illuminate\Support\Facades\Cache::remember('settings', 3600, function () {
                 return \App\Models\Setting::all()->mapWithKeys(fn($s) => [$s->key => $s->getTypedValue()])->all();
             })['favicon_image_id'] ?? null;
-        $faviconUrl = $faviconImageId
+        $faviconImage = $faviconImageId
             ? \Illuminate\Support\Facades\Cache::remember(
-                "favicon_url_{$faviconImageId}",
+                "favicon_image_{$faviconImageId}",
                 3600,
-                fn() => \App\Models\Image::find($faviconImageId)?->url,
+                fn() => (fn($img) => $img ? ['url' => $img->url, 'format' => $img->format] : null)(
+                    \App\Models\Image::find($faviconImageId),
+                ),
             )
             : null;
+        $faviconIcoUrl = $faviconImage ? preg_replace('#/upload/#', '/upload/f_ico/', $faviconImage['url'], 1) : null;
+        $faviconPngUrl = $faviconImage ? preg_replace('#/upload/#', '/upload/f_png/', $faviconImage['url'], 1) : null;
+        $faviconSvgUrl = $faviconImage && $faviconImage['format'] === 'svg' ? $faviconImage['url'] : null;
     @endphp
-    @if ($faviconUrl)
-        <link rel="icon" href="{{ $faviconUrl }}">
+    @if ($faviconImage)
+        @if ($faviconSvgUrl)
+            <link rel="icon" type="image/svg+xml" href="{{ $faviconSvgUrl }}">
+        @endif
+        <link rel="icon" type="image/png" href="{{ $faviconPngUrl }}">
+        <link rel="icon" type="image/x-icon" href="{{ $faviconIcoUrl }}">
     @else
         <link rel="icon" type="image/svg+xml" href="/favicon.svg">
         <link rel="icon" type="image/png" href="/favicon.png">
