@@ -16,7 +16,7 @@
             : null,
     ]);
 @endphp
-<x-site-layout :title="$publication->title" :description="$publication->excerpt" :og-image="$publication->ogImage?->url ?? $publication->coverImage?->url" :json-ld="$jsonLd">
+<x-site-layout :title="$publication->title" :description="$publication->excerpt" :og-image="$publication->ogImage?->url ?? $publication->coverImage?->url" :json-ld="$jsonLd" :favicon-image-id="$publication->getMeta('favicon_image_id')">
     <article style="max-width:680px;margin:0 auto;padding:48px 36px;">
         @if ($publication->coverImage)
             <img src="{{ $publication->coverImage->responsiveUrl(800) }}"

@@ -18,12 +18,13 @@ class SiteLayout extends Component
         public ?string $description = null,
         public ?string $ogImage = null,
         public ?string $jsonLd = null,
+        ?string $faviconImageId = null,
     ) {
         $this->settings = Cache::remember('settings', 3600, function () {
             return Setting::all()->mapWithKeys(fn ($s) => [$s->key => $s->getTypedValue()])->all();
         });
 
-        $faviconImageId = $this->settings['favicon_image_id'] ?? null;
+        $faviconImageId = $faviconImageId ?: ($this->settings['favicon_image_id'] ?? null);
         $this->faviconUrl = $faviconImageId
             ? Cache::remember("favicon_url_{$faviconImageId}", 3600, fn () => Image::find($faviconImageId)?->url)
             : null;
