@@ -71,4 +71,4 @@
         Thank you for your support! If you have any questions, feel free to reach out via the <a href="#" style="color:var(--accent);text-decoration:none;">contact form</a>.
     </p>
 </article>
-@endsectionHelp
+@endsection
