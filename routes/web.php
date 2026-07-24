@@ -103,9 +103,11 @@ Route::middleware(['cms.ip', 'auth', 'two_factor'])->prefix('panel')->name('pane
     Route::post('ai/generate-excerpt', [AiController::class, 'generateExcerpt'])->name('ai.generate-excerpt');
     Route::post('ai/generate', [AiController::class, 'generate'])->name('ai.generate');
     Route::post('ai/audit', [AiController::class, 'audit'])->name('ai.audit');
+    Route::post('ai/generate-broadcast', [AiController::class, 'generateBroadcast'])->name('ai.generate-broadcast');
 
-    // Broadcast history
+    // Broadcast
     Route::get('broadcasts', [BroadcastController::class, 'index'])->name('broadcasts.index');
+    Route::post('broadcasts/send', [BroadcastController::class, 'send'])->name('broadcasts.send');
 });
 
 // Static mockups (dev only)

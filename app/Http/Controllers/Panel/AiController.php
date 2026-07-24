@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
+use App\Models\Entry;
+use App\Models\Publication;
 use App\Services\Ai\AiProviderFactory;
 use Illuminate\Http\Request;
 use Throwable;
@@ -90,20 +92,58 @@ class AiController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:500',
-            'body' => 'required|string',
+            'body'  => 'required|string',
         ]);
 
         $start = microtime(true);
 
         try {
             $provider = AiProviderFactory::make();
-            $result = $provider->auditContent($data['title'], $data['body']);
+            $result   = $provider->auditContent($data['title'], $data['body']);
 
             $this->logCall('audit', $result['tokens'], $start);
 
             return response()->json(['suggestions' => $result['suggestions']]);
         } catch (Throwable $e) {
             $this->logCall('audit', 0, $start, $e->getMessage());
+
+            return response()->json(['error' => $e->getMessage()], 422);
+        }
+    }
+
+    public function generateBroadcast(Request $request)
+    {
+        $data = $request->validate([
+            'broadcastable_type' => 'required|in:entry,publication',
+            'broadcastable_id'   => 'required|integer',
+            'platforms'          => 'required|array|min:1',
+            'platforms.*'        => 'string|in:linkedin,facebook,instagram,threads',
+        ]);
+
+        $model = $data['broadcastable_type'] === 'entry'
+            ? Entry::with(['contentType', 'ogImage'])->findOrFail($data['broadcastable_id'])
+            : Publication::with(['ogImage', 'coverImage'])->findOrFail($data['broadcastable_id']);
+
+        $url = $model instanceof Entry
+            ? route('site.show', [$model->contentType->slug, $model->slug])
+            : route('site.ebooks.show', $model->slug);
+
+        $start = microtime(true);
+
+        try {
+            $provider = AiProviderFactory::make();
+            $result   = $provider->generateBroadcastContent(
+                $model->title,
+                $model->excerpt ?? '',
+                $url,
+                $data['platforms'],
+            );
+
+            $this->logCall('generate-broadcast', $result['tokens'], $start);
+
+            return response()->json(['platforms' => $result['platforms']]);
+        } catch (Throwable $e) {
+            $this->logCall('generate-broadcast', 0, $start, $e->getMessage());
 
             return response()->json(['error' => $e->getMessage()], 422);
         }

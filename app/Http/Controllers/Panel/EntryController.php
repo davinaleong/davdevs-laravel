@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\BroadcastPost;
 use App\Models\Category;
 use App\Models\ContentType;
 use App\Models\Entry;
@@ -75,7 +74,6 @@ class EntryController extends Controller
 
         $this->syncRelations($request, $entry);
         $this->syncMeta($request, $entry);
-        $this->dispatchBroadcast($request, $entry);
 
         return redirect()->route('panel.entries.edit', $entry)->with('success', 'Entry created.');
     }
@@ -97,7 +95,6 @@ class EntryController extends Controller
 
         $this->syncRelations($request, $entry);
         $this->syncMeta($request, $entry);
-        $this->dispatchBroadcast($request, $entry);
 
         return redirect()->route('panel.entries.edit', $entry)->with('success', 'Entry updated.');
     }
@@ -254,13 +251,5 @@ class EntryController extends Controller
 
         return $slug;
     }
-
-    protected function dispatchBroadcast(Request $request, Entry $entry): void
-    {
-        $platforms = $request->input('broadcast', []);
-        if (empty($platforms) || $entry->status !== 'published') {
-            return;
-        }
-        BroadcastPost::dispatch($entry->load(['contentType', 'ogImage']), $platforms);
-    }
+}
 }

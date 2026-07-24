@@ -32,4 +32,19 @@ interface AiProvider
      * @return array{suggestions: array<int, array{category: string, note: string}>, tokens: int}
      */
     public function auditContent(string $title, string $body): array;
+
+    /**
+     * Generate platform-specific social media post content.
+     *
+     * @param  string[]  $platforms
+     * @return array{platforms: array<string, string>, tokens: int}
+     */
+    public function generateBroadcastContent(string $title, string $excerpt, string $url, array $platforms): array;
+
+    /**
+     * Sanity-check and auto-correct a social media post.
+     *
+     * @return array{corrected: string, changed: bool, tokens: int}
+     */
+    public function sanitizeBroadcast(string $platform, string $text): array;
 }

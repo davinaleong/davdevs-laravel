@@ -73,6 +73,52 @@ class OpenAiProvider implements AiProvider
         ];
     }
 
+    public function generateBroadcastContent(string $title, string $excerpt, string $url, array $platforms): array
+    {
+        $platformGuidelines = [
+            'linkedin'  => 'professional tone, 150-300 words, end with the link',
+            'facebook'  => 'conversational and friendly, 100-200 words, end with the link',
+            'instagram' => 'engaging with relevant hashtags, 100-150 words, end with the link',
+            'threads'   => 'concise and punchy, under 100 words, end with the link',
+        ];
+        $guidelines = collect($platforms)
+            ->map(fn ($p) => "- {$p}: ".($platformGuidelines[$p] ?? 'concise post, include the link'))
+            ->implode("\n");
+
+        $prompt = 'Generate social media post content for these platforms: '.implode(', ', $platforms)."\n".
+            "Title: \"{$title}\". Excerpt: \"{$excerpt}\". Link: {$url}\n".
+            "Platform guidelines:\n{$guidelines}\n".
+            'Respond as JSON with only the requested platform keys: '.
+            json_encode(array_fill_keys($platforms, '...'));
+
+        $result = $this->chat($prompt);
+        $decoded = json_decode($result['content'], true) ?? [];
+
+        return [
+            'platforms' => array_intersect_key($decoded, array_flip($platforms)),
+            'tokens'    => $result['tokens'],
+        ];
+    }
+
+    public function sanitizeBroadcast(string $platform, string $text): array
+    {
+        $prompt = "You are a social media proofreader. Check the following {$platform} post for grammar errors, ".
+            'spelling mistakes, and inappropriate or offensive content. '.
+            "If corrections are needed, return the corrected version with 'changed' set to true. ".
+            "If it is already correct and appropriate, return it unchanged with 'changed' set to false.\n\n".
+            "Post:\n{$text}\n\n".
+            'Respond as JSON only: {"corrected": "...", "changed": true|false}';
+
+        $result = $this->chat($prompt);
+        $decoded = json_decode($result['content'], true) ?? ['corrected' => $text, 'changed' => false];
+
+        return [
+            'corrected' => $decoded['corrected'] ?? $text,
+            'changed'   => (bool) ($decoded['changed'] ?? false),
+            'tokens'    => $result['tokens'],
+        ];
+    }
+
     /**
      * @return array{content: string, tokens: int}
      */

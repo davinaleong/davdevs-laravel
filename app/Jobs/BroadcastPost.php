@@ -21,47 +21,33 @@ class BroadcastPost implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /** @var string[] */
-    public array $platforms;
+    /** @var array<string, string> Platform slug => post text */
+    public array $platformTexts;
 
     public function __construct(
         public Entry|Publication $broadcastable,
-        array $platforms,
+        array $platformTexts,
+        public string $url,
+        public ?string $imageUrl = null,
     ) {
-        $this->platforms = $platforms;
+        $this->platformTexts = $platformTexts;
     }
 
     public function handle(): void
     {
         $settings = Setting::all()->mapWithKeys(fn ($s) => [$s->key => $s->getTypedValue()])->all();
 
-        $title = $this->broadcastable->title;
-        $excerpt = $this->broadcastable->excerpt ?? '';
-        $slug = $this->broadcastable->slug;
-
-        // Build canonical URL based on model type
-        $url = $this->broadcastable instanceof Entry
-            ? route('site.show', [$this->broadcastable->contentType->slug, $slug])
-            : route('site.ebooks.show', $slug);
-
-        $text = $title.($excerpt ? "\n\n".$excerpt : '');
-
-        // OG image URL (Entry uses ogImage, Publication uses ogImage ?? coverImage)
-        $imageUrl = $this->broadcastable instanceof Entry
-            ? $this->broadcastable->ogImage?->url
-            : ($this->broadcastable->ogImage?->url ?? $this->broadcastable->coverImage?->url);
-
-        foreach ($this->platforms as $platform) {
+        foreach ($this->platformTexts as $platform => $text) {
             $broadcast = SocialBroadcast::create([
                 'broadcastable_type' => get_class($this->broadcastable),
-                'broadcastable_id' => $this->broadcastable->id,
-                'platform' => $platform,
-                'status' => 'pending',
+                'broadcastable_id'   => $this->broadcastable->id,
+                'platform'           => $platform,
+                'status'             => 'pending',
             ]);
 
             try {
                 $driver = $this->makeDriver($platform, $settings);
-                $result = $driver->post($text, $url, $imageUrl);
+                $result = $driver->post($text, $this->url, $this->imageUrl);
                 $broadcast->update(['status' => 'sent', 'post_url' => $result['post_url']]);
             } catch (Throwable $e) {
                 $broadcast->update(['status' => 'failed', 'error' => $e->getMessage()]);
