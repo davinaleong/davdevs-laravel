@@ -1,6 +1,6 @@
-<x-site-layout title="E-Books">
+<x-site-layout title="{{ $type->name ?? 'E-Books' }}">
     <section style="max-width:1280px;margin:0 auto;padding:48px 36px;">
-        <h1 style="font-family:'Syne',sans-serif;font-size:clamp(24px,4vw,32px);font-weight:800;color:var(--text-primary);margin:0 0 24px;">E-Books</h1>
+        <h1 style="font-family:'Syne',sans-serif;font-size:clamp(24px,4vw,32px);font-weight:800;color:var(--text-primary);margin:0 0 24px;">{{ $type->name ?? 'E-Books' }}</h1>
 
         @if($bundles->isNotEmpty())
         <h2 style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text-primary);margin:0 0 12px;">Bundles</h2>
@@ -11,7 +11,7 @@
         </div>
         @endif
 
-        <h2 style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text-primary);margin:0 0 12px;">E-Books</h2>
+        <h2 style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text-primary);margin:0 0 12px;">{{ $type->name ?? 'E-Books' }}</h2>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--border-default);">
             @forelse($publications as $pub)
                 @include('site.partials.ebook-card', ['pub' => $pub])

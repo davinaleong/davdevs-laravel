@@ -127,7 +127,7 @@
     <footer class="pub-footer">
         <hr class="pub-divider mb-10">
         <p>&copy; {{ date('Y') }} Davina Leong. All rights reserved.</p>
-        <p class="mt-2"><a href="{{ route('site.ebooks') }}">← All E-Books</a></p>
+        <p class="mt-2"><a href="{{ route('site.listing', $publication->contentType->slug) }}">← All {{ $publication->contentType->name }}</a></p>
     </footer>
 </body>
 </html>

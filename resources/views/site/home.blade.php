@@ -12,7 +12,8 @@
     <section style="max-width:1280px;margin:0 auto;padding:32px 36px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
             <h2 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--text-primary);margin:0;">E-Books</h2>
-            <a href="{{ route('site.ebooks') }}" style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);text-decoration:none;">view all →</a>
+            @php $pubType = $types->firstWhere('table_target', 'publications'); @endphp
+            <a href="{{ $pubType ? route('site.listing', $pubType->slug) : '#' }}" style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);text-decoration:none;">view all →</a>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--border-default);">
             @foreach($publications as $pub)

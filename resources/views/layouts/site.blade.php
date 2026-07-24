@@ -52,7 +52,6 @@
                 @foreach(\App\Models\ContentType::where('listed', true)->orderBy('name')->get() as $ct)
                 <a href="{{ route('site.listing', $ct->slug) }}" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--nav-link);text-decoration:none;">{{ $ct->name }}</a>
                 @endforeach
-                <a href="{{ route('site.ebooks') }}" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--nav-link);text-decoration:none;">E-Books</a>
                 <a href="{{ route('site.funny') }}" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--nav-link);text-decoration:none;">Funny</a>
                 <button @click="searchOpen = true" style="background:none;border:none;color:var(--nav-link);cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;">⌘K</button>
                 <button @click="theme = theme === 'dark' ? 'light' : 'dark'; localStorage.setItem('theme', theme)" style="background:none;border:none;color:var(--nav-link);cursor:pointer;">

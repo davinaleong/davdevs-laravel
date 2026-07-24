@@ -41,6 +41,31 @@ class SiteController extends Controller
     {
         $type = ContentType::where('slug', $typeSlug)->where('listed', true)->firstOrFail();
 
+        // Publications content type — serve the publications listing instead of entries
+        if ($type->table_target === 'publications') {
+            $bundles = Publication::published()
+                ->where('bundle', true)
+                ->where('content_type_id', $type->id)
+                ->with('coverImage', 'store')
+                ->orderByDesc('published_at')
+                ->get();
+
+            $publications = Publication::published()
+                ->where('bundle', false)
+                ->where('content_type_id', $type->id)
+                ->with('coverImage', 'store', 'contentType')
+                ->orderByDesc('published_at')
+                ->orderByDesc('id')
+                ->cursorPaginate(12);
+
+            $settings  = Cache::remember('settings', 3600, fn () =>
+                Setting::all()->mapWithKeys(fn ($s) => [$s->key => $s->getTypedValue()])->all()
+            );
+            $showPrice = $settings['publication_ebook_show_price'] ?? true;
+
+            return view('site.ebooks', compact('type', 'bundles', 'publications', 'showPrice'));
+        }
+
         $query = Entry::published()->where('content_type_id', $type->id)->with(['category']);
 
         if ($request->filled('category')) {
@@ -119,7 +144,7 @@ class SiteController extends Controller
     {
         $publication = Publication::where('slug', $slug)
             ->with([
-                'store', 'images', 'links', 'tags', 'meta',
+                'store', 'images', 'links', 'tags', 'meta', 'contentType',
                 'coverImage', 'ogImage', 'template', 'variants', 'reactComponent',
                 'bundleMembers.coverImage', 'bundleMembers.store',
             ])

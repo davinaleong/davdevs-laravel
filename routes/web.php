@@ -32,7 +32,6 @@ Route::post('api/reactions/{type}/{id}', [ReactionController::class, 'toggle'])
     ->where('id', '[0-9]+')
     ->middleware('throttle:5,1')
     ->name('api.reactions.toggle');
-Route::get('ebooks', [SiteController::class, 'ebooks'])->name('site.ebooks');
 Route::get('ebooks/{slug}', [SiteController::class, 'ebookShow'])->name('site.ebooks.show');
 Route::get('privacy', fn () => view('site.privacy'))->name('site.privacy');
 
