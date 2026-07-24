@@ -9,7 +9,6 @@
     (defaults to "Get This").
 --}}
 @php
-    $lemonSqueezyCheckoutBase = 'https://davinaleong.lemonsqueezy.com/checkout/buy';
     $hasVariants = $publication->variants->isNotEmpty();
     $storeUrl = $publication->store?->ls_store_url;
     $priceDisplay = $publication->store?->price_display;
@@ -24,7 +23,7 @@
         <div class="pub-card">
             <h3 class="pub-prose font-semibold text-lg mb-2" style="opacity: 1;">{{ $variant->name }}</h3>
             <div class="pub-heading text-2xl mb-4 pub-accent">{{ $variant->price_display }}</div>
-            <a href="{{ $variant->ls_product_id ? $lemonSqueezyCheckoutBase.'/'.$variant->ls_product_id : '#' }}" class="pub-btn pub-btn-primary">
+            <a href="{{ $storeUrl ?: '#' }}" class="pub-btn pub-btn-primary">
                 Get This Version
             </a>
         </div>

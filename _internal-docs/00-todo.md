@@ -18,3 +18,5 @@
 - [x] Panel: Some UX enhancements:
     - Enable search on all dropdowns
     - Order by Alpha order
+- [x] Bug: Publication pages:
+    - Variant CTA should point to the checkout URL
