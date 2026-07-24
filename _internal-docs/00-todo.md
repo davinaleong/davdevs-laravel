@@ -12,3 +12,6 @@
             - Only then, then post to social media platforms
 - [x] Panel: 500 Error when trying to save an "Edit Entry" Meta form.
 - [x] Bug: Lingering "}"
+- [x] Bug:
+    - Local /panel/settings > can see Broadcast social media integration
+    - Production /panel/settings > no Broadcast social media integration
