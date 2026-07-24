@@ -64,6 +64,37 @@
     max-height: 240px;
 }
 
+/* ── Tom Select sort bar ──────────────────────────────────────────────────── */
+.ts-sort-bar {
+    display: flex;
+    gap: 4px;
+    padding: 6px 8px 5px;
+    border-bottom: 1px solid var(--cms-input-border);
+    background: var(--cms-bg-surface);
+    flex-wrap: wrap;
+}
+.ts-sort-bar button {
+    background: none;
+    border: 1px solid var(--cms-input-border);
+    border-radius: 3px;
+    padding: 2px 8px;
+    font-size: 11px;
+    color: var(--cms-text-secondary);
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+    line-height: 1.6;
+}
+.ts-sort-bar button:hover {
+    background: var(--cms-bg-surface-2, rgba(0,0,0,.06));
+    color: var(--cms-text-primary);
+}
+.ts-sort-bar button.active {
+    background: var(--cms-accent);
+    border-color: var(--cms-accent);
+    color: #fff;
+}
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
