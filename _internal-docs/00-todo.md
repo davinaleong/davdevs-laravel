@@ -11,3 +11,4 @@
             - Auto correct if failed sanity check
             - Only then, then post to social media platforms
 - [x] Panel: 500 Error when trying to save an "Edit Entry" Meta form.
+- [x] Bug: Lingering "}"

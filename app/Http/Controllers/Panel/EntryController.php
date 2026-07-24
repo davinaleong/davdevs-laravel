@@ -252,4 +252,3 @@ class EntryController extends Controller
         return $slug;
     }
 }
-}
