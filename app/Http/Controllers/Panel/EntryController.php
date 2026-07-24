@@ -154,12 +154,12 @@ class EntryController extends Controller
     {
         $contentTypes = ContentType::orderBy('name')->get();
         $categories = $entry->content_type_id
-            ? Category::where('content_type_id', $entry->content_type_id)->orWhereNull('content_type_id')->get()
-            : Category::all();
+            ? Category::where('content_type_id', $entry->content_type_id)->orWhereNull('content_type_id')->orderBy('name')->get()
+            : Category::orderBy('name')->get();
         $tags = $entry->content_type_id
-            ? Tag::where('content_type_id', $entry->content_type_id)->orWhereNull('content_type_id')->get()
-            : Tag::all();
-        $images = Image::orderByDesc('id')->limit(60)->get();
+            ? Tag::where('content_type_id', $entry->content_type_id)->orWhereNull('content_type_id')->orderBy('name')->get()
+            : Tag::orderBy('name')->get();
+        $images = Image::orderBy('title')->orderByDesc('id')->limit(200)->get();
         $videoEmbeds = VideoEmbed::orderByDesc('id')->limit(60)->get();
         $links = Link::orderBy('sort_order')->get();
         $reactComponents = ReactComponent::where('active', true)->orderBy('name')->get();

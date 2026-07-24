@@ -1,6 +1,68 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap');
 @import 'easymde/dist/easymde.min.css';
+@import 'tom-select/dist/css/tom-select.default.css';
 @import 'tailwindcss';
+
+/* ── Tom Select – CMS theme overrides ─────────────────────────────────────── */
+.ts-wrapper {
+    width: 100%;
+    box-sizing: border-box;
+}
+.ts-wrapper .ts-control {
+    background: var(--cms-input-bg);
+    border: 1px solid var(--cms-input-border);
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-size: 13px;
+    color: var(--cms-input-text);
+    box-shadow: none;
+    min-height: unset;
+    cursor: pointer;
+    flex-wrap: nowrap;
+    gap: 4px;
+}
+.ts-wrapper.focus .ts-control {
+    border-color: var(--cms-accent);
+    box-shadow: none;
+    outline: none;
+}
+.ts-wrapper .ts-control input {
+    color: var(--cms-input-text);
+    font-size: 13px;
+    min-width: 60px;
+}
+.ts-wrapper .ts-control input::placeholder {
+    color: var(--cms-text-muted);
+}
+.ts-dropdown {
+    background: var(--cms-bg-surface);
+    border: 1px solid var(--cms-input-border);
+    border-radius: 5px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.18);
+    font-size: 13px;
+    z-index: 999;
+}
+.ts-dropdown [data-selectable] {
+    color: var(--cms-text-primary);
+    padding: 7px 12px;
+}
+.ts-dropdown .option.selected {
+    background: color-mix(in srgb, var(--cms-accent) 15%, transparent);
+    color: var(--cms-text-primary);
+}
+.ts-dropdown .option:hover,
+.ts-dropdown .option.active {
+    background: var(--cms-accent);
+    color: #fff;
+}
+.ts-dropdown .no-results {
+    color: var(--cms-text-muted);
+    padding: 8px 12px;
+    font-size: 12px;
+}
+.ts-dropdown-content {
+    max-height: 240px;
+}
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';

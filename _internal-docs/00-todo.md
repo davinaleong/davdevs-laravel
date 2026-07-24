@@ -15,3 +15,6 @@
 - [x] Bug:
     - Local /panel/settings > can see Broadcast social media integration
     - Production /panel/settings > no Broadcast social media integration
+- [x] Panel: Some UX enhancements:
+    - Enable search on all dropdowns
+    - Order by Alpha order

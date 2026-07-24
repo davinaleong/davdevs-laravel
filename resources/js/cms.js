@@ -1,6 +1,7 @@
 import Alpine from 'alpinejs';
 import intersect from '@alpinejs/intersect';
 import EasyMDE from 'easymde';
+import TomSelect from 'tom-select';
 
 Alpine.plugin(intersect);
 window.Alpine = Alpine;
@@ -34,5 +35,18 @@ document.addEventListener('DOMContentLoaded', () => {
             minHeight: '300px',
         });
         if (el.id) window._easyMdeInstances[el.id] = instance;
+    });
+});
+
+// Searchable dropdowns — Tom Select on all <select> except Alpine x-model bindings
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('select:not([x-model]):not([data-no-ts])').forEach((el) => {
+        new TomSelect(el, {
+            create: false,
+            maxOptions: null,
+            selectOnTab: true,
+            // Preserve server-side ordering; don't re-sort client-side
+            sortField: false,
+        });
     });
 });

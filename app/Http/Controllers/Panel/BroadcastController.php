@@ -27,8 +27,8 @@ class BroadcastController extends Controller
 
         $broadcasts = $query->paginate(30)->withQueryString();
 
-        $entries      = Entry::where('status', 'published')->orderByDesc('published_at')->get(['id', 'title']);
-        $publications = Publication::where('status', 'published')->orderByDesc('published_at')->get(['id', 'title']);
+        $entries      = Entry::where('status', 'published')->orderBy('title')->get(['id', 'title']);
+        $publications = Publication::where('status', 'published')->orderBy('title')->get(['id', 'title']);
 
         $broadcastSettings = Setting::whereIn('key', [
             'broadcast_linkedin_enabled',
