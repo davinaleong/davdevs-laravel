@@ -7,7 +7,7 @@
         selectedBundleMembers: {{ json_encode($publication->bundleMembers->pluck('id')->all()) }},
         isBundle: {{ $publication->bundle ? 'true' : 'false' }},
         metaRows: {{ json_encode($publication->meta->map(fn($m) => ['key' => $m->key, 'value' => $m->value])->values()->all() ?: [['key' => '', 'value' => '']]) }},
-        variantRows: {{ json_encode($publication->variants->map(fn($v) => ['name' => $v->name, 'price_display' => $v->price_display, 'ls_product_id' => $v->ls_product_id])->values()->all() ?: []) }},
+        variantRows: {{ json_encode($publication->variants->map(fn($v) => ['name' => $v->name, 'price_display' => $v->price_display])->values()->all() ?: []) }},
         aiLoading: false,
         aiError: null,
         aiPrompt: '',
@@ -146,27 +146,9 @@
             <div x-show="tab === 'store'" x-cloak>
                 <div
                     style="background:var(--cms-bg-surface);border:1px solid var(--cms-border);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px;margin-bottom:16px;">
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-                        <div>
-                            <label
-                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Lemon
-                                Squeezy Product ID</label>
-                            <input type="text" name="ls_product_id"
-                                value="{{ old('ls_product_id', $publication->store?->ls_product_id) }}"
-                                style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cms-input-text);">
-                        </div>
-                        <div>
-                            <label
-                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Lemon
-                                Squeezy Variant ID</label>
-                            <input type="text" name="ls_variant_id"
-                                value="{{ old('ls_variant_id', $publication->store?->ls_variant_id) }}"
-                                style="width:100%;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cms-input-text);">
-                        </div>
-                    </div>
                     <div>
                         <label
-                            style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Store
+                            style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Checkout
                             URL</label>
                         <input type="text" name="ls_store_url"
                             value="{{ old('ls_store_url', $publication->store?->ls_store_url) }}"
@@ -210,14 +192,11 @@
                                 <input type="text" name="variant_price_display[]" x-model="row.price_display"
                                     placeholder="SGD 13"
                                     style="flex:0 0 110px;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-size:12px;color:var(--cms-input-text);">
-                                <input type="text" name="variant_ls_product_id[]" x-model="row.ls_product_id"
-                                    placeholder="LS product ID"
-                                    style="flex:0 0 200px;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cms-input-text);">
                                 <button type="button" @click="variantRows.splice(i, 1)"
                                     style="background:none;border:none;color:var(--cms-error);cursor:pointer;font-size:16px;">×</button>
                             </div>
                         </template>
-                        <button type="button" @click="variantRows.push({name:'',price_display:'',ls_product_id:''})"
+                        <button type="button" @click="variantRows.push({name:'',price_display:''})"
                             style="font-size:12px;color:var(--cms-accent);background:none;border:none;cursor:pointer;">+
                             Add variant</button>
                     </div>
@@ -451,6 +430,14 @@
                                     style="width:16px;height:16px;accent-color:var(--cms-accent);">
                                 <span style="font-size:12px;color:var(--cms-text-muted);">Featured</span>
                             </label>
+                        </div>
+                        <div>
+                            <label
+                                style="display:block;font-size:12px;font-weight:500;margin-bottom:6px;color:var(--cms-text-secondary);">Main
+                                Foreground Colour</label>
+                            <input type="color" name="design_color_primary"
+                                value="{{ old('design_color_primary', $publication->getMeta('design_color_primary') ?? '#0E0E10') }}"
+                                style="width:100%;height:36px;box-sizing:border-box;background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:2px 4px;cursor:pointer;">
                         </div>
                     </div>
                 </div>

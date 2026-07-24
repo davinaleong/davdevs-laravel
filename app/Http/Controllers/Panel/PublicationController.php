@@ -134,8 +134,6 @@ class PublicationController extends Controller
     protected function storeValidated(Request $request): array
     {
         return $request->validate([
-            'ls_product_id' => 'nullable|string|max:100',
-            'ls_variant_id' => 'nullable|string|max:100',
             'ls_store_url' => 'nullable|string',
             'price_display' => 'nullable|string|max:50',
             'currency' => 'nullable|string|max:3',
@@ -184,6 +182,13 @@ class PublicationController extends Controller
             }
             $publication->meta()->create(['key' => $key, 'value' => $values[$i] ?? null]);
         }
+
+        // Named design fields stored as meta
+        foreach (['design_color_primary'] as $key) {
+            if ($request->filled($key)) {
+                $publication->meta()->create(['key' => $key, 'value' => $request->input($key)]);
+            }
+        }
     }
 
     protected function syncVariants(Request $request, Publication $publication): void
@@ -192,7 +197,6 @@ class PublicationController extends Controller
 
         $names = $request->input('variant_name', []);
         $prices = $request->input('variant_price_display', []);
-        $lsProductIds = $request->input('variant_ls_product_id', []);
 
         foreach ($names as $i => $name) {
             if (blank($name)) {
@@ -201,7 +205,6 @@ class PublicationController extends Controller
             $publication->variants()->create([
                 'name' => $name,
                 'price_display' => $prices[$i] ?? null,
-                'ls_product_id' => $lsProductIds[$i] ?? null,
                 'sort_order' => $i,
             ]);
         }

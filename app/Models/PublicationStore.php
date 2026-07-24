@@ -11,7 +11,7 @@ class PublicationStore extends Model
     protected $table = 'publication_store';
 
     protected $fillable = [
-        'publication_id', 'ls_product_id', 'ls_variant_id',
+        'publication_id',
         'ls_store_url', 'price_display', 'currency', 'free_sample_url',
     ];
 

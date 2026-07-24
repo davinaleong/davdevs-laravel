@@ -1,5 +1,14 @@
 # TODO - For Maintenance &amp; Ad-hoc Tasks
 
+- [x] Panel: Update "Store" step
+    - Just takes in a single checkout link regardless of variant
+        - All "get this book", etc, CTA uses this link
+        - Remove product ID column from the variant section
+            - The variant buttons are for cosmetics only
+    - Remove the "Lemon Squeezy Product ID" field
+    - Remove the "Lemon Squeezy Variant ID" field
+    - Example "Store URL": https://davinaleong.lemonsqueezy.com/checkout/buy/806ab8ae-9298-47b1-b0f8-79b7739a3a13
+        - So, suggest a better field label → renamed to "Checkout URL"
 - [ ] Panel: Refactor the broadcast module.
     - DO NOT auto post to social media on create/edit of an Entry/Publication
     - Instead, give me a broadcast form:
@@ -10,4 +19,4 @@
             - Sanity check for grammar, spelling mistakes, and inappropriate content
             - Auto correct if failed sanity check
             - Only then, then post to social media platforms
-- [ ] Bug: Publications to allow defining of main foreground colour in the meta settings per record.
+- [x] Bug: Publications to allow defining of main foreground colour in the meta settings per record.
