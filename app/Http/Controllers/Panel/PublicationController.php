@@ -88,7 +88,7 @@ class PublicationController extends Controller
         $layouts = Layout::where('active', true)->orderBy('name')->get();
         $contentTypes = ContentType::where('table_target', 'publications')->orderBy('name')->get();
         $categories = Category::orderBy('name')->get();
-        $images = Image::orderBy('title')->orderByDesc('id')->limit(200)->get();
+        $images = Image::orderBy('title')->orderByDesc('id')->get();
         $links = Link::orderBy('sort_order')->get();
         $tags = Tag::orderBy('name')->get();
         $bundleCandidates = Publication::where('id', '!=', $publication->id ?? 0)->orderBy('title')->get();

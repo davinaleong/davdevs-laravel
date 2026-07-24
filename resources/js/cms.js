@@ -96,6 +96,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (lazyLoad) rebuild();  // initial setup for large selects
 
+        // When user types in a lazy-loaded select, load ALL matching options from
+        // the full valueOpts snapshot so search isn't limited to the current page.
+        if (lazyLoad) {
+            let searching = false;
+            ts.on('type', (query) => {
+                if (query && !searching) {
+                    searching = true;
+                    const savedVal = ts.getValue();
+                    const all = [...blankOpts, ...applyMode(sortMode, valueOpts)];
+                    ts.clearOptions();
+                    all.forEach(o => ts.addOption(o));
+                    ts.settings.maxOptions = all.length + 1;
+                    ts.refreshOptions(false);
+                    if (savedVal) ts.setValue(savedVal, true);
+                } else if (!query && searching) {
+                    searching = false;
+                    loaded = Math.min(PAGE_SIZE, valueOpts.length);
+                    rebuild();
+                }
+            });
+        }
+
         ts.on('dropdown_open', (dropdown) => {
             // Inject sort bar once per dropdown element
             if (showSort && !dropdown.querySelector('.ts-sort-bar')) {

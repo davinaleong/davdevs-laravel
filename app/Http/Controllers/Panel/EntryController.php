@@ -159,7 +159,7 @@ class EntryController extends Controller
         $tags = $entry->content_type_id
             ? Tag::where('content_type_id', $entry->content_type_id)->orWhereNull('content_type_id')->orderBy('name')->get()
             : Tag::orderBy('name')->get();
-        $images = Image::orderBy('title')->orderByDesc('id')->limit(200)->get();
+        $images = Image::orderBy('title')->orderByDesc('id')->get();
         $videoEmbeds = VideoEmbed::orderByDesc('id')->limit(60)->get();
         $links = Link::orderBy('sort_order')->get();
         $reactComponents = ReactComponent::where('active', true)->orderBy('name')->get();
