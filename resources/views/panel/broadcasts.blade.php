@@ -233,7 +233,6 @@
     <div style="margin-top:20px;">{{ $broadcasts->links() }}</div>
 </x-cms-layout>
 
-        <select name="platform" onchange="this.form.submit()"
             style="background:var(--cms-input-bg);border:1px solid var(--cms-input-border);border-radius:5px;padding:7px 10px;font-size:12px;color:var(--cms-input-text);">
             <option value="">All platforms</option>
             @foreach (['linkedin', 'facebook', 'instagram', 'threads'] as $p)
