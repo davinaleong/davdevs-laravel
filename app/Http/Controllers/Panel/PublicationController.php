@@ -173,15 +173,19 @@ class PublicationController extends Controller
         $keys = $request->input('meta_key', []);
         $values = $request->input('meta_value', []);
 
+        // Keys managed by dedicated named inputs — skip them from the free-form rows
+        // to prevent duplicate key violations if the user had them in custom meta before.
+        $reservedKeys = ['design_color_primary'];
+
         foreach ($keys as $i => $key) {
-            if (blank($key)) {
+            if (blank($key) || in_array($key, $reservedKeys, true)) {
                 continue;
             }
             $publication->meta()->create(['key' => $key, 'value' => $values[$i] ?? null]);
         }
 
         // Named design fields stored as meta
-        foreach (['design_color_primary'] as $key) {
+        foreach ($reservedKeys as $key) {
             if ($request->filled($key)) {
                 $publication->meta()->create(['key' => $key, 'value' => $request->input($key)]);
             }
