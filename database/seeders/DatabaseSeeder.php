@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             PublicationTypeSeeder::class,
             LayoutSeeder::class,
             SettingSeeder::class,
+            QuipSeeder::class,
         ]);
     }
 }
