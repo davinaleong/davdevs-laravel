@@ -33,6 +33,7 @@ Route::post('api/reactions/{type}/{id}', [ReactionController::class, 'toggle'])
     ->middleware('throttle:5,1')
     ->name('api.reactions.toggle');
 Route::get('ebooks/{slug}', [SiteController::class, 'ebookShow'])->name('site.ebooks.show');
+Route::get('tutor', fn () => view('site.tutor'))->name('site.tutor');
 Route::get('privacy', fn () => view('site.privacy'))->name('site.privacy');
 
 // Headless public REST API (toggleable via Settings > Headless CMS)

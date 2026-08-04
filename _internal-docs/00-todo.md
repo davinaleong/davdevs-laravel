@@ -1,6 +1,7 @@
 # TODO - For Maintenance &amp; Ad-hoc Tasks
 
 - [x] Feature: A How-to-purchase iframe Modal that gives the visitors instructions on how to purchase a publication.
+- [ ] Frontend: Tutor/Mentor page
 - [ ] Panel (Feature): Messages module
     - Settings:
         - A subject list I can edit: label/value
