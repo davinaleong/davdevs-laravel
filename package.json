@@ -23,6 +23,7 @@
         "alpinejs": "^3.15.12",
         "colord": "^2.9.3",
         "easymde": "^2.21.0",
+        "lucide": "^1.28.0",
         "lucide-react": "^1.23.0",
         "react": "^19.2.7",
         "react-dom": "^19.2.7",

@@ -1,5 +1,8 @@
 import Alpine from 'alpinejs';
 import intersect from '@alpinejs/intersect';
+import { createIcons, icons } from 'lucide';
+
+createIcons({icons});
 
 Alpine.plugin(intersect);
 window.Alpine = Alpine;
